@@ -4,10 +4,10 @@ import { ImageReveal } from './Motion'
 import { disciplineBySlug } from '../data/disciplines'
 import { workPath } from '../data/projects'
 
-// A work in a grid, captioned like a gallery wall label: title, then medium and catalogue number.
+// A work in a grid, captioned like a gallery wall label: title, then medium and size where known.
 export default function ProjectCard({ project, ratio = '4/5', className = '', showDiscipline = true, sizes }) {
   const d = disciplineBySlug[project.discipline]
-  const label = [project.medium, project.code].filter(Boolean).join(' · ')
+  const label = [project.medium, project.dimensions].filter(Boolean).join(' · ')
   return (
     <Link to={workPath(project)} className={`group block ${className}`}>
       <ImageReveal>
@@ -26,7 +26,6 @@ export default function ProjectCard({ project, ratio = '4/5', className = '', sh
       <p className="caption mt-1 transition-transform duration-500 ease-gallery group-hover:translate-x-1">
         {showDiscipline && d && <span className="mr-3 text-geru">{d.shortName}</span>}
         {label}
-        {project.gallery.length > 0 && <span className="ml-3 text-ink-soft/80">{project.gallery.length + 1} views</span>}
       </p>
     </Link>
   )

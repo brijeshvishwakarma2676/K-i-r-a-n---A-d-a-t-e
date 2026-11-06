@@ -8,6 +8,7 @@ import ProjectCard from '../components/ProjectCard'
 import Lightbox from '../components/Lightbox'
 import { ClipReveal, ease } from '../components/Motion'
 import Invitation from '../sections/Invitation'
+import Tone from '../components/Tone'
 import NotFound from './NotFound'
 import { disciplineBySlug } from '../data/disciplines'
 import { projectBySlug, projectsFor, workPath } from '../data/projects'
@@ -25,7 +26,7 @@ export default function Project() {
   const { slug, work } = useParams()
   const p = projectBySlug[work]
   const [open, setOpen] = useState(null)
-  if (!p || p.discipline !== slug) return <NotFound />
+  if (!p || p.discipline !== slug || p.listed === false) return <NotFound />
 
   const d = disciplineBySlug[p.discipline]
   const siblings = projectsFor(p.discipline)
@@ -41,7 +42,6 @@ export default function Project() {
 
   // The wall label: only what is known is shown.
   const facts = [
-    { term: 'Catalogue no.', value: (p.codes || [p.code]).filter(Boolean).join(', ') },
     { term: 'Body of work', value: d.name },
     { term: 'Subject', value: groupName || segmentName },
     { term: 'Medium', value: p.medium },
@@ -54,11 +54,11 @@ export default function Project() {
     <article style={{ '--accent': d.accent }}>
       <Seo
         title={p.title}
-        description={`${p.title}${p.medium ? `, ${p.medium}` : ''}: ${d.name.toLowerCase()} by ${site.name} and ${site.studio}, ${site.basedIn}.`}
+        description={`${p.title}${p.medium ? `, ${p.medium}` : ''}: ${d.name.toLowerCase()} by ${site.name}, ${site.basedIn}.`}
         image={srcFor(p.cover) ? `${site.url}${srcFor(p.cover)}` : undefined}
       />
 
-      <div className="wrap grid grid-cols-12 gap-x-6 gap-y-10 pt-[calc(var(--header-h)+2.5rem)] md:pt-[calc(var(--header-h)+4rem)]">
+      <div data-tone="light" className="wrap grid grid-cols-12 gap-x-6 gap-y-10 pt-[calc(var(--header-h)+2.5rem)] md:pt-[calc(var(--header-h)+4rem)]">
         <ClipReveal className="col-span-12 md:col-span-7">
           <button type="button" onClick={() => setOpen(0)} className="group relative block w-full cursor-zoom-in text-left" aria-label={`View ${p.title} full screen`}>
             <div style={photo(p.cover) ? { maxWidth: `calc(80svh * ${photo(p.cover).w / photo(p.cover).h})` } : undefined}>
@@ -97,11 +97,7 @@ export default function Project() {
             <div className="prose-body mt-8 text-[1rem]">
               {p.description.map((t) => <p key={t}>{t}</p>)}
             </div>
-          ) : (
-            <p className="mt-8 max-w-[40ch] text-[0.98rem] text-ink-soft">
-              Made in the workshop of {site.studio}, the studio of {site.name}. Pieces like this one can be made to your design, size and material.
-            </p>
-          )}
+          ) : null}
 
           {shownIn.length > 0 && (
             <div className="mt-8">
@@ -123,8 +119,8 @@ export default function Project() {
       </div>
 
       {p.gallery.length > 0 && (
-        <section aria-label="More views" className="wrap py-24 md:py-32">
-          <h2 className="caption mb-10">{images.length} views</h2>
+        <section data-tone="night" aria-label="More views" className="wrap py-24 md:py-32">
+          <h2 className="caption mb-10">Further views</h2>
           <div className="grid grid-cols-1 gap-x-6 gap-y-12 md:grid-cols-12">
             {p.gallery.map((im, i) => {
               const s = spread[i % spread.length]
@@ -142,7 +138,7 @@ export default function Project() {
         </section>
       )}
 
-      <nav aria-label="More works" className={`wrap grid grid-cols-2 border-y border-stone ${p.gallery.length ? '' : 'mt-24 md:mt-32'}`}>
+      <nav data-tone="light" aria-label="More works" className={`wrap grid grid-cols-2 border-y border-stone ${p.gallery.length ? '' : 'mt-24 md:mt-32'}`}>
         <Link to={workPath(prev)} className="group border-r border-stone py-8 pr-4 md:py-12">
           <span className="caption block">Previous</span>
           <span className="label-title mt-2 block text-[clamp(1.4rem,1rem+1.6vw,2.4rem)] leading-tight group-hover:text-geru">{prev.title}</span>
@@ -154,7 +150,7 @@ export default function Project() {
       </nav>
 
       {related.length > 0 && (
-        <section aria-labelledby="related-title" className="wrap py-24 md:py-32">
+        <section data-tone="clay" aria-labelledby="related-title" className="wrap py-24 md:py-32">
           <div className="flex flex-wrap items-end justify-between gap-6">
             <h2 id="related-title" className="display text-[clamp(2rem,1.4rem+2vw,3.2rem)]">
               Also in {(groupName || d.name).toLowerCase()}
@@ -169,7 +165,9 @@ export default function Project() {
         </section>
       )}
 
-      <Invitation title="Every work here can be made again, to your design, size and material." linkLabel="Ask about this work" to={`/contact?work=${p.slug}`} />
+      <Tone name="light">
+        <Invitation title="For this work, or a commission of your own." linkLabel="Ask about this work" to={`/contact?work=${p.slug}`} />
+      </Tone>
 
       <Lightbox images={images} index={open} onIndex={setOpen} onClose={() => setOpen(null)} title={p.title} />
     </article>

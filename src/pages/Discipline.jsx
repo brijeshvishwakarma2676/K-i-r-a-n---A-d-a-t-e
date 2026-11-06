@@ -5,6 +5,7 @@ import ArtImage from '../components/ArtImage'
 import Masonry from '../components/Masonry'
 import { ClipReveal, Parallax, SplitText } from '../components/Motion'
 import Invitation from '../sections/Invitation'
+import Tone from '../components/Tone'
 import NotFound from './NotFound'
 import { disciplineBySlug, disciplines } from '../data/disciplines'
 import { projectsFor } from '../data/projects'
@@ -29,14 +30,16 @@ export default function Discipline() {
   return (
     <div style={{ '--accent': d.accent }}>
       <Seo title={d.name} description={d.intro} />
-      <Opening d={d} />
-      <Body d={d} />
-      <Feature d={d} />
-
-      <WorksGrid d={d} list={list} />
-
-      <OtherDisciplines current={d.slug} />
-      <Invitation title={d.variant === 'monument' ? 'For a sculpture of your own, or a piece like one of these.' : 'Made to your design, your size and your site.'} />
+      <Tone name="light">
+        <Opening d={d} />
+        <Body d={d} />
+      </Tone>
+      <Tone name="night"><Feature d={d} /></Tone>
+      <Tone name="clay"><WorksGrid d={d} list={list} /></Tone>
+      <Tone name="light">
+        <OtherDisciplines current={d.slug} />
+        <Invitation />
+      </Tone>
     </div>
   )
 }
@@ -180,12 +183,6 @@ function Body({ d }) {
               {d.materials.map((s) => <li key={s}>{s}</li>)}
             </ul>
           </div>
-          <div>
-            <h2 className="caption">Made for</h2>
-            <ul className="mt-3 space-y-1.5 text-[0.98rem]">
-              {d.madeFor.map((s) => <li key={s}>{s}</li>)}
-            </ul>
-          </div>
         </div>
       </div>
     </section>
@@ -196,7 +193,7 @@ function Body({ d }) {
 
 function MonumentFeature({ d }) {
   return (
-    <section aria-label="Sculpture in its setting" className="bg-paper py-24 md:py-32">
+    <section aria-label="Sculpture in its setting" className="py-24 md:py-32">
       <div className="wrap grid grid-cols-12 gap-x-6 gap-y-10">
         <div className="col-span-12 md:col-span-8">
           <ClipReveal>
@@ -216,7 +213,7 @@ function MonumentFeature({ d }) {
 
 function LandscapeFeature({ d }) {
   return (
-    <section aria-label={`${d.name} in their setting`} className="bg-paper py-24 md:py-32">
+    <section aria-label={`${d.name} in their setting`} className="py-24 md:py-32">
       <div className="wrap grid grid-cols-12 gap-x-6 gap-y-10">
         <div className="col-span-12 self-end md:col-span-4">
           {d.designs ? (
@@ -250,7 +247,7 @@ function LandscapeFeature({ d }) {
 
 function ReliefFeature({ d }) {
   return (
-    <section aria-label="Murals and wall features" className="bg-paper py-24 md:py-32">
+    <section aria-label="Murals and wall features" className="py-24 md:py-32">
       <div className="wrap">
         <dl className="grid gap-x-6 gap-y-12 md:grid-cols-2">
           {d.definitions.map((def) => (
@@ -345,7 +342,7 @@ function OtherDisciplines({ current }) {
   const others = disciplines.filter((d) => d.slug !== current)
   return (
     <nav aria-label="Other bodies of work" className="wrap pb-12">
-      <ul className="grid gap-px border-y border-stone md:grid-cols-2 lg:grid-cols-4">
+      <ul className="grid gap-px border-y border-stone md:grid-cols-2">
         {others.map((d) => (
           <li key={d.slug}>
             <Link to={`/works/${d.slug}`} className="group flex h-full items-center gap-5 py-6 md:pr-6">

@@ -5,8 +5,8 @@ import { SplitText } from '../components/Motion'
 
 // The quiet closing line used at the end of most pages: an address, not a sales pitch.
 export default function Invitation({
-  title = 'For acquisitions, commissions, exhibitions and studio visits.',
-  linkLabel = 'Write to the studio',
+  title = 'For works, commissions and exhibitions.',
+  linkLabel = 'Get in touch',
   to = '/contact',
 }) {
   return (

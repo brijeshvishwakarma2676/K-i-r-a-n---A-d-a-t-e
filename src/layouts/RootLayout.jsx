@@ -4,6 +4,7 @@ import { AnimatePresence, MotionConfig, motion, useReducedMotion } from 'framer-
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import { ScrollProgress, ease, easeInOut } from '../components/Motion'
+import { useRooms } from '../components/Tone'
 import { site } from '../data/site'
 import { disciplineBySlug } from '../data/disciplines'
 import { projectBySlug } from '../data/projects'
@@ -55,8 +56,11 @@ export default function RootLayout() {
 // One page and the footer. They fade in under the lifting curtain, except on the first visit.
 function Page({ children }) {
   const first = useFirstPaint()
+  const ref = useRef(null)
+  useRooms(ref)
   return (
     <motion.div
+      ref={ref}
       initial={first ? false : { opacity: 0 }}
       animate={{ opacity: 1, transition: { duration: 0.5, ease, delay: 0.25 } }}
       exit={{ opacity: 0, transition: { duration: 0.45, ease } }}

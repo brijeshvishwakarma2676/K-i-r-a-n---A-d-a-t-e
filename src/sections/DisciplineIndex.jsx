@@ -15,7 +15,7 @@ export default function DisciplineIndex() {
   const current = disciplines[active]
 
   return (
-    <section aria-labelledby="disciplines-title" className="bg-paper py-28 md:py-40">
+    <section aria-labelledby="disciplines-title" className="py-28 md:py-40">
       <div className="wrap">
         <SplitText as="h2" id="disciplines-title" className="display text-[clamp(2.4rem,1.4rem+3.6vw,4.6rem)]" text="Bodies of work" />
 
@@ -71,7 +71,7 @@ function Entry({ d, index, onActive, active }) {
       <h3 className={`display text-[clamp(2.4rem,1.6rem+2.6vw,3.8rem)] leading-[0.98] transition-colors duration-700 ${active ? 'text-ink' : 'lg:text-ink-soft'}`}>
         {d.name}
       </h3>
-      <p className="display mt-5 text-[1.45rem] italic leading-snug" style={{ color: d.accent }}>
+      <p className="display mt-5 text-[1.45rem] italic leading-snug text-geru">
         {d.headline}
       </p>
       <p className="mt-5 max-w-[48ch] text-[0.98rem]">{d.intro}</p>

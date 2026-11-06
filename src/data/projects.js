@@ -23,6 +23,10 @@
     views       caption for each photo, in the same order as `images`
     images      photo ids from images.js; the first is the cover
     featured    shown on the home page
+    listed      false keeps an entry out of the works (lists, counts, work pages); see EXTRA
+
+  PORTFOLIO (below RAW) is the curated selection the site shows, in order. Every other entry stays
+  in RAW as the studio's archive and is not listed, counted or given a page.
 */
 
 const RAW = [
@@ -171,19 +175,68 @@ const RAW = [
   { slug: 'lattice-pergola', title: 'Lattice pergola', discipline: 'water-garden', group: 'structures', images: ['gallery/other_products/17'] },
 ]
 
-const captionFor = (w, i) => (w.views ? w.views[i] : i === 0 ? w.title : `${w.title}, view ${i + 1}`)
-const codeFor = (w, i) => (w.codes ? w.codes[i] : w.code)
+// The selection shown on the site, in this order: the strongest photographs of sculpture and
+// murals, without watermarks, date stamps, replicas or decor pieces. Add a slug here to show it.
+const PORTFOLIO = [
+  // Sculpture
+  'twisted-ribbon-form',
+  'lion-of-machine-parts',
+  'leaning-figure-with-a-silver-mane',
+  'seated-buddha',
+  'figure-on-a-bicycle',
+  'rhinoceros-in-metal-mesh',
+  'stylised-ganesha',
+  'runner-around-a-column',
+  'embracing-couple',
+  'figure-at-the-spinning-wheel',
+  'reclining-ganesha',
+  'cellist',
+  'figure-with-kites',
+  'buddha-head',
+  'leaping-figure',
+  'gandhi-statue',
+  'saraswati-with-veena',
+  'sliced-figures-on-a-rock',
+  'columns-of-climbing-figures',
+  'wall-of-climbing-figures',
+  'abstract-ring-form',
+  'tall-standing-figure',
+  // Murals
+  'dancers-relief-lobby-wall',
+  'carved-relief-wall-full-length',
+  'metal-leaf-wall-installation',
+  'figurative-relief-panel',
+  'relief-frieze-wall',
+  'floral-relief-panel',
+  'metal-figures-wall-and-floor',
+]
 
-export const projects = RAW.map((w) => {
+// Not works: entries that can be featured by slug (the hero's `heroSlug`) but are never listed
+// among the works, counted, or given a work page.
+const EXTRA = [
+  { slug: 'kiran-adate', title: 'Kiran Adate', discipline: 'sculpture', listed: false, views: ['Portrait of Kiran Adate'], images: ['portrait/kiran-adate'] },
+]
+
+const captionFor = (w, i) => (w.views ? w.views[i] : i === 0 ? w.title : `${w.title}, view ${i + 1}`)
+
+const build = (w) => {
   const pics = w.images.map((id, i) => ({
     id,
-    alt: `${captionFor(w, i)}, by Invent Fine Art${codeFor(w, i) ? ` (${codeFor(w, i)})` : ''}`,
+    alt: w.listed === false ? captionFor(w, i) : `${captionFor(w, i)}, by Kiran Adate`,
     caption: captionFor(w, i),
   }))
   return { ...w, cover: pics[0], gallery: pics.slice(1) }
-})
+}
 
-export const projectBySlug = Object.fromEntries(projects.map((p) => [p.slug, p]))
+const bySlug = Object.fromEntries(RAW.map((w) => [w.slug, w]))
+const missing = PORTFOLIO.filter((slug) => !bySlug[slug])
+if (missing.length) throw new Error(`PORTFOLIO lists unknown works: ${missing.join(', ')}`)
+
+// The works shown on the site.
+export const projects = PORTFOLIO.map((slug) => build(bySlug[slug]))
+
+// Every shown work and every unlisted entry, by slug (check `listed === false` before linking to a work page).
+export const projectBySlug = Object.fromEntries([...projects, ...EXTRA.map(build)].map((p) => [p.slug, p]))
 export const projectsFor = (slug) => projects.filter((p) => p.discipline === slug)
 export const featuredProjects = projects.filter((p) => p.featured)
 

@@ -21,7 +21,7 @@ export default function Monument({ slug = 'lion-of-machine-parts', view = 0, tex
         <div className="col-span-12 md:col-span-6">
           <SplitText as="h2" id="monument-title" className="label-title text-[clamp(2rem,4vw,3.25rem)] leading-none" text={p.title} />
           <p className="caption mt-3">
-            {[d.name, p.medium, p.code].filter(Boolean).join('. ')}
+            {[d.name, p.medium, p.year].filter(Boolean).join('. ')}
           </p>
         </div>
         <Reveal as="p" delay={0.15} className="col-span-12 max-w-[46ch] text-[0.98rem] md:col-span-4 md:col-start-8">

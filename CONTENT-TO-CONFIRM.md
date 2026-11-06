@@ -5,6 +5,19 @@ All content on this site comes from the studio's old website (inventfineart.com,
 site-v4 (`site-v4/app/data`, `site-v4/CONTENT-GAPS.md`). Nothing has been invented. These
 items still need the owner's confirmation or input before launch.
 
+## The portfolio (changed 2026-11-06)
+
+The site now shows 29 works (22 sculptures, 7 murals) chosen from the studio catalogue: the
+strongest photographs, leaving out watermarked or date-stamped photos, replicas and decor pieces.
+The studio's product lines are hidden. To confirm with Kiran Adate:
+
+- **The selection**: which of these 29 are Kiran Adate's own work, and which pieces are missing.
+  The list is `PORTFOLIO` in `src/data/projects.js`.
+- **The statement**: the text on the home and About pages ("The work moves between the figure and
+  the abstract…") describes the works shown; it is not Kiran Adate's own words. Replace it with a
+  statement from the artist (`artist.statement` in `src/data/site.js`).
+- **Labels**: title, year, material and size for each of the 29 works.
+
 ## The artist
 
 The site is presented under Kiran Adate's name, with Invent Fine Art as the studio. The spelling
@@ -20,7 +33,9 @@ The site is presented under Kiran Adate's name, with Invent Fine Art as the stud
   and add it to `src/data/exhibitions.js`; the home page will then announce it.
 - **Biography**: training, how long Kiran Adate has worked as a sculptor, and a short statement in
   the artist's own words. The statement now on the site is the studio's.
-- **Portrait**: a photograph of Kiran Adate, ideally at work. The workshop photo is a stand-in.
+- **Portrait**: the home page now opens with Kiran Adate's studio portrait (navy suit), cut out of its
+  white background. The artist section and the About page still use the workshop photo; a photo of
+  Kiran Adate at work would suit those best.
 - **Domain and email**: kiranadate.com or kiranadate.in was discussed. `site.url` still points to
   inventfineart.com, and the contact email is still the studio's.
 

@@ -2,6 +2,10 @@
   Bodies of work. Each one has its own page at /works/<slug>.
   `variant` selects the art direction of that page (see src/pages/Discipline.jsx).
 
+  This is Kiran Adate's portfolio, so only Sculpture and Murals are shown. The studio's product
+  lines (planters, FRP and GRC architectural work, water and garden work) belong on the company
+  site, inventfineart.com; they are kept below with `archived: true`, hidden everywhere.
+
   Sources: the studio's own words from the old inventfineart.com (services and about pages),
   the brief (new-design.md) and the meeting of 2026-10-24 (decision.txt), as collected in
   site-v4/app/data/lines.js and content.js. The order and names of the first four follow the
@@ -11,23 +15,22 @@
 
 const pic = (id, alt, position) => ({ id, alt, position })
 
-export const disciplines = [
+export const allDisciplines = [
   {
     slug: 'sculpture',
     name: 'Sculpture',
     shortName: 'Sculpture',
     variant: 'monument',
     accent: '#7A5537',
-    headline: 'Art that gives a space a distinctive identity.',
+    headline: 'Figures, devotional forms, animals and abstract work.',
     intro:
-      'Decorative sculptures and custom statement pieces in steel, stone, bronze and FRP: figures and portraits, devotional forms, animals and birds, and abstract work for gardens, lobbies and public places.',
+      'Sculpture in steel, stone, bronze and fibre: figures and portraits, devotional forms, animals and birds, and abstract work, from pieces for a room to works for gardens and public places.',
     body: [
-      'Sculpture brings character, elegance and artistic expression to its surroundings. From a portrait statue to a lion assembled from machine parts, each piece is developed from a sketch, a reference or an idea, and made to the size its site needs.',
-      'Before the full piece is made, the studio 3D-prints a miniature of the design for approval. The work is then modelled, cast, welded or carved in the studio’s own workshop and finished by hand.',
+      'From a portrait statue to a lion assembled from machine parts, each piece begins as a sketch, a reference or an idea.',
+      'It is then modelled, cast, welded or carved in the workshop and finished by hand.',
     ],
     note: 'Steel, stone, bronze and FRP: each chosen for the place a sculpture will stand, indoors or out.',
     materials: ['Steel', 'Stone', 'Bronze', 'FRP (GRP)'],
-    madeFor: ['Residences', 'Gardens', 'Hotels', 'Commercial spaces', 'Architectural projects'],
     groups: [
       { slug: 'figures', name: 'Figures & portraits' },
       { slug: 'devotional', name: 'Devotional' },
@@ -35,21 +38,21 @@ export const disciplines = [
       { slug: 'abstract', name: 'Abstract & contemporary' },
       { slug: 'nature', name: 'Garden & nature' },
     ],
-    cover: pic('gallery/sculptures/84', 'Twisted ribbon form, a sculpture in two metals, by Invent Fine Art'),
-    context: pic('gallery/sculptures/80', 'Lion of machine parts, a steel sculpture, by Invent Fine Art'),
+    cover: pic('gallery/sculptures/84', 'Twisted ribbon form, a sculpture in two metals, by Kiran Adate'),
+    context: pic('gallery/sculptures/80', 'Lion of machine parts, a steel sculpture, by Kiran Adate'),
   },
   {
     slug: 'murals',
-    name: 'Murals & Wall Features',
+    name: 'Murals & Reliefs',
     shortName: 'Murals',
     variant: 'relief',
     accent: '#7F5F22',
-    headline: 'Art for the walls.',
+    headline: 'A composition carried across a wall.',
     intro:
-      'Relief murals and decorative wall features in steel, FRP, GRC and mixed media, made to the wall they are for: in homes, lobbies, hotels and commercial spaces.',
+      'Relief murals in steel, FRP, GRC and mixed media, each drawn to the wall it is made for.',
     body: [
-      'A mural carries one composition across a wall: a carved scene, a tree, a pair of dancers, a field of metal leaves. A wall feature is quieter: a set of panels that gives a whole surface its texture and character.',
-      'Both are drawn to the wall’s exact size and made to the client’s design, then fixed on site by the studio’s own team.',
+      'A mural carries one composition across a wall: a carved scene, a pair of dancers, a field of metal leaves.',
+      'Each is drawn to the wall’s exact size, then carved or cast in panels and assembled on the wall.',
     ],
     definitions: [
       { term: 'Mural', text: 'Artwork raised in relief on a wall: a figure, a scene or a pattern.' },
@@ -57,16 +60,16 @@ export const disciplines = [
     ],
     note: 'Light changes a relief through the day. Many of these walls are lit from within or from one side, so their carving reads as shadow.',
     materials: ['Steel', 'FRP', 'GRC', 'Mixed media'],
-    madeFor: ['Residences', 'Lobbies', 'Hotels', 'Commercial spaces'],
     groups: [
       { slug: 'murals', name: 'Murals' },
       { slug: 'wall-features', name: 'Wall features' },
     ],
-    cover: pic('gallery/wall_murals/32', 'Carved relief wall, lit from below, by Invent Fine Art'),
-    context: pic('gallery/wall_murals/33', 'Dancers relief on a lobby wall, by Invent Fine Art'),
+    cover: pic('gallery/wall_murals/34', 'Carved relief wall, full length, by Kiran Adate'),
+    context: pic('gallery/wall_murals/33', 'Dancers relief on a lobby wall, by Kiran Adate'),
   },
   {
     slug: 'planters',
+    archived: true,
     name: 'Planters & Pots',
     shortName: 'Planters',
     variant: 'landscape',
@@ -91,6 +94,7 @@ export const disciplines = [
   },
   {
     slug: 'architectural',
+    archived: true,
     name: 'Architectural Works in FRP & GRC',
     shortName: 'FRP & GRC',
     variant: 'drawing',
@@ -119,6 +123,7 @@ export const disciplines = [
   },
   {
     slug: 'water-garden',
+    archived: true,
     name: 'Water & Garden Works',
     shortName: 'Water & garden',
     variant: 'landscape',
@@ -143,6 +148,8 @@ export const disciplines = [
   },
 ]
 
+// The bodies of work shown on the site (archived ones are left out of every list and page).
+export const disciplines = allDisciplines.filter((d) => !d.archived)
 export const disciplineBySlug = Object.fromEntries(disciplines.map((d) => [d.slug, d]))
 
 /*
@@ -154,6 +161,6 @@ export const materials = [
   { name: 'Bronze', note: 'The classic material of statues. Holds the finest detail and darkens naturally with age.', plate: { kind: 'texture', variant: 'bronze', material: 'bronze', seed: 61 } },
   { name: 'Stone', note: 'Natural stone, carved by hand. No two pieces are alike, and it lasts for generations outdoors.', plate: { kind: 'texture', variant: 'stone', material: 'stone', seed: 63 } },
   { name: 'Steel', note: 'Strong in thin sections, for slim, open and bold forms: polished, brushed or painted.', plate: { kind: 'texture', variant: 'steel', material: 'steel', seed: 62 } },
-  { name: 'FRP', note: 'Fibre-reinforced plastic. Light yet strong and durable, and made faster than RCC.', plate: { kind: 'texture', variant: 'frp', material: 'frp', seed: 64 } },
-  { name: 'GRC', note: 'Glassfibre reinforced concrete. Takes fine detail from the mould and stands up to sun and rain.', plate: { kind: 'texture', variant: 'grc', material: 'grc', seed: 65 } },
+  { name: 'FRP', note: 'Fibre-reinforced plastic. Light and strong, for large forms and pieces that stand outdoors.', plate: { kind: 'texture', variant: 'frp', material: 'frp', seed: 64 } },
+  { name: 'GRC', note: 'Glassfibre reinforced concrete. Takes fine detail from the mould; used for relief murals.', plate: { kind: 'texture', variant: 'grc', material: 'grc', seed: 65 } },
 ]

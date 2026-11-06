@@ -1,16 +1,16 @@
-import { Fragment } from 'react'
 import { Link } from 'react-router'
 import Seo from '../components/Seo'
 import ArtImage from '../components/ArtImage'
-import { ClipReveal, Parallax, Reveal, ScrollWords, SplitText, Stagger } from '../components/Motion'
+import { ClipReveal, Parallax, Reveal, ScrollWords, SplitText } from '../components/Motion'
 import Invitation from '../sections/Invitation'
+import Tone from '../components/Tone'
 import { artist, site } from '../data/site'
 import { materials } from '../data/disciplines'
 import { dateRange, exhibitions } from '../data/exhibitions'
 
-// A work on site, at the scale of a building: the heritage-style façade under construction.
-const siteImage = { id: 'gallery/grc_products/11', alt: 'A heritage-style GRC façade by Invent Fine Art, being fixed on site', position: '50% 40%' }
-const workshopImage = { id: 'gallery/sculptures/54', alt: 'A Gandhi statue in the Invent Fine Art workshop, before finishing' }
+// A work at full width between the statement and the materials.
+const siteImage = { id: 'gallery/sculptures/57', alt: 'Leaning figure with a silver mane, in a garden', position: '50% 55%' }
+const workshopImage = { id: 'gallery/sculptures/54', alt: 'A Gandhi statue in the workshop, before finishing' }
 
 const shows = [...exhibitions].sort((a, b) => (a.start < b.start ? 1 : -1))
 
@@ -19,7 +19,7 @@ export default function About() {
     <>
       <Seo title="About" description={artist.shortBio} />
 
-      <header className="wrap grid grid-cols-12 gap-x-6 gap-y-12 pt-[calc(var(--header-h)+3rem)] md:pt-[calc(var(--header-h)+5rem)]">
+      <Tone name="light" as="header" className="wrap grid grid-cols-12 gap-x-6 gap-y-12 pt-[calc(var(--header-h)+3rem)] md:pt-[calc(var(--header-h)+5rem)]">
         <div className="col-span-12 flex flex-col md:col-span-7">
           <SplitText
             as="h1"
@@ -38,11 +38,12 @@ export default function About() {
           <ArtImage image={artist.portrait} ratio="3/4" priority sizes="33vw" />
           <figcaption className="caption mt-3">{artist.portrait.alt}</figcaption>
         </figure>
-      </header>
+      </Tone>
 
+      <Tone name="night">
       <section aria-labelledby="statement-title" className="wrap py-28 md:py-40">
         <figure className="grid grid-cols-12 gap-x-6">
-          <h2 id="statement-title" className="caption col-span-12 mb-8 md:col-span-10 md:col-start-2">The studio, in its own words</h2>
+          <h2 id="statement-title" className="caption col-span-12 mb-8 md:col-span-10 md:col-start-2">On the work</h2>
           <blockquote className="display col-span-12 text-[clamp(2rem,1.2rem+2.8vw,3.8rem)] italic leading-[1.08] md:col-span-10 md:col-start-2">
             <ScrollWords text={artist.statement} />
           </blockquote>
@@ -51,7 +52,7 @@ export default function About() {
         <div className="mt-24 grid grid-cols-12 gap-x-6 gap-y-10 md:mt-32">
           <div className="col-span-12 md:col-span-4">
             <SplitText as="h2" className="display text-[clamp(2.2rem,1.4rem+2.8vw,3.8rem)]" text="The practice" />
-            <p className="mt-6 max-w-[30ch] text-[1.15rem] italic text-ink-soft display">From the first concept to the complete execution.</p>
+            <p className="mt-6 max-w-[30ch] text-[1.15rem] italic text-ink-soft display">From a sketch to the finished piece.</p>
           </div>
           <Reveal className="prose-body col-span-12 text-[1.06rem] md:col-span-6 md:col-start-6">
             {artist.practice.map((p) => (
@@ -69,7 +70,9 @@ export default function About() {
         </ClipReveal>
         <p className="wrap caption mt-4">{siteImage.alt}</p>
       </section>
+      </Tone>
 
+      <Tone name="stone">
       <section aria-labelledby="materials-title" className="wrap py-28 md:py-40">
         <div className="grid grid-cols-12 gap-x-6 gap-y-10">
           <div className="col-span-12 md:col-span-5">
@@ -90,7 +93,9 @@ export default function About() {
         </div>
       </section>
 
-      <section aria-labelledby="workshop-title" className="bg-paper py-28 md:py-40">
+      </Tone>
+      <Tone name="clay">
+      <section aria-labelledby="workshop-title" className="py-28 md:py-40">
         <div className="wrap grid grid-cols-12 gap-x-6 gap-y-12">
           <figure className="col-span-12 sm:col-span-8 md:col-span-4">
             <ArtImage image={workshopImage} ratio="3/4" sizes="33vw" />
@@ -98,23 +103,15 @@ export default function About() {
           </figure>
           <div className="col-span-12 md:col-span-7 md:col-start-6">
             <SplitText as="h2" id="workshop-title" className="display text-[clamp(2.2rem,1.4rem+2.8vw,3.8rem)]" text="The workshop" />
-            <p className="mt-6 max-w-[52ch] text-[1.04rem]">
-              Every piece is made in the studio’s own facility at {site.workshop.lines[1]}, in four units that work in close cooperation.
-            </p>
-            <Stagger as="dl" className="mt-10 grid gap-x-8 sm:grid-cols-2" itemClassName="border-t border-stone py-5">
-              {artist.facility.map((f) => (
-                <Fragment key={f.name}>
-                  <dt className="label-title text-[1.5rem] leading-tight">{f.name}</dt>
-                  <dd className="mt-1.5 text-[0.95rem] text-ink-soft">{f.text}</dd>
-                </Fragment>
-              ))}
-            </Stagger>
-            <h3 className="caption mt-12">Also made in the studio</h3>
-            <p className="mt-2 text-[1rem]">{artist.alsoMake.join(' · ')}</p>
+            <Reveal as="p" className="mt-6 max-w-[52ch] text-[1.04rem]">
+              The work is made in the workshop of {site.studio}, the studio {site.name} leads, at {site.workshop.lines[1]}, near {site.basedIn}. Studio visits are by appointment.
+            </Reveal>
           </div>
         </div>
       </section>
 
+      </Tone>
+      <Tone name="light">
       <section aria-labelledby="record-title" className="wrap py-28 md:py-40">
         <div className="grid grid-cols-12 gap-x-6 gap-y-12">
           <div className="col-span-12 md:col-span-4">
@@ -126,7 +123,6 @@ export default function About() {
               title="Studio"
               rows={[
                 { year: site.since, text: `${site.studio} founded in ${site.basedIn}` },
-                { year: '', text: site.certification },
               ]}
             />
             <CvList
@@ -141,7 +137,7 @@ export default function About() {
               }))}
             />
             <div>
-              <h3 className="caption">Commissioned by</h3>
+              <h3 className="caption">Selected commissions</h3>
               <ul className="mt-3 columns-1 gap-x-8 sm:columns-2">
                 {artist.commissions.map((c) => (
                   <li key={c} className="break-inside-avoid border-b border-stone py-2.5 text-[0.98rem]">{c}</li>
@@ -153,6 +149,7 @@ export default function About() {
       </section>
 
       <Invitation />
+      </Tone>
     </>
   )
 }

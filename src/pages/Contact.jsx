@@ -7,7 +7,7 @@ import { site } from '../data/site'
 import { projectBySlug } from '../data/projects'
 import { submitEnquiry, mailtoFor } from '../utils/enquiry'
 
-const TYPES = ['A work on this site', 'A sculpture', 'A mural or wall feature', 'Planters', 'FRP or GRC work', 'Water or garden work', 'An exhibition or collaboration', 'Something else']
+const TYPES = ['A work on this site', 'A commission', 'An exhibition or collaboration', 'Press', 'Something else']
 const EMPTY = { name: '', email: '', phone: '', type: '', location: '', message: '' }
 
 function validate(v) {
@@ -26,7 +26,7 @@ export default function Contact() {
   const [params] = useSearchParams()
   const work = projectBySlug[params.get('work')]
   const initial = work
-    ? { ...EMPTY, type: 'A work on this site', message: `I would like to know more about ${work.title}${work.code ? ` (${work.code})` : ''}.` }
+    ? { ...EMPTY, type: 'A work on this site', message: `I would like to know more about ${work.title}.` }
     : EMPTY
   const [values, setValues] = useState(initial)
   const [errors, setErrors] = useState({})
@@ -69,12 +69,12 @@ export default function Contact() {
 
   return (
     <>
-      <Seo title="Contact" description="Write to Kiran Adate and the studio Invent Fine Art, Mumbai: sculpture, murals, planters and FRP and GRC work made to your design." />
+      <Seo title="Contact" description="Write to Kiran Adate, sculptor, Mumbai: about a work, a commission, an exhibition or press." />
       <header className="wrap pt-[calc(var(--header-h)+3rem)] md:pt-[calc(var(--header-h)+5rem)]">
         <div className="grid grid-cols-12 gap-x-6 gap-y-8">
           <SplitText as="h1" className="display col-span-12 text-[clamp(3.4rem,1.8rem+7vw,9rem)] font-light leading-[0.86] md:col-span-8" text="Contact" immediate delay={0.3} />
           <p className="col-span-12 max-w-[44ch] self-end text-[1.04rem] md:col-span-4">
-            For a sculpture, a mural, planters or architectural work made to your design, and for exhibitions and studio visits. A sketch, a reference photo or a drawing helps; it can follow by email or WhatsApp.
+            About a work on this site, a commission, an exhibition or press. Studio visits are by appointment.
           </p>
         </div>
       </header>
@@ -168,36 +168,31 @@ export default function Contact() {
           </AnimatePresence>
         </div>
 
-        <aside className="col-span-12 lg:col-span-4 lg:col-start-9" aria-label="Studio contact details">
+        <aside className="col-span-12 lg:col-span-4 lg:col-start-9" aria-label="Contact details">
           <dl className="space-y-8">
             <div>
               <dt className="caption">Email</dt>
-              <dd className="mt-1.5 space-y-1">
+              <dd className="mt-1.5">
                 <a href={`mailto:${site.email}`} className="text-link block w-fit text-[1.1rem]">{site.email}</a>
-                {site.emailAlt && <a href={`mailto:${site.emailAlt}`} className="text-link block w-fit text-[0.98rem] text-ink-soft">{site.emailAlt}</a>}
               </dd>
             </div>
             <div>
               <dt className="caption">Phone</dt>
-              <dd className="mt-1.5 space-y-1">
-                {site.phones.map((ph) => (
-                  <a key={ph.tel} href={`tel:${ph.tel}`} className="text-link block w-fit text-[1.1rem] tabular-nums">{ph.label}</a>
-                ))}
-                <a href={site.whatsapp} target="_blank" rel="noreferrer" className="arrow-link mt-3 !text-[1.25rem]">WhatsApp</a>
+              <dd className="mt-1.5">
+                <a href={`tel:${site.phones[0].tel}`} className="text-link block w-fit text-[1.1rem] tabular-nums">{site.phones[0].label}</a>
+                <a href={site.whatsapp} target="_blank" rel="noreferrer" className="text-link mt-2 inline-block text-[0.95rem]">WhatsApp</a>
               </dd>
             </div>
-            {[site.workshop, site.office].map((place) => (
-              <div key={place.label}>
-                <dt className="caption">{place.label}</dt>
-                <dd className="mt-1.5 text-[1rem]">
-                  <address className="not-italic">
-                    {place.lines.map((l) => <span key={l} className="block">{l}</span>)}
-                  </address>
-                  <a href={place.map} target="_blank" rel="noreferrer" className="text-link mt-2 inline-block text-[0.9rem]">Open in Maps</a>
-                  {place === site.workshop && <p className="caption mt-2">{site.visits}</p>}
-                </dd>
-              </div>
-            ))}
+            <div>
+              <dt className="caption">Studio</dt>
+              <dd className="mt-1.5 text-[1rem]">
+                <address className="not-italic">
+                  {site.workshop.lines.map((l) => <span key={l} className="block">{l}</span>)}
+                </address>
+                <a href={site.workshop.map} target="_blank" rel="noreferrer" className="text-link mt-2 inline-block text-[0.9rem]">Open in Maps</a>
+                <p className="caption mt-2">{site.visits}</p>
+              </dd>
+            </div>
             {site.representation && (
               <div>
                 <dt className="caption">Represented by</dt>
@@ -208,14 +203,6 @@ export default function Contact() {
                 </dd>
               </div>
             )}
-            <div>
-              <dt className="caption">Film</dt>
-              <dd className="mt-1.5 flex flex-wrap gap-x-5 gap-y-1">
-                {site.social.map((s) => (
-                  <a key={s.label} href={s.href} target="_blank" rel="noreferrer" className="text-link text-[1rem]">The studio on {s.label}</a>
-                ))}
-              </dd>
-            </div>
           </dl>
         </aside>
       </section>

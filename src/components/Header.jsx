@@ -138,11 +138,7 @@ function MobileMenu({ onClose }) {
         <a href={`mailto:${site.email}`} className="text-link text-[0.95rem]">
           {site.email}
         </a>
-        <p className="caption mt-2">
-          <a href={site.phones[0].tel ? `tel:${site.phones[0].tel}` : undefined}>{site.phones[0].label}</a>
-          <span className="mx-2" aria-hidden="true">·</span>
-          <a href={site.whatsapp} target="_blank" rel="noreferrer">WhatsApp</a>
-        </p>
+        <p className="caption mt-2">{site.short}</p>
       </div>
     </motion.div>
   )

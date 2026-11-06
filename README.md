@@ -50,11 +50,23 @@ Routes:
 
 Text: edit the files in `src/data/`. Values marked `CONFIRM` still need the owner's confirmation.
 
+This is Kiran Adate's portfolio, not the company catalogue:
+
+- **Which works are shown:** the `PORTFOLIO` list in `src/data/projects.js` (29 works, in order). Every other entry in `RAW` is the studio's archive: not listed, counted or given a page. Add a slug to `PORTFOLIO` to show a work.
+- **Bodies of work:** only Sculpture and Murals & Reliefs. Planters, FRP & GRC and Water & Garden are kept in `src/data/disciplines.js` with `archived: true`; their pages show "not found". One line on the Works page and in the footer points to the company site (`site.products` in `src/data/site.js`).
+- **Not shown on purpose:** catalogue codes, view counts, client numbers, ISO certification and sales wording. The client list appears only on the About page, as "Selected commissions".
+
 Photographs: each work lists photo ids, for example `images: ['gallery/sculptures/15']`. The ids are keys in `src/data/images.js`, which points to WebP files in `public/img` at 480, 960 and up to 1600 px wide. They were copied from site-v4's optimised set (`site-v4/public/img`). To add a photo, put its WebP files in `public/img`, add an entry to `images.js`, and use its id in `projects.js`. The first photo of a work is its cover.
 
 A work page shows only the label fields that are filled in: `medium`, `dimensions`, `year`, `location`. Add them as the studio supplies them.
 
 The home page's hero work is set by `heroSlug` in `src/sections/Hero.jsx`; the selected works are listed in `src/sections/SelectedWorks.jsx`.
+
+### The home page portrait
+
+The hero has two scenes that take turns every 8 seconds (`SCENE_MS` in `src/sections/Hero.jsx`): "The artist", with the portrait and the name in two lines, and "The work", with one work (`heroSlug`) standing on the name in a single line. `heroSlug` can also be `'kiran-adate'`, the portrait's entry in `EXTRA` in `src/data/projects.js`: it is never listed among the works, and in the hero it links to About. On wide screens the letters of the name glide between the two arrangements. Visitors can pick a scene or pause; the change stops while the hero is off screen and never runs by itself with reduced motion.
+
+The portrait is a cut-out (transparent WebP) from `public/img/portrait/kiran-adate-{480,800,1074}.webp`, set in `src/sections/Hero.jsx` (`portrait`). To replace it, export a new cut-out at the same three widths with a transparent background and the bottom edge cropped straight, then update `w` and `h` there.
 
 ## Enquiry form
 
@@ -90,6 +102,7 @@ Motion lives in `src/components/Motion.jsx` and `src/layouts/RootLayout.jsx`:
 - **Work photographs** are uncovered from below as they scroll in (`ImageReveal`) and catch a band of light on hover (`.sheen` in `global.css`).
 - **Home page**: the hero light follows the pointer and the work turns slightly towards it; the statement brightens word by word as it is scrolled (`ScrollWords`); figures count up (`Counter`); client names drift past in two bands (`Marquee`); the footer name rises letter by letter.
 - A thin geru line at the top of the screen shows how far the page has been read (`ScrollProgress`).
+- **Rooms:** the page changes colour as you scroll. Each run of sections is wrapped in `<Tone name="…">` (`src/components/Tone.jsx`) or carries `data-tone="…"`; when it crosses the middle of the screen, the whole palette (background, text, lines, accent) fades to that room. Rooms: `light` (limestone), `night` (near black), `clay` (warm sand), `moss` (deep green), `stone` (cool grey), `earth` (geru red). The palettes and the fade are in `src/styles/global.css` under "ROOMS"; a fine grain and a soft pool of light sit behind every room. Home: light hero, night statement and lion, clay works, moss bodies of work, stone studio, light "In place", earth artist. About, Works, the body-of-work pages and work pages have rooms too.
 
 All of it respects the visitor's reduced-motion setting: the page is then shown still, with no curtain.
 
