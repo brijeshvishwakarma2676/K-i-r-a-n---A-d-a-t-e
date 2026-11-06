@@ -1,0 +1,267 @@
+@import "tailwindcss";
+
+/*
+  Design tokens
+  Limestone foundation, basalt for dark rooms, and geru, the red-ochre earth pigment used on
+  walls and floors across India, as the single interactive accent. Each body of work adds one
+  material tint (see src/data/disciplines.js).
+*/
+@theme {
+  --color-limestone: #E7E3DA;
+  --color-paper: #F1EEE8;
+  --color-stone: #D9D3C7;
+  --color-concrete: #A8A39A;
+  --color-ink: #22211E;
+  --color-ink-soft: #5D5950;
+  --color-basalt: #262522;
+  --color-basalt-soft: #B9B3A7;
+  --color-bone: #ECE7DD;
+  --color-geru: #8A3B26;
+  --color-bronze: #7A5537;
+  --color-moss: #4D5A3F;
+  --color-ochre: #7F5F22;
+  --color-steel: #44515A;
+
+  --font-display: "Cormorant Garamond Variable", "Cormorant Garamond", Garamond, "Times New Roman", serif;
+  --font-sans: "Archivo Variable", "Archivo", "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+  --ease-gallery: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Optional dark tokens. index.html pins data-theme="light" because the gallery is designed
+   on limestone; remove that attribute to let the site follow the visitor's system setting. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --color-limestone: #1F1E1C;
+    --color-paper: #2A2926;
+    --color-stone: #34322E;
+    --color-concrete: #5E5A53;
+    --color-ink: #ECE7DD;
+    --color-ink-soft: #ABA59A;
+    --color-basalt: #141312;
+    --color-geru: #D9957A;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --color-limestone: #1F1E1C;
+  --color-paper: #2A2926;
+  --color-stone: #34322E;
+  --color-concrete: #5E5A53;
+  --color-ink: #ECE7DD;
+  --color-ink-soft: #ABA59A;
+  --color-basalt: #141312;
+  --color-geru: #D9957A;
+}
+
+@layer base {
+  :root {
+    color-scheme: light;
+    box-sizing: border-box;
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    --gutter: clamp(1.25rem, 4.5vw, 4.5rem);
+    --header-h: 4.5rem;
+  }
+
+  html {
+    scroll-padding-top: calc(var(--header-h) + env(safe-area-inset-top, 0px));
+    background: var(--color-limestone);
+    color: var(--color-ink);
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.6;
+    font-variation-settings: "wdth" 100;
+    overflow-x: clip;
+    background: var(--color-limestone);
+  }
+
+  ::selection {
+    background: var(--color-geru);
+    color: var(--color-paper);
+  }
+
+  img, svg { display: block; max-width: 100%; }
+
+  a { color: inherit; text-decoration: none; }
+
+  :focus-visible {
+    outline: 2px solid var(--color-geru);
+    outline-offset: 3px;
+    border-radius: 1px;
+  }
+
+  .on-dark :focus-visible { outline-color: #C9B79E; }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+    .marquee-track, .glow-breathe { animation: none !important; }
+  }
+}
+
+@layer components {
+  .wrap {
+    width: 100%;
+    max-width: 96rem;
+    margin-inline: auto;
+    padding-inline: var(--gutter);
+  }
+
+  /* Display type: Cormorant at large sizes, tight leading, slight negative tracking */
+  .display {
+    font-family: var(--font-display);
+    font-weight: 400;
+    line-height: 0.95;
+    letter-spacing: -0.015em;
+  }
+  .display-light { font-weight: 300; }
+
+  /* Small architectural lettering: Archivo set expanded, sentence case */
+  .caption {
+    font-family: var(--font-sans);
+    font-size: 0.78rem;
+    line-height: 1.45;
+    font-stretch: 118%;
+    font-variation-settings: "wdth" 118;
+    letter-spacing: 0.01em;
+    color: var(--color-ink-soft);
+  }
+  .on-dark .caption { color: var(--color-basalt-soft); }
+
+  .lede {
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 1.1rem + 1.6vw, 2.5rem);
+    line-height: 1.18;
+    font-weight: 400;
+    letter-spacing: -0.005em;
+  }
+
+  .prose-body p + p { margin-top: 1em; }
+  .prose-body { max-width: 62ch; color: var(--color-ink); }
+  .on-dark .prose-body { color: var(--color-bone); }
+
+  /* Underlined text link with a drawn rule */
+  .text-link {
+    position: relative;
+    display: inline-block;
+    padding-bottom: 0.2em;
+    background-image: linear-gradient(currentColor, currentColor);
+    background-size: 100% 1px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    transition: background-size 0.5s var(--ease-gallery);
+  }
+  .text-link:hover { background-size: 35% 1px; }
+
+  /* An arrow link, the quiet call to action used instead of buttons */
+  .arrow-link {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.6em;
+    font-family: var(--font-display);
+    font-size: clamp(1.35rem, 1.1rem + 0.8vw, 1.8rem);
+    line-height: 1.2;
+    transition: color 0.35s var(--ease-gallery);
+  }
+  .arrow-link::after {
+    content: "→";
+    font-family: var(--font-sans);
+    font-size: 0.7em;
+    transition: transform 0.45s var(--ease-gallery);
+  }
+  .arrow-link:hover { color: var(--color-geru); }
+  .arrow-link:hover::after { transform: translateX(0.35em); }
+  .on-dark .arrow-link:hover { color: #E3B48F; }
+
+  /* A label on a gallery wall: title in italic, then medium and size */
+  .label-title { font-family: var(--font-display); font-style: italic; }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    min-height: 3rem;
+    padding: 0.85rem 1.5rem;
+    font-size: 0.875rem;
+    font-stretch: 112%;
+    font-variation-settings: "wdth" 112;
+    letter-spacing: 0.01em;
+    border: 1px solid currentColor;
+    transition: background-color 0.35s var(--ease-gallery), color 0.35s var(--ease-gallery);
+  }
+  .btn:hover { background: var(--color-ink); color: var(--color-paper); border-color: var(--color-ink); }
+  .btn-solid { background: var(--color-ink); color: var(--color-paper); border-color: var(--color-ink); }
+  .btn-solid:hover { background: var(--color-geru); border-color: var(--color-geru); }
+  .on-dark .btn:hover { background: var(--color-bone); color: #22211E; border-color: var(--color-bone); }
+
+  /* Fine material grain laid over generated plates and photographs */
+  .grain::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.22;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.5 0 0 0 0 0.48 0 0 0 0 0.45 0 0 0 0.55 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .skip-link {
+    position: fixed;
+    left: 1rem;
+    top: -4rem;
+    z-index: 100;
+    background: var(--color-ink);
+    color: var(--color-paper);
+    padding: 0.75rem 1rem;
+    font-size: 0.875rem;
+  }
+  .skip-link:focus { top: 1rem; }
+
+  .no-scrollbar { scrollbar-width: none; }
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+
+  /* Blueprint grid used only by the designer-products discipline */
+  .drawing-grid {
+    background-image:
+      linear-gradient(to right, rgb(68 81 90 / 0.09) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(68 81 90 / 0.09) 1px, transparent 1px);
+    background-size: 2rem 2rem;
+  }
+
+  /* A band that drifts sideways for ever; it pauses while the pointer rests on it */
+  .marquee-track { animation: marquee var(--marquee-dur, 60s) linear infinite; }
+  .marquee:hover .marquee-track { animation-play-state: paused; }
+
+  /* A soft band of light that crosses a photograph when it is hovered */
+  .sheen { position: relative; }
+  .sheen::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(105deg, transparent 35%, rgb(255 255 255 / 0.28) 50%, transparent 65%);
+    transform: translateX(-120%);
+    transition: transform 1.1s var(--ease-gallery);
+  }
+  .group:hover .sheen::after, .group:focus-visible .sheen::after { transform: translateX(120%); }
+
+  /* Slow breathing of the warm light behind the hero work */
+  .glow-breathe { animation: breathe 9s ease-in-out infinite; }
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+@keyframes breathe {
+  0%, 100% { opacity: 0.55; transform: scale(1); }
+  50% { opacity: 0.9; transform: scale(1.08); }
+}
