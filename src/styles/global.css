@@ -55,100 +55,10 @@
   --color-geru: #D9957A;
 }
 
-/*
-  ROOMS
-  As the visitor scrolls, the page moves through rooms of different colour. Each section declares
-  a tone (data-tone="…", see src/components/Tone.jsx); when it reaches the middle of the screen the
-  tone is set on <html>, and the palette below fades to it. Registering the colours with @property
-  is what lets the browser animate between palettes; without support the change is instant.
-*/
-@property --color-limestone { syntax: "<color>"; inherits: true; initial-value: #E7E3DA; }
-@property --color-paper { syntax: "<color>"; inherits: true; initial-value: #F1EEE8; }
-@property --color-stone { syntax: "<color>"; inherits: true; initial-value: #D9D3C7; }
-@property --color-concrete { syntax: "<color>"; inherits: true; initial-value: #A8A39A; }
-@property --color-ink { syntax: "<color>"; inherits: true; initial-value: #22211E; }
-@property --color-ink-soft { syntax: "<color>"; inherits: true; initial-value: #5D5950; }
-@property --color-geru { syntax: "<color>"; inherits: true; initial-value: #8A3B26; }
-@property --tone-glow { syntax: "<color>"; inherits: true; initial-value: rgb(255 255 255 / 0.55); }
-@property --tone-grain { syntax: "<number>"; inherits: true; initial-value: 0.16; }
+:root { --tone-glow: rgb(255 255 255 / 0.5); }
 
-:root {
-  --tone-glow: rgb(255 255 255 / 0.55);
-  --tone-grain: 0.16;
-  transition:
-    --color-limestone 1s var(--ease-gallery),
-    --color-paper 1s var(--ease-gallery),
-    --color-stone 1s var(--ease-gallery),
-    --color-concrete 1s var(--ease-gallery),
-    --color-ink 1s var(--ease-gallery),
-    --color-ink-soft 1s var(--ease-gallery),
-    --color-geru 1s var(--ease-gallery),
-    --tone-glow 1.2s var(--ease-gallery),
-    --tone-grain 1s var(--ease-gallery);
-}
-
-/* Night: a dark room for the statement and the large plates */
-:root[data-tone="night"] {
-  --color-limestone: #1F1E1B;
-  --color-paper: #282723;
-  --color-stone: #3B3934;
-  --color-concrete: #6B675F;
-  --color-ink: #EEE9DF;
-  --color-ink-soft: #ADA79B;
-  --color-geru: #E3A486;
-  --tone-glow: rgb(214 160 120 / 0.13);
-  --tone-grain: 0.32;
-}
-/* Clay: warm sand, for the works */
-:root[data-tone="clay"] {
-  --color-limestone: #E3D5C1;
-  --color-paper: #EBE0D0;
-  --color-stone: #CDBBA2;
-  --color-concrete: #A8957D;
-  --color-ink: #2A2119;
-  --color-ink-soft: #6A5846;
-  --color-geru: #8A3B26;
-  --tone-glow: rgb(255 246 232 / 0.6);
-  --tone-grain: 0.2;
-}
-/* Moss: deep green, for the bodies of work */
-:root[data-tone="moss"] {
-  --color-limestone: #2B3127;
-  --color-paper: #333A2E;
-  --color-stone: #48513F;
-  --color-concrete: #6E7763;
-  --color-ink: #ECE9DD;
-  --color-ink-soft: #B4B8A5;
-  --color-geru: #E0AC86;
-  --tone-glow: rgb(200 214 170 / 0.1);
-  --tone-grain: 0.3;
-}
-/* Stone: a cool grey room, for materials and the studio */
-:root[data-tone="stone"] {
-  --color-limestone: #D3CEC4;
-  --color-paper: #DCD8CF;
-  --color-stone: #BDB6A9;
-  --color-concrete: #948E83;
-  --color-ink: #22211E;
-  --color-ink-soft: #57534B;
-  --color-geru: #7E3522;
-  --tone-glow: rgb(255 255 255 / 0.4);
-  --tone-grain: 0.22;
-}
-/* Earth: geru, the red-ochre of Indian walls, for the artist */
-:root[data-tone="earth"] {
-  --color-limestone: #6B2D1C;
-  --color-paper: #763422;
-  --color-stone: #8D4A34;
-  --color-concrete: #A86A52;
-  --color-ink: #F4E8DC;
-  --color-ink-soft: #DDBFAA;
-  --color-geru: #F2C29A;
-  --tone-glow: rgb(255 190 140 / 0.14);
-  --tone-grain: 0.3;
-}
-
-/* Fine grain and a pool of light behind every room, so no background is ever flat. */
+/* Fine grain and a soft pool of light behind the page, so the background is never flat. Both layers are
+   fixed and static: painted once, then only composited, so they cost nothing while scrolling. */
 body::before,
 body::after {
   content: "";
@@ -162,14 +72,11 @@ body::before {
     radial-gradient(ellipse 60% 50% at 8% 100%, var(--tone-glow), transparent 70%);
 }
 body::after {
-  opacity: var(--tone-grain);
-  mix-blend-mode: soft-light;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.5 0 0 0 0 0.5 0 0 0 0 0.5 0 0 0 0.9 0'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: 0.07;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.45 0 0 0 0 0.43 0 0 0 0 0.4 0 0 0 1 0'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
-@media (prefers-reduced-motion: reduce) {
-  :root { transition: none; }
-}
+
 
 @layer base {
   :root {
@@ -195,13 +102,12 @@ body::after {
     line-height: 1.6;
     font-variation-settings: "wdth" 100;
     overflow-x: clip;
-    /* The room colour is on <html>; body stays clear so the grain and light layers show. */
+    /* The page colour is on <html>; body stays clear so the grain and light layers show. */
     background: transparent;
   }
 
   /*
-    Scrollbar: a slim rounded pill on a clear track, with no arrow buttons, coloured from the
-    current room so it reads on light and dark rooms alike. It widens a little under the pointer.
+    Scrollbar: a slim rounded pill on a clear track, with no arrow buttons, in the page's ink colour. It widens a little under the pointer.
     Chrome, Edge and Safari use the ::-webkit-scrollbar rules; Firefox, which has no such rules,
     gets the standard thin scrollbar in the same colours. (Chrome ignores the ::-webkit rules when
     scrollbar-color is set, so the standard properties are given to Firefox only.)
@@ -401,7 +307,16 @@ body::after {
   .group:hover .sheen::after, .group:focus-visible .sheen::after { transform: translateX(120%); }
 
   /* Slow breathing of the warm light behind the hero work */
-  .glow-breathe { animation: breathe 9s ease-in-out infinite; }
+  .glow-breathe { animation: breathe 9s ease-in-out infinite; will-change: transform, opacity; }
+  /* Off screen, the hero's glow stops, so an idle page asks nothing of the GPU. */
+  [data-live="false"] .glow-breathe { animation-play-state: paused; }
+
+  /* Sections far from the screen are not rendered until they come near (the browser keeps their
+     last known height), which keeps style and paint work small on long pages. */
+  .cv-auto { content-visibility: auto; contain-intrinsic-size: auto 1200px; }
+
+  /* The cover that lifts off a revealing image matches the panel it sits on. */
+  .bg-paper { --reveal: var(--color-paper); }
 }
 
 @keyframes marquee {

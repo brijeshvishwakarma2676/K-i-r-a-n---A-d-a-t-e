@@ -10,7 +10,7 @@ export default function ArtistIntro() {
       <div className="grid grid-cols-12 gap-x-6 gap-y-10">
         <figure className="col-span-12 sm:col-span-8 md:col-span-5">
           <ImageReveal>
-            <ArtImage image={artist.portrait} ratio="4/5" sizes="40vw" />
+            <ArtImage image={artist.portrait} ratio="4/5" sizes="(min-width: 768px) 40vw, 100vw" />
           </ImageReveal>
           <figcaption className="caption mt-3">{artist.portrait.alt}</figcaption>
         </figure>

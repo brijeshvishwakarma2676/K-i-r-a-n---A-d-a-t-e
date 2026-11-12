@@ -1,7 +1,9 @@
 // Photographs of the studio's work, copied from the optimised set in site-v4 (public/img).
 // id -> { w, h: original size, color: dominant colour shown while loading, files: { width: url } }
 // To add a photo: put WebP files in public/img and add an entry here, then use its id in projects.js.
-export const images = {"portrait/kiran-adate":{"w":1074,"h":1465,"color":"#ECE9E3","files":{"480":"/img/portrait/kiran-adate-480.webp","800":"/img/portrait/kiran-adate-800.webp","1074":"/img/portrait/kiran-adate-1074.webp"}},
+// The client's own photographs (ids kiran/…) come from clientImages.js, made by scripts/import-client-images.py.
+import { clientImages } from './clientImages'
+const studioImages = {"portrait/kiran-adate":{"w":1074,"h":1465,"color":"#ECE9E3","files":{"480":"/img/portrait/kiran-adate-480.webp","800":"/img/portrait/kiran-adate-800.webp","1074":"/img/portrait/kiran-adate-1074.webp"}},
   "gallery/grc_products/1":{"w":4160,"h":3120,"color":"#f8f8f8","files":{"480":"/img/gallery/grc_products/1-480.3b05b3d5.webp","960":"/img/gallery/grc_products/1-960.3b05b3d5.webp","1600":"/img/gallery/grc_products/1-1600.3b05b3d5.webp"}},
   "gallery/grc_products/10":{"w":1040,"h":780,"color":"#a8a898","files":{"480":"/img/gallery/grc_products/10-480.c4e13c33.webp","960":"/img/gallery/grc_products/10-960.c4e13c33.webp"}},
   "gallery/grc_products/11":{"w":2048,"h":1536,"color":"#d8e8e8","files":{"480":"/img/gallery/grc_products/11-480.42c53e75.webp","960":"/img/gallery/grc_products/11-960.42c53e75.webp","1600":"/img/gallery/grc_products/11-1600.42c53e75.webp"}},
@@ -166,3 +168,5 @@ export const images = {"portrait/kiran-adate":{"w":1074,"h":1465,"color":"#ECE9E
   "gallery/water_fountains/8":{"w":2048,"h":1536,"color":"#c8b8a8","files":{"480":"/img/gallery/water_fountains/8-480.f69b0049.webp","960":"/img/gallery/water_fountains/8-960.f69b0049.webp","1600":"/img/gallery/water_fountains/8-1600.f69b0049.webp"}},
   "gallery/water_fountains/9":{"w":480,"h":640,"color":"#f8f8f8","files":{"480":"/img/gallery/water_fountains/9-480.77d6bf71.webp"}},
   "gallery/other_products/10":{"w":1600,"h":1462,"color":"#b8b4b0","files":{"480":"/img/gallery/other_products/10-480.poster.webp","960":"/img/gallery/other_products/10-960.poster.webp","1600":"/img/gallery/other_products/10-1600.poster.webp"}}}
+
+export const images = { ...studioImages, ...clientImages }

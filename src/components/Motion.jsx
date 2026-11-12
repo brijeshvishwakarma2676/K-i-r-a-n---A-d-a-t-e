@@ -18,19 +18,33 @@ const ease = [0.22, 1, 0.36, 1]
 const easeInOut = [0.76, 0, 0.24, 1]
 const view = { once: true, margin: '0px 0px -12% 0px' }
 
-// Reveals large images by opening a clip from the bottom edge. Used only on key plates.
+/*
+  Reveals use a cover in the page's colour that shrinks away (a transform, which the GPU animates
+  without repainting) rather than an animated clip-path, which repaints the image on every frame.
+*/
+
+// Reveals large images: the plate rises into view as a cover lifts off its upper part.
 export function ClipReveal({ children, className = '', delay = 0 }) {
   const reduce = useReducedMotion()
   if (reduce) return <div className={className}>{children}</div>
   return (
     <motion.div
-      className={className}
-      initial={{ clipPath: 'inset(18% 0% 0% 0%)', opacity: 0.4 }}
-      whileInView={{ clipPath: 'inset(0% 0% 0% 0%)', opacity: 1 }}
+      className={`relative overflow-hidden ${className}`}
+      initial={{ opacity: 0.4 }}
+      whileInView={{ opacity: 1 }}
       viewport={view}
       transition={{ duration: 1.3, ease, delay }}
     >
       {children}
+      <motion.span
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 z-10 bg-[var(--reveal,var(--color-limestone))]"
+        style={{ originY: 0 }}
+        initial={{ scaleY: 0.18 }}
+        whileInView={{ scaleY: 0 }}
+        viewport={view}
+        transition={{ duration: 1.3, ease, delay }}
+      />
     </motion.div>
   )
 }
@@ -40,13 +54,7 @@ export function ImageReveal({ children, className = '', delay = 0 }) {
   const reduce = useReducedMotion()
   if (reduce) return <div className={className}>{children}</div>
   return (
-    <motion.div
-      className={`overflow-hidden ${className}`}
-      initial={{ clipPath: 'inset(100% 0% 0% 0%)' }}
-      whileInView={{ clipPath: 'inset(0% 0% 0% 0%)' }}
-      viewport={view}
-      transition={{ duration: 1.2, ease: easeInOut, delay }}
-    >
+    <div className={`relative overflow-hidden ${className}`}>
       <motion.div
         initial={{ scale: 1.18 }}
         whileInView={{ scale: 1 }}
@@ -55,7 +63,16 @@ export function ImageReveal({ children, className = '', delay = 0 }) {
       >
         {children}
       </motion.div>
-    </motion.div>
+      <motion.span
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 z-10 bg-[var(--reveal,var(--color-limestone))]"
+        style={{ originY: 0 }}
+        initial={{ scaleY: 1 }}
+        whileInView={{ scaleY: 0 }}
+        viewport={view}
+        transition={{ duration: 1.2, ease: easeInOut, delay }}
+      />
+    </div>
   )
 }
 

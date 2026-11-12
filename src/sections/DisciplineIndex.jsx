@@ -15,24 +15,24 @@ export default function DisciplineIndex() {
   const current = disciplines[active]
 
   return (
-    <section aria-labelledby="disciplines-title" className="py-28 md:py-40">
+    <section aria-labelledby="disciplines-title" className="bg-paper py-28 md:py-40">
       <div className="wrap">
         <SplitText as="h2" id="disciplines-title" className="display text-[clamp(2.4rem,1.4rem+3.6vw,4.6rem)]" text="Bodies of work" />
 
         <div className="mt-16 grid grid-cols-12 gap-x-6 md:mt-24">
           <div className="col-span-6 hidden lg:block">
             <div className="sticky top-[calc(var(--header-h)+2rem)]">
-              <div className="relative aspect-[4/5]">
+              <div className="relative aspect-[4/5] overflow-hidden">
                 <AnimatePresence initial={false}>
                   <motion.div
                     key={current.slug}
                     className="absolute inset-0"
-                    initial={{ opacity: 0, clipPath: 'inset(0 0 0 12%)' }}
-                    animate={{ opacity: 1, clipPath: 'inset(0 0 0 0%)' }}
+                    initial={{ opacity: 0, scale: 1.04 }}
+                    animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0 }}
                     transition={{ duration: 0.9, ease }}
                   >
-                    <ArtImage image={current.cover} fill sizes="50vw" />
+                    <ArtImage image={current.cover} fill sizes="(min-width: 1024px) 50vw, 100vw" />
                   </motion.div>
                 </AnimatePresence>
               </div>

@@ -5,6 +5,27 @@ All content on this site comes from the studio's old website (inventfineart.com,
 site-v4 (`site-v4/app/data`, `site-v4/CONTENT-GAPS.md`). Nothing has been invented. These
 items still need the owner's confirmation or input before launch.
 
+## Client photographs and press (added 2026-11-12)
+
+The "Kiran Stone" folder gave the site Kiran Adate's own work, the making of it, and press
+coverage. See `CLIENT-IMAGES.md` for every file, what is used where, and the fix prompts.
+
+- **Facts now on the site, from Lokmat Times, Nagpur, 7 January 2015** (client's clippings
+  `english.jpg`, `english.jpg1.jpg`): from Parali Vaijnath, Beed district; studied at the J.J. School
+  of Art, Mumbai; met Vijay Darda at a monsoon exhibition at Jehangir Art Gallery; the Statue of
+  Freedom of Press stands at Lokmat Media's printing press in Butibori; the Sculpture of Hawker,
+  installed at Samvidhan Square, Nagpur, was unveiled on 6 January 2015 and reported as the
+  country's first sculpture of a hawker; the quote on the home page. Confirm these read correctly.
+- **Dates** for the Statue (carved Nov 2006 to Mar 2007, installed Apr 2007) and the Hawker (made
+  2007, on site Jan 2008) come from the camera dates of the photographs.
+- **Working titles** for four stone pieces: "Expectant couple" (2007), "Standing couple",
+  "Reclining couple" and "Two torsos" (2012). Ask for their real titles, sizes and where they are.
+- **Materials**: the Statue is given as "Stone"; the Hawker has no material yet (it looks like
+  welded steel wire). Ask for both.
+- **People**: `01102007542-002.jpg` is a black-and-white portrait of a man (2007). If it is Kiran
+  Adate, it would suit the About page. The 2012 exhibition photos (`DSC05062.JPG`) need the
+  exhibition's name and venue, and permission for the people shown.
+
 ## The portfolio (changed 2026-11-06)
 
 The site now shows 29 works (22 sculptures, 7 murals) chosen from the studio catalogue: the

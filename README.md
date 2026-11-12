@@ -68,6 +68,22 @@ The hero has two scenes that take turns every 8 seconds (`SCENE_MS` in `src/sect
 
 The portrait is a cut-out (transparent WebP) from `public/img/portrait/kiran-adate-{480,800,1074}.webp`, set in `src/sections/Hero.jsx` (`portrait`). To replace it, export a new cut-out at the same three widths with a transparent background and the bottom edge cropped straight, then update `w` and `h` there.
 
+## Client photographs
+
+Kiran Adate's own photographs (ids `kiran/…`) are imported from the client's "Kiran Stone" folder by
+`scripts/import-client-images.py`, using the list in `scripts/client-images.json`. The script writes
+WebP files to `public/img/kiran/` and the manifest `src/data/clientImages.js` (merged into
+`src/data/images.js`). Originals are never changed.
+
+Some photographs need retouching first. `CLIENT-IMAGES.md` lists each one with a ready-to-use
+prompt for an AI image editor. Save the result next to the original as `fix-<original filename>`
+and run the script again: a `fix-` file is always preferred, and images that were waiting for one
+appear on the site.
+
+```bash
+python3 -I scripts/import-client-images.py "/run/media/brijesh/0050-1781/Kiran Stone"
+```
+
 ## Enquiry form
 
 The contact form validates every field. Until a form service is connected, a valid submission shows a confirmation and offers to open the message in the visitor's email app. Nothing is sent.
@@ -102,9 +118,11 @@ Motion lives in `src/components/Motion.jsx` and `src/layouts/RootLayout.jsx`:
 - **Work photographs** are uncovered from below as they scroll in (`ImageReveal`) and catch a band of light on hover (`.sheen` in `global.css`).
 - **Home page**: the hero light follows the pointer and the work turns slightly towards it; the statement brightens word by word as it is scrolled (`ScrollWords`); figures count up (`Counter`); client names drift past in two bands (`Marquee`); the footer name rises letter by letter.
 - A thin geru line at the top of the screen shows how far the page has been read (`ScrollProgress`).
-- **Rooms:** the page changes colour as you scroll. Each run of sections is wrapped in `<Tone name="…">` (`src/components/Tone.jsx`) or carries `data-tone="…"`; when it crosses the middle of the screen, the whole palette (background, text, lines, accent) fades to that room. Rooms: `light` (limestone), `night` (near black), `clay` (warm sand), `moss` (deep green), `stone` (cool grey), `earth` (geru red). The palettes and the fade are in `src/styles/global.css` under "ROOMS"; a fine grain and a soft pool of light sit behind every room. Home: light hero, night statement and lion, clay works, moss bodies of work, stone studio, light "In place", earth artist. About, Works, the body-of-work pages and work pages have rooms too.
+- **Background:** one light page colour throughout, with a fine grain and a soft pool of light behind it (`body::before`/`::after` in `src/styles/global.css`); a few sections sit on their own paper or stone panels.
 
 All of it respects the visitor's reduced-motion setting: the page is then shown still, with no curtain.
+
+**Performance.** Everything that moves is animated with `transform` and `opacity`, which the GPU composites without repainting: reveals lift a cover in the page's colour instead of animating `clip-path`, the curtain is two scaled panels, the hero light is a moved gradient disc. Avoid animating CSS variables, `filter`, `clip-path`, `backdrop-filter` or `mix-blend-mode` on large areas: on an ordinary laptop those made scrolling drop to about 20 frames a second. Home-page sections far from the screen use `.cv-auto` (`content-visibility: auto`), so they are not rendered until they come near.
 
 ## Deployment
 

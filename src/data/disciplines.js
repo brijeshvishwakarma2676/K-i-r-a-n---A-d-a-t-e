@@ -38,8 +38,8 @@ export const allDisciplines = [
       { slug: 'abstract', name: 'Abstract & contemporary' },
       { slug: 'nature', name: 'Garden & nature' },
     ],
-    cover: pic('gallery/sculptures/84', 'Twisted ribbon form, a sculpture in two metals, by Kiran Adate'),
-    context: pic('gallery/sculptures/80', 'Lion of machine parts, a steel sculpture, by Kiran Adate'),
+    cover: pic('kiran/two-torsos', 'Two torsos, a stone sculpture by Kiran Adate, 2012', '50% 40%'),
+    context: pic('kiran/hawker-detail', 'Sculpture of Hawker by Kiran Adate, detail against the sky', '50% 35%'),
   },
   {
     slug: 'murals',

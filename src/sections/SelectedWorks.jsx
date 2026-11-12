@@ -7,12 +7,12 @@ import { SplitText } from '../components/Motion'
 // Ratios follow each photograph's own orientation so nothing important is cropped away.
 const layout = [
   { slug: 'leaning-figure-with-a-silver-mane', ratio: '4/5', cls: 'md:col-span-7' },
-  { slug: 'dancers-relief-lobby-wall', ratio: '4/3', cls: 'md:col-span-5 md:col-start-8 md:mt-[38%]' },
-  { slug: 'seated-buddha', ratio: '3/4', cls: 'md:col-span-4 md:col-start-2' },
-  { slug: 'metal-leaf-wall-installation', ratio: '4/3', cls: 'md:col-span-6 md:col-start-7 md:mt-[24%]' },
-  { slug: 'figure-on-a-bicycle', ratio: '3/4', cls: 'md:col-span-4 md:col-start-1' },
+  { slug: 'reclining-couple', ratio: '4/3', cls: 'md:col-span-5 md:col-start-8 md:mt-[38%]' },
+  { slug: 'expectant-couple', ratio: '3/4', cls: 'md:col-span-4 md:col-start-2' },
+  { slug: 'dancers-relief-lobby-wall', ratio: '4/3', cls: 'md:col-span-6 md:col-start-7 md:mt-[24%]' },
+  { slug: 'standing-couple', ratio: '3/4', cls: 'md:col-span-4 md:col-start-1' },
   { slug: 'rhinoceros-in-metal-mesh', ratio: '4/3', cls: 'md:col-span-6 md:col-start-6 md:mt-[16%]' },
-  { slug: 'stylised-ganesha', ratio: '3/4', cls: 'md:col-span-4 md:col-start-3' },
+  { slug: 'seated-buddha', ratio: '3/4', cls: 'md:col-span-4 md:col-start-3' },
   { slug: 'sliced-figures-on-a-rock', ratio: '4/3', cls: 'md:col-span-5 md:col-start-8 md:mt-[20%]' },
 ]
 

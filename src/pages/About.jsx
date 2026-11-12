@@ -3,14 +3,14 @@ import Seo from '../components/Seo'
 import ArtImage from '../components/ArtImage'
 import { ClipReveal, Parallax, Reveal, ScrollWords, SplitText } from '../components/Motion'
 import Invitation from '../sections/Invitation'
-import Tone from '../components/Tone'
 import { artist, site } from '../data/site'
 import { materials } from '../data/disciplines'
 import { dateRange, exhibitions } from '../data/exhibitions'
+import { projectBySlug, workPath } from '../data/projects'
 
 // A work at full width between the statement and the materials.
-const siteImage = { id: 'gallery/sculptures/57', alt: 'Leaning figure with a silver mane, in a garden', position: '50% 55%' }
-const workshopImage = { id: 'gallery/sculptures/54', alt: 'A Gandhi statue in the workshop, before finishing' }
+const siteImage = { id: 'kiran/freedom-of-press-night-close', alt: 'Statue of Freedom of Press, Butibori, Nagpur, at night', position: '50% 18%' }
+const workshopImage = { id: 'kiran/hawker-workshop', alt: 'Building up the Sculpture of Hawker in the workshop, 2007' }
 
 const shows = [...exhibitions].sort((a, b) => (a.start < b.start ? 1 : -1))
 
@@ -19,7 +19,7 @@ export default function About() {
     <>
       <Seo title="About" description={artist.shortBio} />
 
-      <Tone name="light" as="header" className="wrap grid grid-cols-12 gap-x-6 gap-y-12 pt-[calc(var(--header-h)+3rem)] md:pt-[calc(var(--header-h)+5rem)]">
+      <header className="wrap grid grid-cols-12 gap-x-6 gap-y-12 pt-[calc(var(--header-h)+3rem)] md:pt-[calc(var(--header-h)+5rem)]">
         <div className="col-span-12 flex flex-col md:col-span-7">
           <SplitText
             as="h1"
@@ -35,12 +35,11 @@ export default function About() {
           <Reveal as="p" delay={0.6} className="lede mt-auto max-w-[32ch] pt-12">{artist.shortBio}</Reveal>
         </div>
         <figure className="col-span-10 col-start-3 sm:col-span-7 sm:col-start-6 md:col-span-4 md:col-start-9">
-          <ArtImage image={artist.portrait} ratio="3/4" priority sizes="33vw" />
+          <ArtImage image={artist.portrait} ratio="3/4" priority sizes="(min-width: 768px) 33vw, 85vw" />
           <figcaption className="caption mt-3">{artist.portrait.alt}</figcaption>
         </figure>
-      </Tone>
+      </header>
 
-      <Tone name="night">
       <section aria-labelledby="statement-title" className="wrap py-28 md:py-40">
         <figure className="grid grid-cols-12 gap-x-6">
           <h2 id="statement-title" className="caption col-span-12 mb-8 md:col-span-10 md:col-start-2">On the work</h2>
@@ -70,9 +69,7 @@ export default function About() {
         </ClipReveal>
         <p className="wrap caption mt-4">{siteImage.alt}</p>
       </section>
-      </Tone>
 
-      <Tone name="stone">
       <section aria-labelledby="materials-title" className="wrap py-28 md:py-40">
         <div className="grid grid-cols-12 gap-x-6 gap-y-10">
           <div className="col-span-12 md:col-span-5">
@@ -93,12 +90,10 @@ export default function About() {
         </div>
       </section>
 
-      </Tone>
-      <Tone name="clay">
-      <section aria-labelledby="workshop-title" className="py-28 md:py-40">
+      <section aria-labelledby="workshop-title" className="bg-paper py-28 md:py-40">
         <div className="wrap grid grid-cols-12 gap-x-6 gap-y-12">
           <figure className="col-span-12 sm:col-span-8 md:col-span-4">
-            <ArtImage image={workshopImage} ratio="3/4" sizes="33vw" />
+            <ArtImage image={workshopImage} ratio="3/4" sizes="(min-width: 768px) 33vw, 100vw" />
             <figcaption className="caption mt-3">{workshopImage.alt}</figcaption>
           </figure>
           <div className="col-span-12 md:col-span-7 md:col-start-6">
@@ -110,8 +105,6 @@ export default function About() {
         </div>
       </section>
 
-      </Tone>
-      <Tone name="light">
       <section aria-labelledby="record-title" className="wrap py-28 md:py-40">
         <div className="grid grid-cols-12 gap-x-6 gap-y-12">
           <div className="col-span-12 md:col-span-4">
@@ -119,6 +112,18 @@ export default function About() {
             <Link to="/exhibitions" className="text-link mt-8 inline-block text-[0.95rem]">Exhibitions</Link>
           </div>
           <div className="col-span-12 space-y-16 md:col-span-7 md:col-start-6">
+            <CvList title="Education" rows={[{ year: '', text: artist.education }]} />
+            <CvList
+              title="Public works"
+              rows={artist.publicWorks.map((w) => ({
+                year: w.year,
+                text: (
+                  <>
+                    <Link to={workPath(projectBySlug[w.slug])} className="label-title text-[1.14em] hover:text-geru">{projectBySlug[w.slug].title}</Link>, {w.place}
+                  </>
+                ),
+              }))}
+            />
             <CvList
               title="Studio"
               rows={[
@@ -136,6 +141,17 @@ export default function About() {
                 ),
               }))}
             />
+            <CvList
+              title="Press"
+              rows={artist.press.map((x) => ({
+                year: x.year,
+                text: (
+                  <>
+                    <span className="label-title text-[1.14em]">{x.title}</span>, {x.outlet}
+                  </>
+                ),
+              }))}
+            />
             <div>
               <h3 className="caption">Selected commissions</h3>
               <ul className="mt-3 columns-1 gap-x-8 sm:columns-2">
@@ -149,7 +165,6 @@ export default function About() {
       </section>
 
       <Invitation />
-      </Tone>
     </>
   )
 }

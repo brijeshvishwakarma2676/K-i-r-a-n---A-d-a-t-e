@@ -5,7 +5,6 @@ import ArtImage from '../components/ArtImage'
 import Masonry from '../components/Masonry'
 import { ClipReveal, Parallax, SplitText } from '../components/Motion'
 import Invitation from '../sections/Invitation'
-import Tone from '../components/Tone'
 import NotFound from './NotFound'
 import { disciplineBySlug, disciplines } from '../data/disciplines'
 import { projectsFor } from '../data/projects'
@@ -30,16 +29,14 @@ export default function Discipline() {
   return (
     <div style={{ '--accent': d.accent }}>
       <Seo title={d.name} description={d.intro} />
-      <Tone name="light">
-        <Opening d={d} />
-        <Body d={d} />
-      </Tone>
-      <Tone name="night"><Feature d={d} /></Tone>
-      <Tone name="clay"><WorksGrid d={d} list={list} /></Tone>
-      <Tone name="light">
-        <OtherDisciplines current={d.slug} />
-        <Invitation />
-      </Tone>
+      <Opening d={d} />
+      <Body d={d} />
+      <Feature d={d} />
+
+      <WorksGrid d={d} list={list} />
+
+      <OtherDisciplines current={d.slug} />
+      <Invitation />
     </div>
   )
 }
@@ -79,7 +76,7 @@ function MonumentOpening({ d }) {
       </div>
       <div className="col-span-12 md:col-span-6 md:col-start-7">
         <ClipReveal>
-          <ArtImage image={d.cover} ratio="4/5" priority sizes="50vw" />
+          <ArtImage image={d.cover} ratio="4/5" priority sizes="(min-width: 768px) 50vw, 100vw" />
         </ClipReveal>
       </div>
     </header>
@@ -147,7 +144,7 @@ function DrawingOpening({ d }) {
           <p className="mt-6 max-w-[48ch] text-[1.02rem]">{d.intro}</p>
         </div>
         <aside className="col-span-12 self-end bg-limestone/90 p-6 md:col-span-4 md:col-start-9" aria-label="Vocabulary">
-          <ArtImage image={d.cover} ratio="4/5" priority sizes="33vw" />
+          <ArtImage image={d.cover} ratio="4/5" priority sizes="(min-width: 768px) 33vw, 100vw" />
           <p className="caption mt-3">{d.cover.alt}</p>
           <h2 className="caption mt-6">Vocabulary</h2>
           <ul className="mt-2 text-[0.95rem]">
@@ -193,12 +190,12 @@ function Body({ d }) {
 
 function MonumentFeature({ d }) {
   return (
-    <section aria-label="Sculpture in its setting" className="py-24 md:py-32">
+    <section aria-label="Sculpture in its setting" className="bg-paper py-24 md:py-32">
       <div className="wrap grid grid-cols-12 gap-x-6 gap-y-10">
         <div className="col-span-12 md:col-span-8">
           <ClipReveal>
             <Parallax amount={4} className="aspect-[4/3]">
-              <ArtImage image={d.context} fill sizes="66vw" />
+              <ArtImage image={d.context} fill sizes="(min-width: 768px) 66vw, 100vw" />
             </Parallax>
           </ClipReveal>
         </div>
@@ -213,7 +210,7 @@ function MonumentFeature({ d }) {
 
 function LandscapeFeature({ d }) {
   return (
-    <section aria-label={`${d.name} in their setting`} className="py-24 md:py-32">
+    <section aria-label={`${d.name} in their setting`} className="bg-paper py-24 md:py-32">
       <div className="wrap grid grid-cols-12 gap-x-6 gap-y-10">
         <div className="col-span-12 self-end md:col-span-4">
           {d.designs ? (
@@ -236,7 +233,7 @@ function LandscapeFeature({ d }) {
         <div className="col-span-12 md:col-span-7 md:col-start-6">
           <ClipReveal>
             <Parallax amount={4} className="aspect-[5/4]">
-              <ArtImage image={d.context} fill sizes="60vw" />
+              <ArtImage image={d.context} fill sizes="(min-width: 768px) 60vw, 100vw" />
             </Parallax>
           </ClipReveal>
         </div>
@@ -247,7 +244,7 @@ function LandscapeFeature({ d }) {
 
 function ReliefFeature({ d }) {
   return (
-    <section aria-label="Murals and wall features" className="py-24 md:py-32">
+    <section aria-label="Murals and wall features" className="bg-paper py-24 md:py-32">
       <div className="wrap">
         <dl className="grid gap-x-6 gap-y-12 md:grid-cols-2">
           {d.definitions.map((def) => (
@@ -260,7 +257,7 @@ function ReliefFeature({ d }) {
         <div className="mt-20 grid grid-cols-12 gap-x-6 gap-y-6 md:mt-28">
           <div className="col-span-12 md:col-span-7 md:col-start-6">
             <ClipReveal>
-              <ArtImage image={d.context} ratio="5/4" sizes="60vw" />
+              <ArtImage image={d.context} ratio="5/4" sizes="(min-width: 768px) 60vw, 100vw" />
             </ClipReveal>
           </div>
           <p className="display col-span-12 self-end text-[clamp(1.5rem,1.1rem+1.2vw,2.1rem)] leading-[1.15] md:order-first md:col-span-4">
@@ -293,7 +290,7 @@ function DrawingFeature({ d }) {
         <div className="mt-16 grid grid-cols-12 gap-x-6">
           <figure className="col-span-12 md:col-span-8 md:col-start-3">
             <ClipReveal>
-              <ArtImage image={d.context} ratio="16/10" sizes="66vw" />
+              <ArtImage image={d.context} ratio="16/10" sizes="(min-width: 768px) 66vw, 100vw" />
             </ClipReveal>
             <figcaption className="caption mt-3">{d.context.alt}</figcaption>
           </figure>

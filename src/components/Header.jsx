@@ -29,7 +29,7 @@ export default function Header() {
     <>
       <motion.header
         className={`fixed inset-x-0 top-0 z-50 pt-[env(safe-area-inset-top,0px)] transition-colors duration-500 ${
-          solid ? 'bg-limestone/92 backdrop-blur-md' : 'bg-transparent'
+          solid ? 'bg-limestone/[0.97]' : 'bg-transparent'
         } ${darkTop ? 'on-dark text-bone' : 'text-ink'}`}
         animate={{ y: hidden ? '-100%' : '0%' }}
         transition={{ duration: 0.45, ease }}
@@ -99,9 +99,9 @@ function MobileMenu({ onClose }) {
       aria-modal="true"
       aria-label="Menu"
       className="fixed inset-0 z-[60] flex flex-col bg-limestone pt-[env(safe-area-inset-top,0px)] pb-[env(safe-area-inset-bottom,0px)]"
-      initial={{ clipPath: 'inset(0 0 100% 0)' }}
-      animate={{ clipPath: 'inset(0 0 0% 0)' }}
-      exit={{ clipPath: 'inset(0 0 100% 0)' }}
+      initial={{ y: '-100%' }}
+      animate={{ y: '0%' }}
+      exit={{ y: '-100%' }}
       transition={{ duration: 0.6, ease }}
     >
       <div className="wrap flex h-[var(--header-h)] items-center justify-between">

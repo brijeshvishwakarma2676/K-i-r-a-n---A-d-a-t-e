@@ -1,5 +1,4 @@
 import Seo from '../components/Seo'
-import Tone from '../components/Tone'
 import Hero from '../sections/Hero'
 import Statement from '../sections/Statement'
 import Monument from '../sections/Monument'
@@ -11,28 +10,28 @@ import InPlace from '../sections/InPlace'
 import ArtistIntro from '../sections/ArtistIntro'
 import Invitation from '../sections/Invitation'
 
-// The home page as a walk through rooms: the page changes colour as each one reaches the middle
-// of the screen (see src/components/Tone.jsx).
+// Sections below the first screen are wrapped in .cv-auto: the browser skips rendering them until
+// they come near the screen, which keeps scrolling light on modest computers.
 export default function Home() {
   return (
     <>
       <Seo />
-      <Tone name="light"><Hero /></Tone>
-      <Tone name="night">
+      <Hero />
+      <div className="cv-auto">
         <Statement />
         <Monument />
-      </Tone>
-      <Tone name="clay">
+      </div>
+      <div className="cv-auto">
         <SelectedWorks />
         <RecentExhibition />
-      </Tone>
-      <Tone name="moss"><DisciplineIndex /></Tone>
-      <Tone name="stone"><Studio /></Tone>
-      <Tone name="light"><InPlace /></Tone>
-      <Tone name="earth">
+      </div>
+      <div className="cv-auto"><DisciplineIndex /></div>
+      <div className="cv-auto"><Studio /></div>
+      <div className="cv-auto"><InPlace /></div>
+      <div className="cv-auto">
         <ArtistIntro />
         <Invitation />
-      </Tone>
+      </div>
     </>
   )
 }

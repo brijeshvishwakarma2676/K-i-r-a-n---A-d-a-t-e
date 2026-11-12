@@ -9,6 +9,7 @@ import { SplitText } from '../components/Motion'
 
 // Works seen where they stand: [work slug, which photo of it]. Only works from the portfolio.
 const sited = [
+  ['sculpture-of-hawker', 4],
   ['runner-around-a-column', 0],
   ['dancers-relief-lobby-wall', 0],
   ['columns-of-climbing-figures', 0],
@@ -16,7 +17,6 @@ const sited = [
   ['sliced-figures-on-a-rock', 0],
   ['metal-leaf-wall-installation', 0],
   ['tall-standing-figure', 0],
-  ['abstract-ring-form', 0],
 ]
 
 // Works in their places, scrolled sideways at the reader's pace (no scroll hijacking).
@@ -62,7 +62,7 @@ export default function InPlace() {
               <Link to={workPath(p)} className="group block">
                 <div className="sheen overflow-hidden">
                   <div className="transition-transform duration-[1.2s] ease-gallery group-hover:scale-[1.045]">
-                    <ArtImage image={image} ratio={wide ? '16/10' : '4/5'} sizes="50vw" />
+                    <ArtImage image={image} ratio={wide ? '16/10' : '4/5'} sizes={wide ? '(min-width: 768px) 52vw, 86vw' : '(min-width: 768px) 30vw, 72vw'} />
                   </div>
                 </div>
                 <p className="mt-4 text-[1.1rem] transition-colors duration-300 group-hover:text-geru">

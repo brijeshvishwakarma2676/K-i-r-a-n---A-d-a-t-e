@@ -4,7 +4,6 @@ import { AnimatePresence, MotionConfig, motion, useReducedMotion } from 'framer-
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import { ScrollProgress, ease, easeInOut } from '../components/Motion'
-import { useRooms } from '../components/Tone'
 import { site } from '../data/site'
 import { disciplineBySlug } from '../data/disciplines'
 import { projectBySlug } from '../data/projects'
@@ -56,11 +55,8 @@ export default function RootLayout() {
 // One page and the footer. They fade in under the lifting curtain, except on the first visit.
 function Page({ children }) {
   const first = useFirstPaint()
-  const ref = useRef(null)
-  useRooms(ref)
   return (
     <motion.div
-      ref={ref}
       initial={first ? false : { opacity: 0 }}
       animate={{ opacity: 1, transition: { duration: 0.5, ease, delay: 0.25 } }}
       exit={{ opacity: 0, transition: { duration: 0.45, ease } }}
@@ -76,6 +72,8 @@ function Page({ children }) {
 /*
   Between pages a basalt curtain rises from the floor, carrying the name of the page being
   opened, then lifts away. On the first visit it starts lifted; with reduced motion it is not drawn.
+  The curtain is two panels scaled vertically (one rises on leaving, one lifts on arriving), which
+  the GPU animates without repainting the screen.
 */
 function Curtain() {
   const { pathname } = useLocation()
@@ -83,15 +81,24 @@ function Curtain() {
   const first = useFirstPaint()
   if (reduce) return null
   return (
-    <motion.div
-      aria-hidden="true"
-      className="on-dark pointer-events-none fixed inset-0 z-[80] flex items-end bg-basalt text-bone"
-      initial={first ? false : { clipPath: 'inset(0% 0% 0% 0%)' }}
-      animate={{ clipPath: 'inset(0% 0% 100% 0%)', transition: { duration: 0.8, ease: easeInOut, delay: 0.1 } }}
-      exit={{ clipPath: ['inset(100% 0% 0% 0%)', 'inset(0% 0% 0% 0%)'], transition: { duration: 0.6, ease: easeInOut } }}
-    >
+    <div aria-hidden="true" className="on-dark pointer-events-none fixed inset-0 z-[80] flex items-end text-bone">
+      {/* Arriving: covers the screen, then lifts towards the top */}
       <motion.div
-        className="wrap pb-[8svh]"
+        className="absolute inset-0 bg-basalt"
+        style={{ originY: 0 }}
+        initial={first ? false : { scaleY: 1 }}
+        animate={{ scaleY: 0, transition: { duration: 0.8, ease: easeInOut, delay: 0.1 } }}
+      />
+      {/* Leaving: rises from the floor to cover the screen */}
+      <motion.div
+        className="absolute inset-0 bg-basalt"
+        style={{ originY: 1 }}
+        initial={{ scaleY: 0 }}
+        animate={{ scaleY: 0 }}
+        exit={{ scaleY: 1, transition: { duration: 0.6, ease: easeInOut } }}
+      />
+      <motion.div
+        className="wrap relative pb-[8svh]"
         initial={first ? false : { opacity: 1, y: 0 }}
         animate={{ opacity: 0, y: -30, transition: { duration: 0.5, ease, delay: 0.1 } }}
         exit={{ opacity: [0, 1], y: [40, 0], transition: { duration: 0.6, ease, delay: 0.1 } }}
@@ -101,6 +108,6 @@ function Curtain() {
           {labelFor(pathname)}
         </p>
       </motion.div>
-    </motion.div>
+    </div>
   )
 }

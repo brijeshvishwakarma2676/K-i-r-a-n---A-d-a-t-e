@@ -61,7 +61,13 @@ const RAW = [
   { slug: 'figure-in-a-wall-niche', code: 'IFA-SC-034', title: 'Figure in a wall niche', discipline: 'sculpture', group: 'figures', images: ['gallery/sculptures/43'] },
   { slug: 'figure-with-kites', code: 'IFA-SC-035', codes: ['IFA-SC-035', 'IFA-SC-036'], title: 'Figure with kites', discipline: 'sculpture', group: 'figures', views: ['Figure with kites', 'Figure with kites, side view'], images: ['gallery/sculptures/44', 'gallery/sculptures/45'] },
   { slug: 'figure-at-the-spinning-wheel', code: 'IFA-SC-037', codes: ['IFA-SC-037', 'IFA-SC-038', 'IFA-SC-039', 'IFA-SC-040'], title: 'Figure at the spinning wheel', discipline: 'sculpture', group: 'figures', views: ['Figure at the spinning wheel', 'Figure at the spinning wheel, side view', 'Figure at the spinning wheel, detail', 'Figure at the spinning wheel, rear view'], images: ['gallery/sculptures/46', 'gallery/sculptures/47', 'gallery/sculptures/48', 'gallery/sculptures/49'] },
-  { slug: 'figure-on-a-bicycle', code: 'IFA-SC-041', title: 'Figure on a bicycle', discipline: 'sculpture', group: 'figures', images: ['gallery/sculptures/50'], featured: true },
+  { slug: 'sculpture-of-hawker', code: 'IFA-SC-041', title: 'Sculpture of Hawker', discipline: 'sculpture', group: 'figures', year: '2007–08', location: 'Samvidhan Square, Nagpur', featured: true,
+    views: ['Sculpture of Hawker', 'Sculpture of Hawker, detail', 'Sculpture of Hawker, side view', 'Sculpture of Hawker, from behind', 'Sculpture of Hawker, before installation, 2008', 'The frame in the workshop, 2007', 'Building up the figure, 2007', 'In the workshop, 2007', 'The unveiling in Nagpur, 6 January 2015'],
+    images: ['kiran/hawker-front', 'kiran/hawker-detail', 'kiran/hawker-side', 'kiran/hawker-back', 'kiran/hawker-gate', 'kiran/hawker-frame', 'kiran/hawker-welding', 'kiran/hawker-workshop', 'kiran/hawker-unveiling'],
+    description: [
+      'A newspaper hawker on his bicycle, holding up the day’s paper. Installed by Lokmat Media at Samvidhan Square in Nagpur, it was unveiled on 6 January 2015, and reported as the country’s first sculpture of a hawker.',
+      '“Capturing the laborious devotion and commitment of the hawker, who, irrespective of seasons – rainy, summer or winter, carries out his task, was a challenge. It was this challenge that strengthened my conviction and this is how I could create the Sculpture of Hawker.” Kiran Adate, in Lokmat Times, January 2015.',
+    ] },
   { slug: 'pair-of-dancers', code: 'IFA-SC-042', title: 'Pair of dancers', discipline: 'sculpture', group: 'figures', images: ['gallery/sculptures/51'] },
   { slug: 'lotus-leaves', code: 'IFA-SC-043', title: 'Lotus leaves', discipline: 'sculpture', group: 'nature', images: ['gallery/sculptures/52'] },
   { slug: 'statue-of-liberty-replica-large', code: 'IFA-SC-044', title: 'Statue of Liberty replica, large', discipline: 'sculpture', group: 'figures', images: ['gallery/sculptures/53'] },
@@ -69,7 +75,18 @@ const RAW = [
   { slug: 'reclining-ganesha', code: 'IFA-SC-047', title: 'Reclining Ganesha', discipline: 'sculpture', group: 'devotional', images: ['gallery/sculptures/56'] },
   { slug: 'leaning-figure-with-a-silver-mane', code: 'IFA-SC-048', codes: ['IFA-SC-048', 'IFA-SC-049', 'IFA-SC-050'], title: 'Leaning figure with a silver mane', discipline: 'sculpture', group: 'abstract', views: ['Leaning figure with a silver mane', 'Leaning figure with a silver mane, side view', 'Leaning figure with a silver mane, front view'], images: ['gallery/sculptures/57', 'gallery/sculptures/58', 'gallery/sculptures/59'], featured: true },
   { slug: 'relief-figure-on-a-rock', code: 'IFA-SC-051', title: 'Relief figure on a rock', discipline: 'sculpture', group: 'figures', images: ['gallery/sculptures/60'] },
-  { slug: 'statue-of-freedom-of-press', code: 'IFA-SC-052', title: 'Statue of Freedom of Press', discipline: 'sculpture', group: 'figures', images: ['gallery/sculptures/61'] },
+  { slug: 'statue-of-freedom-of-press', code: 'IFA-SC-052', title: 'Statue of Freedom of Press', discipline: 'sculpture', group: 'figures', medium: 'Stone', year: 2007, location: 'Lokmat Media printing press, Butibori, Nagpur', featured: true,
+    views: ['Statue of Freedom of Press, at night', 'Statue of Freedom of Press, detail', 'Statue of Freedom of Press, on its plinth', 'Finished, in the stone yard, March 2007', 'Carving the two figures, 2006', 'Splitting the block, November 2006', 'Roughing out the block, November 2006', 'Carving, December 2006', 'Statue of Freedom of Press, with its plaque'],
+    images: ['kiran/freedom-of-press-night', 'kiran/freedom-of-press-night-close', 'kiran/freedom-of-press-night-wide', 'kiran/freedom-of-press-in-the-yard', 'kiran/freedom-of-press-carving', 'kiran/freedom-of-press-block', 'kiran/freedom-of-press-team', 'kiran/freedom-of-press-dust', 'gallery/sculptures/61'],
+    description: [
+      'Two figures sit side by side, reading the newspaper that lies across their laps. The idea came from Vijay Darda, chairman of the Editorial Board of Lokmat Media; the statue stands at Lokmat Media’s printing press in Butibori, Nagpur.',
+      'Carved from a block of stone between November 2006 and March 2007, and installed in April 2007.',
+    ] },
+  // Kiran Adate's own stone works, from the client's photographs (titles are working titles: see CONTENT-TO-CONFIRM.md)
+  { slug: 'expectant-couple', title: 'Expectant couple', discipline: 'sculpture', group: 'figures', medium: 'Stone', year: 2007, views: ['Expectant couple', 'Expectant couple, in the stone yard', 'Expectant couple, from the side'], images: ['kiran/expectant-couple', 'kiran/expectant-couple-front', 'kiran/expectant-couple-side'] },
+  { slug: 'standing-couple', title: 'Standing couple', discipline: 'sculpture', group: 'figures', medium: 'Stone', year: 2012, views: ['Standing couple', 'Standing couple, in the stone yard'], images: ['kiran/standing-couple', 'kiran/standing-couple-in-the-yard'] },
+  { slug: 'reclining-couple', title: 'Reclining couple', discipline: 'sculpture', group: 'figures', medium: 'Stone', year: 2012, views: ['Reclining couple', 'Reclining couple, from above'], images: ['kiran/reclining-couple', 'kiran/reclining-couple-above'] },
+  { slug: 'two-torsos', title: 'Two torsos', discipline: 'sculpture', group: 'figures', medium: 'Stone', year: 2012, images: ['kiran/two-torsos'] },
   { slug: 'standing-portrait-statue', code: 'IFA-SC-053', title: 'Standing portrait statue', discipline: 'sculpture', group: 'figures', images: ['gallery/sculptures/62'] },
   { slug: 'figure-at-the-spinning-wheel-large', code: 'IFA-SC-054', codes: ['IFA-SC-054', 'IFA-SC-055'], title: 'Figure at the spinning wheel, large', discipline: 'sculpture', group: 'figures', views: ['Figure at the spinning wheel, large', 'Figure at the spinning wheel, large, side view'], images: ['gallery/sculptures/63', 'gallery/sculptures/64'] },
   { slug: 'wall-of-climbing-figures', code: 'IFA-SC-056', title: 'Wall of climbing figures', discipline: 'sculpture', group: 'figures', images: ['gallery/sculptures/65'] },
@@ -178,12 +195,17 @@ const RAW = [
 // The selection shown on the site, in this order: the strongest photographs of sculpture and
 // murals, without watermarks, date stamps, replicas or decor pieces. Add a slug here to show it.
 const PORTFOLIO = [
-  // Sculpture
+  // Sculpture: Kiran Adate's own public works and stone pieces first
+  'statue-of-freedom-of-press',
+  'sculpture-of-hawker',
+  'expectant-couple',
+  'standing-couple',
+  'reclining-couple',
+  'two-torsos',
   'twisted-ribbon-form',
   'lion-of-machine-parts',
   'leaning-figure-with-a-silver-mane',
   'seated-buddha',
-  'figure-on-a-bicycle',
   'rhinoceros-in-metal-mesh',
   'stylised-ganesha',
   'runner-around-a-column',

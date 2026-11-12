@@ -5,7 +5,6 @@ import Seo from '../components/Seo'
 import ProjectCard from '../components/ProjectCard'
 import Masonry from '../components/Masonry'
 import Invitation from '../sections/Invitation'
-import Tone from '../components/Tone'
 import { ease, SplitText } from '../components/Motion'
 import { disciplines } from '../data/disciplines'
 import { projects, projectsFor } from '../data/projects'
@@ -36,7 +35,7 @@ export default function Works() {
   return (
     <>
       <Seo title="Works" description="Selected sculpture and relief murals by Kiran Adate, Mumbai." />
-      <header data-tone="light" className="wrap pb-14 pt-[calc(var(--header-h)+4rem)] md:pt-[calc(var(--header-h)+6rem)]">
+      <header className="wrap pb-14 pt-[calc(var(--header-h)+4rem)] md:pt-[calc(var(--header-h)+6rem)]">
         <div className="grid grid-cols-12 gap-x-6 gap-y-8">
           <SplitText as="h1" className="display col-span-12 text-[clamp(4rem,2rem+9vw,11rem)] font-light leading-[0.82] md:col-span-7" text="Works" immediate delay={0.3} />
           <p className="col-span-12 max-w-[46ch] self-end text-[1.02rem] md:col-span-4 md:col-start-9">
@@ -65,14 +64,14 @@ export default function Works() {
       <AnimatePresence mode="wait">
         <motion.div key={filter} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.45, ease }}>
           {filter === 'all' ? (
-            disciplines.map((d, ci) => <Chapter key={d.slug} d={d} arrangement={arrangements[ci % 2]} tone={ROOMS[ci % ROOMS.length]} />)
+            disciplines.map((d, ci) => <Chapter key={d.slug} d={d} arrangement={arrangements[ci % 2]} />)
           ) : (
-            <Tone name={ROOMS[Math.max(0, disciplines.findIndex((d) => d.slug === filter)) % ROOMS.length]} className="wrap pb-20 pt-6">
+            <div className="wrap pb-20 pt-6">
               <Masonry projects={projectsFor(filter)} />
               <Link to={`/works/${filter}`} className="text-link text-[0.95rem]">
                 About {disciplines.find((d) => d.slug === filter)?.name.toLowerCase()}
               </Link>
-            </Tone>
+            </div>
           )}
         </motion.div>
       </AnimatePresence>
@@ -89,14 +88,11 @@ export default function Works() {
 }
 
 // Each chapter shows five works, featured ones first, and links to the full body of work.
-// Chapters take turns between rooms, so the page changes colour from one body of work to the next.
-const ROOMS = ['clay', 'stone']
-
-function Chapter({ d, arrangement, tone }) {
+function Chapter({ d, arrangement }) {
   const all = projectsFor(d.slug)
   const list = [...all.filter((p) => p.featured), ...all.filter((p) => !p.featured)].slice(0, arrangement.length)
   return (
-    <section data-tone={tone} aria-labelledby={`ch-${d.slug}`} className="wrap border-t border-stone py-20 md:py-28">
+    <section aria-labelledby={`ch-${d.slug}`} className="wrap border-t border-stone py-20 md:py-28">
       <div className="grid grid-cols-12 items-end gap-x-6 gap-y-5">
         <SplitText as="h2" id={`ch-${d.slug}`} className="display col-span-12 text-[clamp(2.4rem,1.4rem+3vw,4.2rem)] leading-none md:col-span-7" text={d.name} />
         <div className="col-span-12 md:col-span-4 md:col-start-9">

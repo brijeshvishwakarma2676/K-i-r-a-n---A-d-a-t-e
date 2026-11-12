@@ -6,8 +6,7 @@ import {
   motion,
   useAnimationFrame,
   useInView,
-  useMotionTemplate,
-  useMotionValue,
+    useMotionValue,
   useReducedMotion,
   useScroll,
   useSpring,
@@ -32,7 +31,7 @@ import { dateRange, featuredExhibition, statusOf } from '../data/exhibitions'
   portrait, an unlisted entry there) - an unlisted entry links to About instead of a work page.
 */
 const SCENE_MS = 8000
-const heroSlug = 'twisted-ribbon-form'
+const heroSlug = 'sculpture-of-hawker'
 
 // Scene 01's cut-out portrait, from images.js like every other photo.
 const portrait = { ...images['portrait/kiran-adate'], alt: `Portrait of ${site.name}` }
@@ -94,9 +93,9 @@ export default function Hero() {
   const py = useMotionValue(0.3)
   const sx = useSpring(px, { stiffness: 40, damping: 18 })
   const sy = useSpring(py, { stiffness: 40, damping: 18 })
-  const lightX = useTransform(sx, (v) => `${v * 100}%`)
-  const lightY = useTransform(sy, (v) => `${v * 100}%`)
-  const light = useMotionTemplate`radial-gradient(ellipse 60% 55% at ${lightX} ${lightY}, rgb(255 255 255 / 0.62), transparent 70%)`
+  // The light is one soft disc moved by transform (the GPU composites it), centred on the pointer.
+  const lightX = useTransform(sx, (v) => `calc(${v * 100}vw - 50%)`)
+  const lightY = useTransform(sy, (v) => `calc(${v * 100}svh - 50%)`)
   const figureX = useTransform(sx, [0, 1], [-12, 12])
   const nameX = useTransform(sx, [0, 1], [8, -8])
   const rotY = useTransform(sx, [0, 1], [-6, 6])
@@ -119,6 +118,7 @@ export default function Hero() {
     <section
       ref={ref}
       onPointerMove={onMove}
+      data-live={inView ? 'true' : 'false'}
       className="relative isolate flex h-[100svh] min-h-[640px] flex-col overflow-hidden"
       aria-labelledby="hero-title"
       aria-roledescription="carousel"
@@ -126,8 +126,8 @@ export default function Hero() {
       {/* Gallery light falling across the wall, drifting after the pointer */}
       <motion.div
         aria-hidden="true"
-        className="absolute inset-0 -z-10"
-        style={{ backgroundImage: reduce ? 'radial-gradient(ellipse 70% 60% at 70% 30%, rgb(255 255 255 / 0.55), transparent 70%)' : light }}
+        className="pointer-events-none absolute left-0 top-0 -z-10 h-[110vmax] w-[110vmax] rounded-full bg-[radial-gradient(closest-side,rgb(255_255_255/0.6),rgb(255_255_255/0.2)_55%,transparent)]"
+        style={{ x: reduce ? 'calc(70vw - 50%)' : lightX, y: reduce ? 'calc(30svh - 50%)' : lightY }}
       />
 
       <div className="wrap relative z-20 grid grid-cols-12 gap-x-6 pt-[calc(var(--header-h)+env(safe-area-inset-top,0px)+1.5rem)] md:pt-[calc(var(--header-h)+4rem)]">
@@ -197,15 +197,15 @@ export default function Hero() {
               aria-label={`1 of 2, ${SCENES[0]}`}
               style={reduce ? undefined : { x: figureX, y: wide ? sinkY : nameY }}
               className="absolute inset-0 md:inset-auto md:bottom-0 md:right-[5vw] md:h-[min(90svh,62vw)] lg:right-[7vw]"
-              exit={{ opacity: 0, filter: 'blur(8px)', transition: { duration: 0.8, ease } }}
+              exit={{ opacity: 0, scale: 0.98, transition: { duration: 0.8, ease } }}
             >
               {/* Warm light breathing behind the figure */}
               <span
                 aria-hidden="true"
-                className="glow-breathe pointer-events-none absolute bottom-[-10%] right-[4vw] -z-10 aspect-square h-[110%] translate-x-[15%] rounded-full bg-[radial-gradient(closest-side,rgb(201_140_96/0.42),rgb(138_59_38/0.1)_58%,transparent)] blur-2xl md:right-auto md:left-[55%] md:-translate-x-1/2"
+                className="glow-breathe pointer-events-none absolute bottom-[-10%] right-[4vw] -z-10 aspect-square h-[110%] translate-x-[15%] rounded-full bg-[radial-gradient(closest-side,rgb(201_140_96/0.42),rgb(138_59_38/0.1)_58%,transparent)] md:right-auto md:left-[55%] md:-translate-x-1/2"
               />
-              {/* The shadow sits on this wrapper so the image's reveal clip cannot cut it off */}
-              <div className="absolute bottom-0 right-[4vw] h-full drop-shadow-[0_30px_40px_rgb(34_33_30/0.18)] md:relative md:right-0">
+              {/* The figure rises out of the floor inside this mask */}
+              <div className="absolute bottom-0 right-[4vw] h-full overflow-hidden md:relative md:right-0">
                 <motion.img
                   src={portrait.files[800]}
                   srcSet={Object.entries(portrait.files).map(([w, url]) => `${url} ${w}w`).join(', ')}
@@ -216,9 +216,9 @@ export default function Hero() {
                   fetchPriority="high"
                   decoding="async"
                   className="block h-full w-auto max-w-none"
-                  initial={reduce ? false : { clipPath: 'inset(100% 0% 0% 0%)', y: 40 }}
-                  animate={{ clipPath: 'inset(0% 0% 0% 0%)', y: 0 }}
-                  transition={{ clipPath: { duration: 1.5, ease: easeInOut, delay: enterDelay }, y: { duration: 1.8, ease, delay: enterDelay } }}
+                  initial={reduce ? false : { y: '100%' }}
+                  animate={{ y: '0%' }}
+                  transition={{ duration: 1.5, ease: easeInOut, delay: enterDelay }}
                 />
               </div>
             </motion.figure>
@@ -229,21 +229,28 @@ export default function Hero() {
               aria-label={`2 of 2, ${SCENES[1]}`}
               style={reduce ? undefined : { y: wide ? riseY : nameY }}
               className="absolute inset-0 md:inset-auto md:bottom-[calc(2svh+14vw+1.5rem)] md:right-[15vw] md:h-[min(62svh,calc(100svh-var(--header-h)-5rem-2svh-14vw))] lg:right-[17vw]"
-              exit={{ opacity: 0, filter: 'blur(8px)', transition: { duration: 0.8, ease } }}
+              exit={{ opacity: 0, scale: 0.98, transition: { duration: 0.8, ease } }}
             >
               <Link
                 to={isWorkPage ? workPath(work) : '/about'}
                 className="group pointer-events-auto absolute inset-0 block md:relative md:inset-auto md:h-full"
                 aria-label={isWorkPage ? `${work.title}, view the work` : `${work.title}, about the artist`}
               >
-                <span aria-hidden="true" className="glow-breathe pointer-events-none absolute right-0 top-0 -z-10 aspect-square h-[100%] rounded-full bg-[radial-gradient(closest-side,rgb(201_140_96/0.4),rgb(138_59_38/0.1)_55%,transparent)] blur-2xl md:-inset-[18%] md:h-auto md:aspect-auto" />
+                <span aria-hidden="true" className="glow-breathe pointer-events-none absolute right-0 top-0 -z-10 aspect-square h-[100%] rounded-full bg-[radial-gradient(closest-side,rgb(201_140_96/0.4),rgb(138_59_38/0.1)_55%,transparent)] md:-inset-[18%] md:h-auto md:aspect-auto" />
                 <motion.div
                   className="sheen absolute bottom-12 right-[4vw] top-0 aspect-[3/4] overflow-hidden shadow-[0_30px_60px_-30px_rgb(34_33_30/0.55)] transition-shadow duration-700 group-hover:shadow-[0_40px_80px_-30px_rgb(34_33_30/0.7)] md:relative md:inset-auto md:h-full"
                   style={reduce ? undefined : { rotateX: rotX, rotateY: rotY, transformPerspective: 1100 }}
-                  initial={reduce ? false : { clipPath: 'inset(100% 0% 0% 0%)' }}
-                  animate={{ clipPath: 'inset(0% 0% 0% 0%)' }}
-                  transition={{ duration: 1.4, ease: easeInOut, delay: enterDelay }}
                 >
+                  {!reduce && (
+                    <motion.span
+                      aria-hidden="true"
+                      className="pointer-events-none absolute inset-0 z-10 bg-[var(--reveal,var(--color-limestone))]"
+                      style={{ originY: 0 }}
+                      initial={{ scaleY: 1 }}
+                      animate={{ scaleY: 0 }}
+                      transition={{ duration: 1.4, ease: easeInOut, delay: enterDelay }}
+                    />
+                  )}
                   <motion.div
                     className="h-full transition-transform duration-[1.2s] ease-gallery group-hover:scale-[1.04]"
                     initial={reduce ? false : { scale: 1.15 }}

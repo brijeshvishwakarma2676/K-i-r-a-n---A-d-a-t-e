@@ -12,7 +12,7 @@ export default function ProjectCard({ project, ratio = '4/5', className = '', sh
     <Link to={workPath(project)} className={`group block ${className}`}>
       <ImageReveal>
         <div className="sheen overflow-hidden">
-          <div className="transition-[filter,transform] duration-[1.2s] ease-gallery group-hover:scale-[1.045] group-hover:brightness-[1.06]">
+          <div className="transition-transform duration-[1.2s] ease-gallery group-hover:scale-[1.045]">
             <ArtImage image={project.cover} ratio={ratio} sizes={sizes} />
           </div>
         </div>

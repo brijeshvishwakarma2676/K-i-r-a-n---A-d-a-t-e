@@ -71,10 +71,29 @@ export const artist = {
     'The work moves between the figure and the abstract: dancers, a cyclist and a cellist; the Buddha and Ganesha; a lion built from machine parts and a rhinoceros in metal mesh; ribbons of metal turning in space. Each piece begins as a sketch or a small model and is carved, cast or welded, then finished by hand.',
 
   shortBio:
-    'Kiran Adate is a sculptor in Mumbai, working in steel, stone, bronze and fibre: portrait statues and devotional figures, animals, abstract forms and relief murals. The work is made in the workshop of Invent Fine Art, the studio Kiran Adate leads, founded in 2008.',
+    'Kiran Adate is a sculptor in Mumbai, from Parali Vaijnath in Beed district, Maharashtra, and studied at the J.J. School of Art in Mumbai. The work ranges from public sculpture, such as the Statue of Freedom of Press and the Sculpture of Hawker in Nagpur, to figures carved in stone. It is made in the workshop of Invent Fine Art, the studio Kiran Adate leads.',
 
-  // A photograph of the studio at work, used until a portrait of Kiran Adate is on hand.
-  portrait: { id: 'gallery/sculptures/78', alt: 'Lion of machine parts taking shape in the workshop' },
+  // Kiran Adate's own words, as printed in Lokmat Times, Nagpur, 7 January 2015 (client's clipping).
+  quote: {
+    text: 'Capturing the laborious devotion and commitment of the hawker, who, irrespective of seasons – rainy, summer or winter, carries out his task, was a challenge. It was this challenge that strengthened my conviction, and this is how I could create the Sculpture of Hawker.',
+    source: 'Lokmat Times, January 2015',
+  },
+
+  // Facts reported in the same article: home village, art school, and how the two Nagpur works began.
+  press: [
+    { year: 2015, title: 'Capturing commitment in a tough task: Adate', outlet: 'Lokmat Times, Nagpur, 7 January 2015' },
+    { year: 2015, title: 'Salute to untiring efforts!', outlet: 'Lokmat Times, Nagpur, 7 January 2015, on the unveiling of the Sculpture of Hawker' },
+    { year: 2015, title: 'समर्पण का शिल्प बनाना चुनौतीपूर्ण', outlet: 'Lokmat Samachar, Nagpur, January 2015' },
+    { year: 2015, title: 'कष्टाला सलाम, त्यागाचा गौरव', outlet: 'Lokmat, Nagpur, 7 January 2015' },
+  ],
+  publicWorks: [
+    { year: 2007, slug: 'statue-of-freedom-of-press', place: 'Lokmat Media printing press, Butibori, Nagpur' },
+    { year: 2015, slug: 'sculpture-of-hawker', place: 'Samvidhan Square, Nagpur; unveiled 6 January 2015' },
+  ],
+  education: 'J.J. School of Art, Mumbai',
+
+  // The artist's work in progress: carving stone with a pointing machine (client photograph, 2012).
+  portrait: { id: 'kiran/carving-with-a-pointing-machine', alt: 'Carving stone with a pointing machine, 2012' },
 
   practice: [
     'A work begins with a sketch, a reference photograph or an idea, and often with the place where it will stand. A small model fixes the form before the full piece is made.',
