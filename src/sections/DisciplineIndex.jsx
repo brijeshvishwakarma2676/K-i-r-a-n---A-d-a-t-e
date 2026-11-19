@@ -4,6 +4,7 @@ import { AnimatePresence, motion, useInView } from 'framer-motion'
 import ArtImage from '../components/ArtImage'
 import { ease, ImageReveal, SplitText } from '../components/Motion'
 import { disciplines } from '../data/disciplines'
+import { useT } from '../i18n'
 
 /*
   The four bodies of work, shown as rooms. On large screens the image stays
@@ -11,6 +12,7 @@ import { disciplines } from '../data/disciplines'
   On small screens each discipline carries its own image.
 */
 export default function DisciplineIndex() {
+  const t = useT()
   const [active, setActive] = useState(0)
   const current = disciplines[active]
 
@@ -36,7 +38,7 @@ export default function DisciplineIndex() {
                   </motion.div>
                 </AnimatePresence>
               </div>
-              <p className="caption mt-3">{current.cover.alt}</p>
+              <p className="caption mt-3">{t(current.cover.alt)}</p>
             </div>
           </div>
 
@@ -52,6 +54,7 @@ export default function DisciplineIndex() {
 }
 
 function Entry({ d, index, onActive, active }) {
+  const t = useT()
   const ref = useRef(null)
   const inView = useInView(ref, { margin: '-45% 0px -45% 0px' })
   useEffect(() => {
@@ -69,15 +72,15 @@ function Entry({ d, index, onActive, active }) {
         <ArtImage image={d.cover} ratio="4/5" sizes="100vw" />
       </ImageReveal>
       <h3 className={`display text-[clamp(2.4rem,1.6rem+2.6vw,3.8rem)] leading-[0.98] transition-colors duration-700 ${active ? 'text-ink' : 'lg:text-ink-soft'}`}>
-        {d.name}
+        {t(d.name)}
       </h3>
       <p className="display mt-5 text-[1.45rem] italic leading-snug text-geru">
-        {d.headline}
+        {t(d.headline)}
       </p>
-      <p className="mt-5 max-w-[48ch] text-[0.98rem]">{d.intro}</p>
-      <p className="caption mt-5">{d.materials.join(', ')}</p>
+      <p className="mt-5 max-w-[48ch] text-[0.98rem]">{t(d.intro)}</p>
+      <p className="caption mt-5">{d.materials.map((m) => t(m)).join(', ')}</p>
       <Link to={`/works/${d.slug}`} className="text-link mt-8 self-start text-[0.95rem]">
-        See the works
+        {t('See the works')}
       </Link>
     </li>
   )

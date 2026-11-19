@@ -5,6 +5,31 @@ All content on this site comes from the studio's old website (inventfineart.com,
 site-v4 (`site-v4/app/data`, `site-v4/CONTENT-GAPS.md`). Nothing has been invented. These
 items still need the owner's confirmation or input before launch.
 
+## New on the site (added 2026-11-18)
+
+- **Hindi and Marathi.** The whole site can be read in Hindi and Marathi (`src/i18n/hi.js`,
+  `mr.js`). The translations were made for the site and need reading by a native speaker,
+  ideally Kiran Adate. His quote uses his own words as printed by Lokmat Samachar (Hindi) and
+  Lokmat (Marathi) on 7 January 2015. The name is written किरण अदाते, as in those papers.
+- **The making** of the Statue of Freedom of Press and the Sculpture of Hawker is shown as a dated
+  timeline; the dates come from the photographs' camera dates and file names. Confirm the steps.
+- **The unveiling**: the Lokmat Times front page (7 January 2015) reports that the Sculpture of
+  Hawker was unveiled by senior hawker Gajanan Meshram in the presence of Chief Minister Devendra
+  Fadnavis. This is now on the home page and the work's page.
+- **Cleaned daylight photograph** of the Statue of Freedom of Press (home page, its page, the PDF):
+  it has been retouched, and the lettering carved on the statue's newspaper is not legible in it.
+  Confirm Kiran Adate is happy to show it.
+- **Where to see the work** (About page): a chart and directions to the two public works. Positions
+  are town-level; the direction links search Google Maps by name.
+- **WhatsApp**: enquiry links open a chat with +91 93232 10327 with a first message filled in.
+  Confirm this number uses WhatsApp.
+- **Films**: a work's page can now show a film (none yet). Wanted from Kiran Adate: any footage of
+  the Statue of Freedom of Press or the Sculpture of Hawker being made, moved or unveiled, or a
+  short walk around a finished work. Phone video is fine (landscape, 30 seconds to 3 minutes).
+  Confirm the studio owns the rights to it.
+- **Portfolio PDF** (`public/kiran-adate-portfolio.pdf`): uses the same texts; it lists the
+  selected commissions only on the About page, not in the PDF.
+
 ## Client photographs and press (added 2026-11-12)
 
 The "Kiran Stone" folder gave the site Kiran Adate's own work, the making of it, and press

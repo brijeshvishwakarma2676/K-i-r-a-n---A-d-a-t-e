@@ -34,16 +34,20 @@ export function statusOf(x, now = today()) {
   return 'current'
 }
 
-const fmt = (iso, opts) => new Date(`${iso}T00:00:00`).toLocaleDateString('en-GB', opts)
+// Dates are written in the visitor's language (en, hi, mr), with Latin digits throughout.
+const LOCALE = { en: 'en-GB', hi: 'hi-IN-u-nu-latn', mr: 'mr-IN-u-nu-latn' }
+const TO = { en: ' to ', hi: ' से ', mr: ' ते ' }
+const fmt = (iso, opts, lang = 'en') => new Date(`${iso}T00:00:00`).toLocaleDateString(LOCALE[lang] || 'en-GB', opts)
 
 // "17 to 23 May 2016", "16 October to 20 December 2026", or with both years across a new year
-export function dateRange(x) {
+export function dateRange(x, lang = 'en') {
   const [ys, ms] = [x.start.slice(0, 4), x.start.slice(5, 7)]
   const [ye, me] = [x.end.slice(0, 4), x.end.slice(5, 7)]
-  const b = fmt(x.end, { day: 'numeric', month: 'long', year: 'numeric' })
-  if (ys !== ye) return `${fmt(x.start, { day: 'numeric', month: 'long', year: 'numeric' })} to ${b}`
-  if (ms !== me) return `${fmt(x.start, { day: 'numeric', month: 'long' })} to ${b}`
-  return `${fmt(x.start, { day: 'numeric' })} to ${b}`
+  const to = TO[lang] || TO.en
+  const b = fmt(x.end, { day: 'numeric', month: 'long', year: 'numeric' }, lang)
+  if (ys !== ye) return `${fmt(x.start, { day: 'numeric', month: 'long', year: 'numeric' }, lang)}${to}${b}`
+  if (ms !== me) return `${fmt(x.start, { day: 'numeric', month: 'long' }, lang)}${to}${b}`
+  return `${fmt(x.start, { day: 'numeric' }, lang)}${to}${b}`
 }
 
 export const yearOf = (x) => Number(x.start.slice(0, 4))

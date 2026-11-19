@@ -1,10 +1,11 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { ChevronLeft, ChevronRight, X } from 'lucide-react'
-import ArtImage, { photo, srcFor } from './ArtImage'
+import ArtImage, { photo, srcFor, srcSetOf } from './ArtImage'
 import useLockBody from '../hooks/useLockBody'
 import useFocusTrap from '../hooks/useFocusTrap'
 import { ease } from './Motion'
+import { useT } from '../i18n'
 
 /*
   Full-screen viewer for a set of images. Arrow keys and swipe move between images,
@@ -15,6 +16,7 @@ export default function Lightbox({ images, index, onClose, onIndex, title }) {
 }
 
 function Viewer({ images, index, onClose, onIndex, title }) {
+  const t = useT()
   const ref = useRef(null)
   const [dir, setDir] = useState(0)
   useLockBody(true)
@@ -44,7 +46,7 @@ function Viewer({ images, index, onClose, onIndex, title }) {
       ref={ref}
       role="dialog"
       aria-modal="true"
-      aria-label={`${title}: image ${index + 1} of ${images.length}`}
+      aria-label={t('{title}: image {n} of {total}', { title, n: index + 1, total: images.length })}
       className="on-dark fixed inset-0 z-[70] flex flex-col bg-[#1b1a18] text-bone pt-[env(safe-area-inset-top,0px)] pb-[env(safe-area-inset-bottom,0px)]"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
@@ -56,7 +58,7 @@ function Viewer({ images, index, onClose, onIndex, title }) {
           {index + 1} / {images.length}
         </p>
         <button type="button" onClick={onClose} className="-mr-2 flex items-center gap-2 p-2 text-[0.85rem]">
-          Close <X size={18} strokeWidth={1.25} aria-hidden="true" />
+          {t('Close')} <X size={18} strokeWidth={1.25} aria-hidden="true" />
         </button>
       </div>
 
@@ -79,14 +81,17 @@ function Viewer({ images, index, onClose, onIndex, title }) {
             }}
           >
             {image.src || image.id ? (
-              <img
-                src={srcFor(image)}
-                srcSet={photo(image) ? Object.entries(photo(image).files).map(([w, u]) => `${u} ${w}w`).join(', ') : image.srcSet}
-                sizes="90vw"
-                alt={image.alt}
-                className="max-h-full max-w-full object-contain"
-                draggable="false"
-              />
+              <picture className="contents">
+                {photo(image) && <source type="image/avif" srcSet={srcSetOf(photo(image).files, true)} sizes="90vw" />}
+                <img
+                  src={srcFor(image)}
+                  srcSet={photo(image) ? srcSetOf(photo(image).files) : image.srcSet}
+                  sizes="90vw"
+                  alt={image.alt}
+                  className="max-h-full max-w-full object-contain"
+                  draggable="false"
+                />
+              </picture>
             ) : (
               <div className="aspect-[4/3] max-h-full max-w-full" style={{ height: 'min(100%, 70vw)' }}>
                 <ArtImage image={image} ratio="4/3" className="!h-full !w-full" sizes="90vw" />
@@ -97,10 +102,10 @@ function Viewer({ images, index, onClose, onIndex, title }) {
 
         {images.length > 1 && (
           <>
-            <button type="button" onClick={() => go(-1)} aria-label="Previous image" className="absolute left-2 top-1/2 hidden -translate-y-1/2 p-3 text-bone/70 hover:text-bone md:block">
+            <button type="button" onClick={() => go(-1)} aria-label={t('Previous image')} className="absolute left-2 top-1/2 hidden -translate-y-1/2 p-3 text-bone/70 hover:text-bone md:block">
               <ChevronLeft size={28} strokeWidth={1} />
             </button>
-            <button type="button" onClick={() => go(1)} aria-label="Next image" className="absolute right-2 top-1/2 hidden -translate-y-1/2 p-3 text-bone/70 hover:text-bone md:block">
+            <button type="button" onClick={() => go(1)} aria-label={t('Next image')} className="absolute right-2 top-1/2 hidden -translate-y-1/2 p-3 text-bone/70 hover:text-bone md:block">
               <ChevronRight size={28} strokeWidth={1} />
             </button>
           </>
@@ -108,11 +113,11 @@ function Viewer({ images, index, onClose, onIndex, title }) {
       </div>
 
       <div className="flex items-center justify-between gap-6 px-5 py-5 md:px-8">
-        <p className="text-[0.95rem]">{image.caption || image.alt}</p>
+        <p className="text-[0.95rem]">{t(image.caption || image.alt)}</p>
         {images.length > 1 && (
           <div className="flex gap-1 md:hidden">
-            <button type="button" onClick={() => go(-1)} aria-label="Previous image" className="p-2"><ChevronLeft size={22} strokeWidth={1.25} /></button>
-            <button type="button" onClick={() => go(1)} aria-label="Next image" className="p-2"><ChevronRight size={22} strokeWidth={1.25} /></button>
+            <button type="button" onClick={() => go(-1)} aria-label={t('Previous image')} className="p-2"><ChevronLeft size={22} strokeWidth={1.25} /></button>
+            <button type="button" onClick={() => go(1)} aria-label={t('Next image')} className="p-2"><ChevronRight size={22} strokeWidth={1.25} /></button>
           </div>
         )}
       </div>

@@ -1,4 +1,7 @@
-import Seo from '../components/Seo'
+import Seo, { personLd } from '../components/Seo'
+import { artist } from '../data/site'
+
+const jsonLd = personLd(artist)
 import Hero from '../sections/Hero'
 import Statement from '../sections/Statement'
 import Monument from '../sections/Monument'
@@ -6,6 +9,7 @@ import SelectedWorks from '../sections/SelectedWorks'
 import RecentExhibition from '../sections/RecentExhibition'
 import DisciplineIndex from '../sections/DisciplineIndex'
 import Studio from '../sections/Studio'
+import PressBand from '../sections/PressBand'
 import InPlace from '../sections/InPlace'
 import ArtistIntro from '../sections/ArtistIntro'
 import Invitation from '../sections/Invitation'
@@ -15,9 +19,9 @@ import Invitation from '../sections/Invitation'
 export default function Home() {
   return (
     <>
-      <Seo />
+      <Seo jsonLd={jsonLd} />
       <Hero />
-      <div className="cv-auto">
+      <div className="cv-auto room-dark">
         <Statement />
         <Monument />
       </div>
@@ -27,6 +31,7 @@ export default function Home() {
       </div>
       <div className="cv-auto"><DisciplineIndex /></div>
       <div className="cv-auto"><Studio /></div>
+      <div className="cv-auto"><PressBand /></div>
       <div className="cv-auto"><InPlace /></div>
       <div className="cv-auto">
         <ArtistIntro />

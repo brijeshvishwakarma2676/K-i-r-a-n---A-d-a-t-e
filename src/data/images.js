@@ -2,7 +2,7 @@
 // id -> { w, h: original size, color: dominant colour shown while loading, files: { width: url } }
 // To add a photo: put WebP files in public/img and add an entry here, then use its id in projects.js.
 // The client's own photographs (ids kiran/…) come from clientImages.js, made by scripts/import-client-images.py.
-import { clientImages } from './clientImages'
+import { clientImages } from './clientImages.js'
 const studioImages = {"portrait/kiran-adate":{"w":1074,"h":1465,"color":"#ECE9E3","files":{"480":"/img/portrait/kiran-adate-480.webp","800":"/img/portrait/kiran-adate-800.webp","1074":"/img/portrait/kiran-adate-1074.webp"}},
   "gallery/grc_products/1":{"w":4160,"h":3120,"color":"#f8f8f8","files":{"480":"/img/gallery/grc_products/1-480.3b05b3d5.webp","960":"/img/gallery/grc_products/1-960.3b05b3d5.webp","1600":"/img/gallery/grc_products/1-1600.3b05b3d5.webp"}},
   "gallery/grc_products/10":{"w":1040,"h":780,"color":"#a8a898","files":{"480":"/img/gallery/grc_products/10-480.c4e13c33.webp","960":"/img/gallery/grc_products/10-960.c4e13c33.webp"}},

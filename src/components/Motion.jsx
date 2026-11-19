@@ -9,6 +9,7 @@ import {
   useSpring,
   useTransform,
 } from 'framer-motion'
+import { useT } from '../i18n'
 
 /*
   The site's motion vocabulary. Everything is slow and eased, like light moving across a gallery
@@ -38,7 +39,7 @@ export function ClipReveal({ children, className = '', delay = 0 }) {
       {children}
       <motion.span
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 z-10 bg-[var(--reveal,var(--color-limestone))]"
+        className="reveal-cover pointer-events-none absolute inset-0 z-10 bg-[var(--reveal,var(--color-limestone))]"
         style={{ originY: 0 }}
         initial={{ scaleY: 0.18 }}
         whileInView={{ scaleY: 0 }}
@@ -65,7 +66,7 @@ export function ImageReveal({ children, className = '', delay = 0 }) {
       </motion.div>
       <motion.span
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 z-10 bg-[var(--reveal,var(--color-limestone))]"
+        className="reveal-cover pointer-events-none absolute inset-0 z-10 bg-[var(--reveal,var(--color-limestone))]"
         style={{ originY: 0 }}
         initial={{ scaleY: 1 }}
         whileInView={{ scaleY: 0 }}
@@ -175,8 +176,9 @@ export function Stagger({ children, className = '', as = 'div', itemAs = 'div', 
   A heading whose words rise one by one out of a mask. `text` must be a plain string.
   `immediate` plays on mount (page titles); otherwise it plays when scrolled into view.
 */
-export function SplitText({ text, as = 'h2', className = '', delay = 0, step = 0.07, immediate = false, ...rest }) {
+export function SplitText({ text: english, as = 'h2', className = '', delay = 0, step = 0.07, immediate = false, ...rest }) {
   const reduce = useReducedMotion()
+  const text = useT()(english) // headings translate themselves (src/i18n)
   if (reduce) {
     const Plain = as
     return <Plain className={className} {...rest}>{text}</Plain>
@@ -210,8 +212,9 @@ export function SplitText({ text, as = 'h2', className = '', delay = 0, step = 0
 }
 
 // A passage whose words brighten one after another as it is scrolled through.
-export function ScrollWords({ text, className = '' }) {
+export function ScrollWords({ text: english, className = '' }) {
   const ref = useRef(null)
+  const text = useT()(english)
   const reduce = useReducedMotion()
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start 0.88', 'end 0.55'] })
   if (reduce) return <p className={className}>{text}</p>
@@ -277,7 +280,7 @@ export function ScrollProgress() {
   return (
     <motion.div
       aria-hidden="true"
-      className="pointer-events-none fixed inset-x-0 top-0 z-[55] h-[2px] origin-left bg-geru"
+      className="scroll-progress pointer-events-none fixed inset-x-0 top-0 z-[55] h-[2px] origin-left bg-geru"
       style={{ scaleX }}
     />
   )

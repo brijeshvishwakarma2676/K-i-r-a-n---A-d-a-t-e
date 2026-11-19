@@ -12,8 +12,9 @@ import {
   useSpring,
   useTransform,
 } from 'framer-motion'
-import ArtImage from '../components/ArtImage'
+import ArtImage, { srcSetOf } from '../components/ArtImage'
 import { images } from '../data/images'
+import { useT } from '../i18n'
 import { ease, easeInOut } from '../components/Motion'
 import { site } from '../data/site'
 import { projectBySlug, workPath } from '../data/projects'
@@ -50,13 +51,14 @@ function useWide() {
 }
 
 export default function Hero() {
+  const t = useT()
   const ref = useRef(null)
   const reduce = useReducedMotion()
   const wide = useWide()
   const inView = useInView(ref, { amount: 0.35 })
   const work = projectBySlug[heroSlug]
   const isWorkPage = work.listed !== false
-  const SCENES = ['The artist', isWorkPage ? 'The work' : 'The portrait']
+  const SCENES = [t('The artist'), t(isWorkPage ? 'The work' : 'The portrait')]
 
   // Scene and its timer. `progress` runs 0 to 1 across one scene and drives the indicator line.
   const [scene, setScene] = useState(0)
@@ -137,22 +139,22 @@ export default function Hero() {
           animate={{ opacity: 1 }}
           transition={{ duration: 1.2, ease, delay: 0.9 }}
         >
-          <p className="lede max-w-[18ch]">{site.tagline}</p>
+          <p className="lede max-w-[18ch]">{t(site.tagline)}</p>
           <p className="caption mt-4 max-w-[34ch] md:mt-5 md:max-w-[30ch] [@media(max-height:700px)_and_(max-width:767px)]:hidden">
-            {site.role}, {site.basedIn}. Figures, devotional forms, animals and abstract work, and relief murals.
+            {t('Sculptor, Mumbai. Figures, devotional forms, animals and abstract work, and relief murals.')}
           </p>
           {show && showStatus !== 'past' && (
             <Link to="/exhibitions" className="group mt-7 block max-w-[30ch]">
-              <span className="caption block">{showStatus === 'current' ? 'Now showing' : 'Opening soon'}</span>
+              <span className="caption block">{t(showStatus === 'current' ? 'Now showing' : 'Opening soon')}</span>
               <span className="mt-1 block text-[0.98rem] leading-snug">
-                <span className="label-title text-[1.15rem] group-hover:text-geru">{show.title}</span>
-                <span className="block text-ink-soft">{show.venue}, {show.city}. {dateRange(show)}</span>
+                <span className="label-title text-[1.15rem] group-hover:text-geru">{t(show.title)}</span>
+                <span className="block text-ink-soft">{t(show.venue)}, {t(show.city)}. {dateRange(show)}</span>
               </span>
             </Link>
           )}
 
           {/* Scene controls: choose a scene, watch its time run out, or pause the change */}
-          <div role="group" aria-label="Opening views" className="mt-6 flex items-end gap-5 md:mt-9">
+          <div role="group" aria-label={t('Opening views')} className="mt-6 flex items-end gap-5 md:mt-9">
             {SCENES.map((label, i) => (
               <button
                 key={label}
@@ -177,7 +179,7 @@ export default function Hero() {
               <button
                 type="button"
                 onClick={() => setPaused((p) => !p)}
-                aria-label={paused ? 'Play the opening views' : 'Pause the opening views'}
+                aria-label={t(paused ? 'Play the opening views' : 'Pause the opening views')}
                 className="-mb-1 p-1.5 text-ink-soft transition-colors hover:text-ink"
               >
                 {paused ? <Play size={13} strokeWidth={1.5} /> : <Pause size={13} strokeWidth={1.5} />}
@@ -194,7 +196,7 @@ export default function Hero() {
             <motion.figure
               key="artist"
               aria-roledescription="slide"
-              aria-label={`1 of 2, ${SCENES[0]}`}
+              aria-label={t('{n} of {total}, {name}', { n: 1, total: 2, name: SCENES[0] })}
               style={reduce ? undefined : { x: figureX, y: wide ? sinkY : nameY }}
               className="absolute inset-0 md:inset-auto md:bottom-0 md:right-[5vw] md:h-[min(90svh,62vw)] lg:right-[7vw]"
               exit={{ opacity: 0, scale: 0.98, transition: { duration: 0.8, ease } }}
@@ -206,9 +208,11 @@ export default function Hero() {
               />
               {/* The figure rises out of the floor inside this mask */}
               <div className="absolute bottom-0 right-[4vw] h-full overflow-hidden md:relative md:right-0">
+                <picture className="contents">
+                <source type="image/avif" srcSet={srcSetOf(portrait.files, true)} sizes="(min-width: 768px) 46vw, 80vw" />
                 <motion.img
                   src={portrait.files[800]}
-                  srcSet={Object.entries(portrait.files).map(([w, url]) => `${url} ${w}w`).join(', ')}
+                  srcSet={srcSetOf(portrait.files)}
                   sizes="(min-width: 768px) 46vw, 80vw"
                   width={portrait.w}
                   height={portrait.h}
@@ -220,13 +224,14 @@ export default function Hero() {
                   animate={{ y: '0%' }}
                   transition={{ duration: 1.5, ease: easeInOut, delay: enterDelay }}
                 />
+                </picture>
               </div>
             </motion.figure>
           ) : (
             <motion.figure
               key="work"
               aria-roledescription="slide"
-              aria-label={`2 of 2, ${SCENES[1]}`}
+              aria-label={t('{n} of {total}, {name}', { n: 2, total: 2, name: SCENES[1] })}
               style={reduce ? undefined : { y: wide ? riseY : nameY }}
               className="absolute inset-0 md:inset-auto md:bottom-[calc(2svh+14vw+1.5rem)] md:right-[15vw] md:h-[min(62svh,calc(100svh-var(--header-h)-5rem-2svh-14vw))] lg:right-[17vw]"
               exit={{ opacity: 0, scale: 0.98, transition: { duration: 0.8, ease } }}
@@ -234,7 +239,7 @@ export default function Hero() {
               <Link
                 to={isWorkPage ? workPath(work) : '/about'}
                 className="group pointer-events-auto absolute inset-0 block md:relative md:inset-auto md:h-full"
-                aria-label={isWorkPage ? `${work.title}, view the work` : `${work.title}, about the artist`}
+                aria-label={t(isWorkPage ? '{title}, view the work' : '{title}, about the artist', { title: work.title })}
               >
                 <span aria-hidden="true" className="glow-breathe pointer-events-none absolute right-0 top-0 -z-10 aspect-square h-[100%] rounded-full bg-[radial-gradient(closest-side,rgb(201_140_96/0.4),rgb(138_59_38/0.1)_55%,transparent)] md:-inset-[18%] md:h-auto md:aspect-auto" />
                 <motion.div
@@ -279,9 +284,9 @@ export default function Hero() {
       <motion.h1
         id="hero-title"
         style={reduce ? undefined : { y: nameY, x: nameX, opacity: fade }}
-        className="display relative z-0 mt-auto px-[var(--gutter)] pb-[3svh] font-light leading-[0.82] tracking-[-0.03em] md:z-20 md:pb-[2svh]"
+        className="display latin relative z-0 mt-auto px-[var(--gutter)] pb-[3svh] font-light leading-[0.82] tracking-[-0.03em] md:z-20 md:pb-[2svh]"
       >
-        <span className="sr-only">{site.name}, {site.role.toLowerCase()}, {site.basedIn}</span>
+        <span className="sr-only">{t('{name}, sculptor, {city}', { name: site.name, city: site.basedIn })}</span>
         <span
           aria-hidden="true"
           className={`flex flex-col items-start text-[25vw] ${isWork ? 'md:flex-row md:justify-center md:gap-[0.2em] md:text-[15vw]' : 'md:text-[min(17vw,24svh)]'}`}

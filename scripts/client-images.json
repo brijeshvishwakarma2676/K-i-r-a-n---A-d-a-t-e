@@ -1,42 +1,196 @@
 {
   "_about": "Client photographs from the 'Kiran Stone' folder used on the site. status 'ready' = imported from the original now; status 'fix' = imported only once a fix-<src> file exists next to the original. For any entry, a fix-<src> file is preferred over the original when present. Prompts for the fixes are in CLIENT-IMAGES.md. Run: python3 -I scripts/import-client-images.py \"/run/media/brijesh/0050-1781/Kiran Stone\"",
   "images": [
-    { "src": "IMG_0740edit.jpg", "id": "kiran/freedom-of-press-night", "status": "ready" },
-    { "src": "IMG_0734.JPG", "id": "kiran/freedom-of-press-night-close", "status": "ready" },
-    { "src": "IMG_0732.JPG", "id": "kiran/freedom-of-press-night-wide", "status": "ready" },
-    { "src": "IMG_0639.JPG", "id": "kiran/freedom-of-press-in-the-yard", "status": "ready" },
-    { "src": "IMG_0442.JPG", "id": "kiran/freedom-of-press-carving", "status": "ready" },
-    { "src": "IMG_0266.JPG", "id": "kiran/freedom-of-press-block", "status": "ready" },
-    { "src": "IMG_0283.JPG", "id": "kiran/freedom-of-press-team", "status": "ready" },
-    { "src": "IMG_0427.JPG", "id": "kiran/freedom-of-press-dust", "status": "ready" },
-    { "src": "IMG_0765.JPG", "id": "kiran/freedom-of-press-sunset", "status": "fix" },
-
-    { "src": "IMG_1090.jpg", "id": "kiran/hawker-front", "status": "ready" },
-    { "src": "IMG_1095.jpg", "id": "kiran/hawker-detail", "status": "ready" },
-    { "src": "IMG_1091.jpg", "id": "kiran/hawker-side", "status": "ready" },
-    { "src": "IMG_1093.jpg", "id": "kiran/hawker-back", "status": "ready" },
-    { "src": "IMG_0093.jpg", "id": "kiran/hawker-gate", "status": "ready" },
-    { "src": "03092007380.jpg", "id": "kiran/hawker-frame", "status": "ready" },
-    { "src": "20092007457.jpg", "id": "kiran/hawker-welding", "status": "ready" },
-    { "src": "23092007485.jpg", "id": "kiran/hawker-workshop", "status": "ready" },
-    { "src": "MSR_2093.JPG", "id": "kiran/hawker-unveiling", "status": "ready" },
-    { "src": "IMG_0092.jpg", "id": "kiran/hawker-wide", "status": "fix" },
-    { "src": "02102007557.jpg", "id": "kiran/hawker-night", "status": "fix" },
-    { "src": "29092007535.jpg", "id": "kiran/hawker-finishing", "status": "fix" },
-
-    { "src": "kiran1.jpg", "id": "kiran/expectant-couple", "status": "ready" },
-    { "src": "IMG_0584.JPG", "id": "kiran/expectant-couple-front", "status": "ready" },
-    { "src": "07.JPG", "id": "kiran/expectant-couple-side", "status": "ready" },
-
-    { "src": "DSC02065.jpg", "id": "kiran/standing-couple", "status": "ready" },
-    { "src": "DSC02064.JPG", "id": "kiran/standing-couple-in-the-yard", "status": "ready" },
-    { "src": "DSC02063.JPG", "id": "kiran/reclining-couple", "status": "ready" },
-    { "src": "DSC02062.jpg", "id": "kiran/reclining-couple-above", "status": "ready" },
-    { "src": "DSC02061.jpg", "id": "kiran/two-torsos", "status": "ready" },
-    { "src": "DSC02055.JPG", "id": "kiran/carving-with-a-pointing-machine", "status": "ready" },
-
-    { "src": "DSC05062.JPG", "id": "kiran/exhibition-2012", "status": "fix" },
-    { "src": "000 (1).JPG", "id": "kiran/stone-frame", "status": "fix" },
-    { "src": "IMG_0005 (33).jpg", "id": "kiran/stone-column", "status": "fix" }
+    {
+      "src": "IMG_0740edit.jpg",
+      "id": "kiran/freedom-of-press-night",
+      "status": "ready"
+    },
+    {
+      "src": "IMG_0734.JPG",
+      "id": "kiran/freedom-of-press-night-close",
+      "status": "ready"
+    },
+    {
+      "src": "/home/brijesh/Downloads/Freedom of Press Sculpture at Lokmat.png",
+      "id": "kiran/freedom-of-press-day",
+      "status": "ready",
+      "note": "Cleaned daylight photograph supplied separately (not in the Kiran Stone folder); an absolute src is read as is."
+    },
+    {
+      "src": "IMG_0639.JPG",
+      "id": "kiran/freedom-of-press-in-the-yard",
+      "status": "ready"
+    },
+    {
+      "src": "IMG_0442.JPG",
+      "id": "kiran/freedom-of-press-carving",
+      "status": "ready"
+    },
+    {
+      "src": "IMG_0266.JPG",
+      "id": "kiran/freedom-of-press-block",
+      "status": "ready"
+    },
+    {
+      "src": "IMG_0283.JPG",
+      "id": "kiran/freedom-of-press-team",
+      "status": "ready"
+    },
+    {
+      "src": "IMG_0427.JPG",
+      "id": "kiran/freedom-of-press-dust",
+      "status": "ready"
+    },
+    {
+      "src": "IMG_0765.JPG",
+      "id": "kiran/freedom-of-press-sunset",
+      "status": "fix"
+    },
+    {
+      "src": "IMG_1090.jpg",
+      "id": "kiran/hawker-front",
+      "status": "ready"
+    },
+    {
+      "src": "IMG_1095.jpg",
+      "id": "kiran/hawker-detail",
+      "status": "ready"
+    },
+    {
+      "src": "IMG_1091.jpg",
+      "id": "kiran/hawker-side",
+      "status": "ready"
+    },
+    {
+      "src": "IMG_1093.jpg",
+      "id": "kiran/hawker-back",
+      "status": "ready"
+    },
+    {
+      "src": "IMG_0093.jpg",
+      "id": "kiran/hawker-gate",
+      "status": "ready"
+    },
+    {
+      "src": "03092007380.jpg",
+      "id": "kiran/hawker-frame",
+      "status": "ready"
+    },
+    {
+      "src": "20092007457.jpg",
+      "id": "kiran/hawker-welding",
+      "status": "ready"
+    },
+    {
+      "src": "23092007485.jpg",
+      "id": "kiran/hawker-workshop",
+      "status": "ready"
+    },
+    {
+      "src": "MSR_2093.JPG",
+      "id": "kiran/hawker-unveiling",
+      "status": "ready"
+    },
+    {
+      "src": "IMG_0092.jpg",
+      "id": "kiran/hawker-wide",
+      "status": "fix"
+    },
+    {
+      "src": "02102007557.jpg",
+      "id": "kiran/hawker-night",
+      "status": "fix"
+    },
+    {
+      "src": "29092007535.jpg",
+      "id": "kiran/hawker-finishing",
+      "status": "fix"
+    },
+    {
+      "src": "kiran1.jpg",
+      "id": "kiran/expectant-couple",
+      "status": "ready"
+    },
+    {
+      "src": "IMG_0584.JPG",
+      "id": "kiran/expectant-couple-front",
+      "status": "ready"
+    },
+    {
+      "src": "07.JPG",
+      "id": "kiran/expectant-couple-side",
+      "status": "ready"
+    },
+    {
+      "src": "DSC02065.jpg",
+      "id": "kiran/standing-couple",
+      "status": "ready"
+    },
+    {
+      "src": "DSC02064.JPG",
+      "id": "kiran/standing-couple-in-the-yard",
+      "status": "ready"
+    },
+    {
+      "src": "DSC02063.JPG",
+      "id": "kiran/reclining-couple",
+      "status": "ready"
+    },
+    {
+      "src": "DSC02062.jpg",
+      "id": "kiran/reclining-couple-above",
+      "status": "ready"
+    },
+    {
+      "src": "DSC02061.jpg",
+      "id": "kiran/two-torsos",
+      "status": "ready"
+    },
+    {
+      "src": "DSC02055.JPG",
+      "id": "kiran/carving-with-a-pointing-machine",
+      "status": "ready"
+    },
+    {
+      "src": "DSC05062.JPG",
+      "id": "kiran/exhibition-2012",
+      "status": "fix"
+    },
+    {
+      "src": "000 (1).JPG",
+      "id": "kiran/stone-frame",
+      "status": "fix"
+    },
+    {
+      "src": "IMG_0005 (33).jpg",
+      "id": "kiran/stone-column",
+      "status": "fix"
+    },
+    {
+      "src": "english.jpg",
+      "id": "kiran/press-lokmat-times-front",
+      "status": "ready"
+    },
+    {
+      "src": "english.jpg1.jpg",
+      "id": "kiran/press-lokmat-times-adate",
+      "status": "ready"
+    },
+    {
+      "src": "hindi.jpg",
+      "id": "kiran/press-lokmat-samachar-front",
+      "status": "ready"
+    },
+    {
+      "src": "hindi.jpg1.jpg",
+      "id": "kiran/press-lokmat-samachar-inside",
+      "status": "ready"
+    },
+    {
+      "src": "7 jan 2015 lokmat.jpg",
+      "id": "kiran/press-lokmat-marathi",
+      "status": "ready"
+    }
   ]
 }

@@ -9,7 +9,7 @@ All content comes from the studio's old website and the catalogue prepared for s
 ```bash
 npm install
 npm run dev       # local development at http://localhost:5173
-npm run build     # production build in dist/
+npm run build     # production build in dist/, every page pre-rendered (see below)
 npm run preview   # serve the production build locally
 ```
 
@@ -82,7 +82,13 @@ appear on the site.
 
 ```bash
 python3 -I scripts/import-client-images.py "/run/media/brijesh/0050-1781/Kiran Stone"
+sh scripts/make-avif.sh                      # AVIF copies of new photos (the build checks)
+python3 -I scripts/make-share-images.py      # link-preview pictures, if a cover changed
 ```
+
+Every WebP in `public/img` has an AVIF copy beside it, about half the size, which browsers that
+read AVIF are given (`ArtImage`, `Lightbox`, the hero portrait). `npm run build` stops if one is
+missing.
 
 ## Enquiry form
 
@@ -124,18 +130,77 @@ All of it respects the visitor's reduced-motion setting: the page is then shown 
 
 **Performance.** Everything that moves is animated with `transform` and `opacity`, which the GPU composites without repainting: reveals lift a cover in the page's colour instead of animating `clip-path`, the curtain is two scaled panels, the hero light is a moved gradient disc. Avoid animating CSS variables, `filter`, `clip-path`, `backdrop-filter` or `mix-blend-mode` on large areas: on an ordinary laptop those made scrolling drop to about 20 frames a second. Home-page sections far from the screen use `.cv-auto` (`content-visibility: auto`), so they are not rendered until they come near.
 
+## Languages
+
+The site reads in English, Hindi and Marathi; the switch is in the header and the choice is
+remembered in the browser. Text is translated by its English wording: `t('Works')` (from `useT()`
+in `src/i18n/index.jsx`) looks the sentence up in `src/i18n/hi.js` and `src/i18n/mr.js`. A sentence
+with no translation yet shows in English, so new text never breaks a page; add its translation to
+both files. Headings given to `SplitText`, quotes given to `ScrollWords` and `<Seo>` titles translate
+themselves. Kiran Adate's quote uses his own Hindi and Marathi words from the Lokmat papers of
+7 January 2015. Pre-rendered pages are in English; the chosen language applies when the app starts.
+The translations should be read by a native speaker before launch (see `CONTENT-TO-CONFIRM.md`).
+
+## Pre-rendering, search and link previews
+
+`npm run build` runs three steps: the normal Vite build, a server build of `src/entry-server.jsx`,
+and `scripts/prerender.mjs`, which renders every page (listed in `entry-server.jsx`) to its own
+`dist/<path>/index.html` with its title, description, canonical link, link-preview tags and
+structured data (schema.org `Person` on the home and About pages, `VisualArtwork` on each work).
+It also writes `dist/sitemap.xml`, `dist/robots.txt` and `dist/404.html`, and preloads the two
+fonts used on first paint. In the browser the app takes over once the page's code has loaded.
+
+Link previews (WhatsApp, LinkedIn…) use 1200x630 JPEGs in `public/share/`, one per work and
+`kiran-adate.jpg` for other pages, made by `python3 -I scripts/make-share-images.py`. The build
+stops if a work has none.
+
+## Portfolio PDF
+
+`/portfolio` is the portfolio as A4 landscape sheets, built from the same data. The downloadable
+file `public/kiran-adate-portfolio.pdf` (linked from About and Contact) is made from it:
+
+```bash
+npm run build
+PLAYWRIGHT=/path/to/node_modules/playwright/index.mjs node scripts/make-portfolio-pdf.mjs
+npm run build    # copies the new PDF into dist
+```
+
+It needs Playwright with Chromium, and Ghostscript (`gs`) to compress the photographs (27 MB to
+about 2 MB).
+
+## Films of the work
+
+A work can have a film (`film` in `src/data/projects.js`). Its page then gets an "On film" section:
+a still from the work's photographs with a play button, and the video only once it is pressed, so a
+film costs visitors nothing until they ask for it. Google also gets the film's details.
+
+```bash
+sh scripts/make-film.sh ~/Downloads/hawker-making.mov hawker   # writes public/film/hawker.mp4
+```
+
+then add `film: { src: '/film/hawker.mp4', caption: '…', date: 'YYYY-MM-DD', length: '2:40' }` to the
+work (the script prints the length). Optional: `poster` (a photo id; default the cover) and
+`captions` (a `.vtt` file in `public/film`). The build stops if a film named in the data is missing.
+No work has a film yet.
+
+## Visitor statistics
+
+Off until configured: set `site.analytics.cloudflareToken` (Cloudflare Web Analytics, free) or
+`site.analytics.plausibleDomain` (Plausible) in `src/data/site.js`. Both are cookie-free, so no
+cookie banner is needed.
+
 ## Deployment
 
-The site is a single-page app, so the host must send every path to `index.html`:
-- Netlify: handled by `public/_redirects`.
-- Vercel: handled by `vercel.json`.
-- Other hosts: add an equivalent rewrite rule.
+Every page is a file in `dist/`, so no rewrite to `index.html` is needed and unknown addresses get
+`404.html` with a real 404 status:
+- Netlify: `public/_redirects` is kept empty on purpose.
+- Vercel: `vercel.json` serves `/about` from `about/index.html`.
+- Other static hosts: serve `dist/` as files, with `404.html` for missing paths.
 
 Before launch:
 - Work through `CONTENT-TO-CONFIRM.md`.
-- `site.url` in `src/data/site.js` is set to https://www.inventfineart.com, which canonical and Open Graph URLs use.
-
-SEO note: page titles, descriptions and Open Graph tags are set per page at runtime. Google renders JavaScript, but social link previews and some crawlers do not. For best results, add prerendering (for example `vite-plugin-prerender` or a prerender step on your host) or move the same components to a framework with static generation, such as Astro or Next.js. The components and data files carry over unchanged.
+- `site.url` in `src/data/site.js` is set to https://www.inventfineart.com; canonical links, the
+  sitemap and link previews use it. Change it when the domain (kiranadate.com or .in) is chosen.
 
 ## Dependency versions
 

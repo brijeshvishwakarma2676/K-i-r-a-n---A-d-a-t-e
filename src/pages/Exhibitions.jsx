@@ -5,10 +5,13 @@ import { ClipReveal, SplitText } from '../components/Motion'
 import Invitation from '../sections/Invitation'
 import { dateRange, exhibitions, statusOf, yearOf } from '../data/exhibitions'
 import { projectBySlug, workPath } from '../data/projects'
+import { useLang, useT } from '../i18n'
 
 const LABEL = { current: 'Now showing', upcoming: 'Upcoming' }
 
 export default function Exhibitions() {
+  const t = useT()
+  const { lang } = useLang()
   const sorted = [...exhibitions].sort((a, b) => (a.start < b.start ? 1 : -1))
   const live = sorted.filter((x) => statusOf(x) !== 'past')
   const past = sorted.filter((x) => statusOf(x) === 'past')
@@ -28,7 +31,7 @@ export default function Exhibitions() {
             delay={0.3}
           />
           <p className="col-span-12 max-w-[42ch] self-end text-[1.02rem] md:col-span-4">
-            Solo and group exhibitions, sculpture camps and residencies.
+            {t('Solo and group exhibitions, sculpture camps and residencies.')}
           </p>
         </div>
       </header>
@@ -44,16 +47,16 @@ export default function Exhibitions() {
               </div>
             )}
             <div className={`col-span-12 self-end ${x.image ? 'md:col-span-4' : 'md:col-span-8'}`}>
-              <p className="caption text-geru">{LABEL[statusOf(x)]}</p>
-              <h2 id={`x-${x.slug}`} className="label-title mt-3 text-[clamp(2.4rem,1.6rem+2.6vw,4rem)] leading-[0.98]">{x.title}</h2>
+              <p className="caption text-geru">{t(LABEL[statusOf(x)])}</p>
+              <h2 id={`x-${x.slug}`} className="label-title mt-3 text-[clamp(2.4rem,1.6rem+2.6vw,4rem)] leading-[0.98]">{t(x.title)}</h2>
               <p className="mt-5 text-[1.02rem]">
-                {x.kind}
+                {t(x.kind)}
                 <br />
-                {x.venue}, {x.city}
+                {t(x.venue)}, {t(x.city)}
                 <br />
-                <span className="text-ink-soft">{dateRange(x)}</span>
+                <span className="text-ink-soft">{dateRange(x, lang)}</span>
               </p>
-              <p className="mt-6 max-w-[40ch] text-ink-soft">{x.text}</p>
+              <p className="mt-6 max-w-[40ch] text-ink-soft">{t(x.text)}</p>
               <ShownWorks x={x} />
             </div>
           </div>
@@ -61,7 +64,7 @@ export default function Exhibitions() {
       ))}
 
       <section aria-labelledby="past-title" className="wrap pb-24 pt-12 md:pb-32">
-        <h2 id="past-title" className="caption border-b border-stone pb-4">Past</h2>
+        <h2 id="past-title" className="caption border-b border-stone pb-4">{t('Past')}</h2>
         {years.map((y) => (
           <div key={y} className="grid grid-cols-12 gap-x-6 border-b border-stone py-10 md:py-14">
             <p className="display col-span-12 text-[2.4rem] leading-none tabular-nums text-ink-soft md:col-span-2">{y}</p>
@@ -69,12 +72,12 @@ export default function Exhibitions() {
               {past.filter((x) => yearOf(x) === y).map((x) => (
                 <li key={x.slug} className="grid grid-cols-12 gap-x-6 gap-y-5">
                   <div className="col-span-12 md:col-span-6">
-                    <p className="caption">{x.kind}</p>
-                    <h3 className="label-title mt-1 text-[clamp(1.7rem,1.3rem+1.2vw,2.4rem)] leading-tight">{x.title}</h3>
+                    <p className="caption">{t(x.kind)}</p>
+                    <h3 className="label-title mt-1 text-[clamp(1.7rem,1.3rem+1.2vw,2.4rem)] leading-tight">{t(x.title)}</h3>
                     <p className="mt-2 text-[0.98rem]">
-                      {x.venue}, {x.city}. <span className="text-ink-soft">{dateRange(x)}</span>
+                      {t(x.venue)}, {t(x.city)}. <span className="text-ink-soft">{dateRange(x, lang)}</span>
                     </p>
-                    <p className="mt-3 max-w-[48ch] text-[0.95rem] text-ink-soft">{x.text}</p>
+                    <p className="mt-3 max-w-[48ch] text-[0.95rem] text-ink-soft">{t(x.text)}</p>
                     <ShownWorks x={x} />
                   </div>
                   {x.image && (
@@ -95,16 +98,17 @@ export default function Exhibitions() {
 }
 
 function ShownWorks({ x }) {
+  const t = useT()
   const works = x.works.map((s) => projectBySlug[s]).filter(Boolean)
   if (!works.length) return null
   return (
     <p className="caption mt-4">
-      Works shown:{' '}
+      {t('Works shown:')}{' '}
       {works.map((p, i) => (
         <span key={p.slug}>
           {i > 0 && ', '}
           <Link to={workPath(p)} className="underline decoration-ink/25 underline-offset-4 hover:text-geru">
-            {p.title}
+            {t(p.title)}
           </Link>
         </span>
       ))}

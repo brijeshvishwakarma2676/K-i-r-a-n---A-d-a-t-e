@@ -2,9 +2,12 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 
-export default defineConfig({
+export default defineConfig(({ isSsrBuild }) => ({
   plugins: [react(), tailwindcss()],
-  build: {
+  // The server build (src/entry-server.jsx, used by scripts/prerender.mjs) bundles the motion and
+  // icon libraries so Node can load them; React stays external.
+  ssr: { noExternal: ['framer-motion', 'lucide-react', /^@fontsource/] },
+  build: isSsrBuild ? {} : {
     rollupOptions: {
       output: {
         // Libraries in their own files: they change rarely, so browsers keep them cached
@@ -16,4 +19,4 @@ export default defineConfig({
       },
     },
   },
-})
+}))

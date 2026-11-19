@@ -6,6 +6,7 @@ import Masonry from '../components/Masonry'
 import { ClipReveal, Parallax, SplitText } from '../components/Motion'
 import Invitation from '../sections/Invitation'
 import NotFound from './NotFound'
+import { useT } from '../i18n'
 import { disciplineBySlug, disciplines } from '../data/disciplines'
 import { projectsFor } from '../data/projects'
 
@@ -42,6 +43,7 @@ export default function Discipline() {
 }
 
 function Title({ d, className = '' }) {
+  const t = useT()
   return (
     <SplitText
       as="h1"
@@ -54,11 +56,12 @@ function Title({ d, className = '' }) {
 }
 
 function Crumb({ d, dark }) {
+  const t = useT()
   return (
-    <nav aria-label="Breadcrumb" className="caption mb-6">
-      <Link to="/works" className={`hover:underline ${dark ? 'text-basalt-soft' : ''}`}>Works</Link>
+    <nav aria-label={t('Breadcrumb')} className="caption mb-6">
+      <Link to="/works" className={`hover:underline ${dark ? 'text-basalt-soft' : ''}`}>{t('Works')}</Link>
       <span aria-hidden="true" className="mx-2">/</span>
-      <span aria-current="page">{d.shortName}</span>
+      <span aria-current="page">{t(d.shortName)}</span>
     </nav>
   )
 }
@@ -66,13 +69,14 @@ function Crumb({ d, dark }) {
 /* ---------------------------------------------------------------- openings */
 
 function MonumentOpening({ d }) {
+  const t = useT()
   return (
     <header className="wrap grid grid-cols-12 gap-x-6 gap-y-12 pt-[calc(var(--header-h)+3rem)] md:pt-[calc(var(--header-h)+4rem)]">
       <div className="col-span-12 flex flex-col justify-end md:col-span-5 md:pb-6">
         <Crumb d={d} />
         <Title d={d} />
-        <p className="display mt-8 text-[1.6rem] italic leading-snug text-[var(--accent)]">{d.headline}</p>
-        <p className="mt-6 max-w-[44ch] text-[1.02rem]">{d.intro}</p>
+        <p className="display mt-8 text-[1.6rem] italic leading-snug text-[var(--accent)]">{t(d.headline)}</p>
+        <p className="mt-6 max-w-[44ch] text-[1.02rem]">{t(d.intro)}</p>
       </div>
       <div className="col-span-12 md:col-span-6 md:col-start-7">
         <ClipReveal>
@@ -84,6 +88,7 @@ function MonumentOpening({ d }) {
 }
 
 function LandscapeOpening({ d }) {
+  const t = useT()
   return (
     <header className="pt-[calc(var(--header-h)+env(safe-area-inset-top,0px))]">
       <div className="relative">
@@ -96,18 +101,19 @@ function LandscapeOpening({ d }) {
           <div className="max-w-[40rem] bg-limestone px-6 pb-8 pt-8 sm:px-10 sm:pt-10">
             <Crumb d={d} />
             <Title d={d} />
-            <p className="display mt-6 text-[1.5rem] italic leading-snug text-[var(--accent)]">{d.headline}</p>
+            <p className="display mt-6 text-[1.5rem] italic leading-snug text-[var(--accent)]">{t(d.headline)}</p>
           </div>
         </div>
       </div>
       <div className="wrap grid grid-cols-12 gap-x-6 pt-10 lg:pt-16">
-        <p className="col-span-12 max-w-[48ch] text-[1.05rem] md:col-span-6 md:col-start-1 lg:col-start-2 lg:px-10">{d.intro}</p>
+        <p className="col-span-12 max-w-[48ch] text-[1.05rem] md:col-span-6 md:col-start-1 lg:col-start-2 lg:px-10">{t(d.intro)}</p>
       </div>
     </header>
   )
 }
 
 function ReliefOpening({ d }) {
+  const t = useT()
   return (
     <header className="on-dark bg-basalt text-bone">
       <div className="wrap pb-14 pt-[calc(var(--header-h)+3rem)] md:pt-[calc(var(--header-h)+5rem)]">
@@ -115,8 +121,8 @@ function ReliefOpening({ d }) {
         <div className="grid grid-cols-12 gap-x-6 gap-y-8">
           <Title d={d} className="col-span-12 md:col-span-8" />
           <div className="col-span-12 self-end md:col-span-4">
-            <p className="display text-[1.5rem] italic leading-snug text-[#D8BE8A]">{d.headline}</p>
-            <p className="mt-5 max-w-[42ch] text-[1rem] text-bone/85">{d.intro}</p>
+            <p className="display text-[1.5rem] italic leading-snug text-[#D8BE8A]">{t(d.headline)}</p>
+            <p className="mt-5 max-w-[42ch] text-[1rem] text-bone/85">{t(d.intro)}</p>
           </div>
         </div>
       </div>
@@ -126,13 +132,14 @@ function ReliefOpening({ d }) {
         </Parallax>
       </ClipReveal>
       <div className="wrap py-5">
-        <p className="caption">{d.cover.alt}</p>
+        <p className="caption">{t(d.cover.alt)}</p>
       </div>
     </header>
   )
 }
 
 function DrawingOpening({ d }) {
+  const t = useT()
   const types = d.vocabulary
   return (
     <header className="drawing-grid border-b border-steel/20 pt-[calc(var(--header-h)+3rem)] md:pt-[calc(var(--header-h)+4rem)]">
@@ -140,8 +147,8 @@ function DrawingOpening({ d }) {
         <div className="col-span-12 md:col-span-7">
           <Crumb d={d} />
           <Title d={d} className="max-w-[14ch]" />
-          <p className="display mt-8 text-[1.6rem] italic leading-snug text-[var(--accent)]">{d.headline}</p>
-          <p className="mt-6 max-w-[48ch] text-[1.02rem]">{d.intro}</p>
+          <p className="display mt-8 text-[1.6rem] italic leading-snug text-[var(--accent)]">{t(d.headline)}</p>
+          <p className="mt-6 max-w-[48ch] text-[1.02rem]">{t(d.intro)}</p>
         </div>
         <aside className="col-span-12 self-end bg-limestone/90 p-6 md:col-span-4 md:col-start-9" aria-label="Vocabulary">
           <ArtImage image={d.cover} ratio="4/5" priority sizes="(min-width: 768px) 33vw, 100vw" />
@@ -163,21 +170,22 @@ function DrawingOpening({ d }) {
 /* ------------------------------------------------------------------- body */
 
 function Body({ d }) {
+  const t = useT()
   return (
-    <section aria-label={`About ${d.shortName.toLowerCase()}`} className="wrap py-24 md:py-32">
+    <section aria-label={t('About {topic}', { topic: t(d.shortName).toLowerCase() })} className="wrap py-24 md:py-32">
       <div className="grid grid-cols-12 gap-x-6 gap-y-12">
         <div className="col-span-12 md:col-span-6 lg:col-span-5 lg:col-start-2">
           <div className="prose-body text-[1.05rem]">
             {d.body.map((p) => (
-              <p key={p}>{p}</p>
+              <p key={p}>{t(p)}</p>
             ))}
           </div>
         </div>
         <div className="col-span-12 grid grid-cols-2 gap-8 md:col-span-5 md:col-start-8 lg:col-span-4 lg:col-start-8">
           <div>
-            <h2 className="caption">Materials</h2>
+            <h2 className="caption">{t('Materials')}</h2>
             <ul className="mt-3 space-y-1.5 text-[0.98rem]">
-              {d.materials.map((s) => <li key={s}>{s}</li>)}
+              {d.materials.map((s) => <li key={s}>{t(s)}</li>)}
             </ul>
           </div>
         </div>
@@ -189,8 +197,9 @@ function Body({ d }) {
 /* --------------------------------------------------------------- features */
 
 function MonumentFeature({ d }) {
+  const t = useT()
   return (
-    <section aria-label="Sculpture in its setting" className="bg-paper py-24 md:py-32">
+    <section aria-label={t('Sculpture in its setting')} className="bg-paper py-24 md:py-32">
       <div className="wrap grid grid-cols-12 gap-x-6 gap-y-10">
         <div className="col-span-12 md:col-span-8">
           <ClipReveal>
@@ -200,8 +209,8 @@ function MonumentFeature({ d }) {
           </ClipReveal>
         </div>
         <div className="col-span-12 self-end md:col-span-3 md:col-start-10">
-          <p className="display text-[clamp(1.6rem,1.1rem+1.4vw,2.3rem)] leading-[1.12]">{d.note}</p>
-          <p className="caption mt-5">{d.context.alt}</p>
+          <p className="display text-[clamp(1.6rem,1.1rem+1.4vw,2.3rem)] leading-[1.12]">{t(d.note)}</p>
+          <p className="caption mt-5">{t(d.context.alt)}</p>
         </div>
       </div>
     </section>
@@ -209,6 +218,7 @@ function MonumentFeature({ d }) {
 }
 
 function LandscapeFeature({ d }) {
+  const t = useT()
   return (
     <section aria-label={`${d.name} in their setting`} className="bg-paper py-24 md:py-32">
       <div className="wrap grid grid-cols-12 gap-x-6 gap-y-10">
@@ -226,9 +236,9 @@ function LandscapeFeature({ d }) {
               </dl>
             </>
           ) : (
-            <p className="display text-[clamp(1.6rem,1.1rem+1.4vw,2.3rem)] leading-[1.12]">{d.note}</p>
+            <p className="display text-[clamp(1.6rem,1.1rem+1.4vw,2.3rem)] leading-[1.12]">{t(d.note)}</p>
           )}
-          <p className="caption mt-5">{d.context.alt}</p>
+          <p className="caption mt-5">{t(d.context.alt)}</p>
         </div>
         <div className="col-span-12 md:col-span-7 md:col-start-6">
           <ClipReveal>
@@ -243,8 +253,9 @@ function LandscapeFeature({ d }) {
 }
 
 function ReliefFeature({ d }) {
+  const t = useT()
   return (
-    <section aria-label="Murals and wall features" className="bg-paper py-24 md:py-32">
+    <section aria-label={t('Murals and wall features')} className="bg-paper py-24 md:py-32">
       <div className="wrap">
         <dl className="grid gap-x-6 gap-y-12 md:grid-cols-2">
           {d.definitions.map((def) => (
@@ -270,6 +281,7 @@ function ReliefFeature({ d }) {
 }
 
 function DrawingFeature({ d }) {
+  const t = useT()
   return (
     <section aria-labelledby="catalogue-title" className="drawing-grid border-y border-steel/20 py-24 md:py-32">
       <div className="wrap">
@@ -302,6 +314,7 @@ function DrawingFeature({ d }) {
 
 // All the works in this body, with a subject filter where the body has groups.
 function WorksGrid({ d, list }) {
+  const t = useT()
   const [group, setGroup] = useState('all')
   const groups = (d.groups || []).map((g) => ({ ...g, count: list.filter((p) => p.group === g.slug).length })).filter((g) => g.count)
   const shown = group === 'all' ? list : list.filter((p) => p.group === group)
@@ -309,10 +322,10 @@ function WorksGrid({ d, list }) {
     <section aria-labelledby="projects-title" className="wrap py-24 md:py-32">
       <div className="flex flex-wrap items-end justify-between gap-6">
         <SplitText as="h2" id="projects-title" className="display text-[clamp(2.2rem,1.4rem+2.8vw,3.8rem)]" text="Works" />
-        <p className="caption">{list.length} works</p>
+        <p className="caption">{t('{n} works', { n: list.length })}</p>
       </div>
       {groups.length > 1 && (
-        <div role="group" aria-label="Show works by subject" className="mt-8 flex flex-wrap gap-x-6 gap-y-2 border-b border-stone">
+        <div role="group" aria-label={t('Show works by subject')} className="mt-8 flex flex-wrap gap-x-6 gap-y-2 border-b border-stone">
           {[{ slug: 'all', name: 'All', count: list.length }, ...groups].map((g) => (
             <button
               key={g.slug}
@@ -323,7 +336,7 @@ function WorksGrid({ d, list }) {
                 group === g.slug ? 'border-ink italic text-ink' : 'border-transparent text-ink-soft hover:text-ink'
               }`}
             >
-              {g.name} <sup className="font-sans text-[0.65rem] not-italic tabular-nums opacity-70">{g.count}</sup>
+              {t(g.name)} <sup className="font-sans text-[0.65rem] not-italic tabular-nums">{g.count}</sup>
             </button>
           ))}
         </div>
@@ -336,9 +349,10 @@ function WorksGrid({ d, list }) {
 }
 
 function OtherDisciplines({ current }) {
+  const t = useT()
   const others = disciplines.filter((d) => d.slug !== current)
   return (
-    <nav aria-label="Other bodies of work" className="wrap pb-12">
+    <nav aria-label={t('Other bodies of work')} className="wrap pb-12">
       <ul className="grid gap-px border-y border-stone md:grid-cols-2">
         {others.map((d) => (
           <li key={d.slug}>
@@ -346,7 +360,7 @@ function OtherDisciplines({ current }) {
               <div className="w-20 shrink-0">
                 <ArtImage image={d.cover} ratio="1/1" tag={false} sizes="80px" />
               </div>
-              <span className="display text-[1.5rem] leading-tight group-hover:text-geru">{d.shortName}</span>
+              <span className="display text-[1.5rem] leading-tight group-hover:text-geru">{t(d.shortName)}</span>
             </Link>
           </li>
         ))}

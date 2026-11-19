@@ -1,9 +1,12 @@
 import { Link } from 'react-router'
-import Seo from '../components/Seo'
+import Seo, { personLd } from '../components/Seo'
+import PublicWorksMap from '../components/PublicWorksMap'
 import ArtImage from '../components/ArtImage'
 import { ClipReveal, Parallax, Reveal, ScrollWords, SplitText } from '../components/Motion'
 import Invitation from '../sections/Invitation'
+import PressClippings from '../components/PressClippings'
 import { artist, site } from '../data/site'
+import { useLang, useT } from '../i18n'
 import { materials } from '../data/disciplines'
 import { dateRange, exhibitions } from '../data/exhibitions'
 import { projectBySlug, workPath } from '../data/projects'
@@ -15,9 +18,11 @@ const workshopImage = { id: 'kiran/hawker-workshop', alt: 'Building up the Sculp
 const shows = [...exhibitions].sort((a, b) => (a.start < b.start ? 1 : -1))
 
 export default function About() {
+  const t = useT()
+  const { lang } = useLang()
   return (
     <>
-      <Seo title="About" description={artist.shortBio} />
+      <Seo title="About" description={artist.shortBio} jsonLd={personLd(artist)} />
 
       <header className="wrap grid grid-cols-12 gap-x-6 gap-y-12 pt-[calc(var(--header-h)+3rem)] md:pt-[calc(var(--header-h)+5rem)]">
         <div className="col-span-12 flex flex-col md:col-span-7">
@@ -30,19 +35,19 @@ export default function About() {
             step={0.12}
           />
           <p className="caption mt-4">
-            {site.role}, {site.basedIn}. Studio: {site.studio}, since {site.since}.
+            {t('Sculptor, Mumbai. Studio: {studio}, since {year}.', { studio: site.studio, year: site.since })}
           </p>
-          <Reveal as="p" delay={0.6} className="lede mt-auto max-w-[32ch] pt-12">{artist.shortBio}</Reveal>
+          <Reveal as="p" delay={0.6} className="lede mt-auto max-w-[32ch] pt-12">{t(artist.shortBio)}</Reveal>
         </div>
         <figure className="col-span-10 col-start-3 sm:col-span-7 sm:col-start-6 md:col-span-4 md:col-start-9">
           <ArtImage image={artist.portrait} ratio="3/4" priority sizes="(min-width: 768px) 33vw, 85vw" />
-          <figcaption className="caption mt-3">{artist.portrait.alt}</figcaption>
+          <figcaption className="caption mt-3">{t(artist.portrait.alt)}</figcaption>
         </figure>
       </header>
 
-      <section aria-labelledby="statement-title" className="wrap py-28 md:py-40">
+      <section aria-labelledby="statement-title" className="room-dark"><div className="wrap py-28 md:py-40">
         <figure className="grid grid-cols-12 gap-x-6">
-          <h2 id="statement-title" className="caption col-span-12 mb-8 md:col-span-10 md:col-start-2">On the work</h2>
+          <h2 id="statement-title" className="caption col-span-12 mb-8 md:col-span-10 md:col-start-2">{t('On the work')}</h2>
           <blockquote className="display col-span-12 text-[clamp(2rem,1.2rem+2.8vw,3.8rem)] italic leading-[1.08] md:col-span-10 md:col-start-2">
             <ScrollWords text={artist.statement} />
           </blockquote>
@@ -51,38 +56,46 @@ export default function About() {
         <div className="mt-24 grid grid-cols-12 gap-x-6 gap-y-10 md:mt-32">
           <div className="col-span-12 md:col-span-4">
             <SplitText as="h2" className="display text-[clamp(2.2rem,1.4rem+2.8vw,3.8rem)]" text="The practice" />
-            <p className="mt-6 max-w-[30ch] text-[1.15rem] italic text-ink-soft display">From a sketch to the finished piece.</p>
+            <p className="mt-6 max-w-[30ch] text-[1.15rem] italic text-ink-soft display">{t('From a sketch to the finished piece.')}</p>
           </div>
           <Reveal className="prose-body col-span-12 text-[1.06rem] md:col-span-6 md:col-start-6">
             {artist.practice.map((p) => (
-              <p key={p}>{p}</p>
+              <p key={p}>{t(p)}</p>
             ))}
           </Reveal>
         </div>
-      </section>
+      </div></section>
 
-      <section aria-label="On site">
+      <section aria-label={t('On site')}>
         <ClipReveal>
           <Parallax amount={5} className="aspect-[4/5] sm:aspect-[16/9] lg:aspect-[21/9]">
             <ArtImage image={siteImage} fill sizes="100vw" />
           </Parallax>
         </ClipReveal>
-        <p className="wrap caption mt-4">{siteImage.alt}</p>
+        <p className="wrap caption mt-4">{t(siteImage.alt)}</p>
+      </section>
+
+      <section aria-labelledby="where-title" className="wrap pt-28 md:pt-40">
+        <div className="grid grid-cols-12 gap-x-6 gap-y-6">
+          <SplitText as="h2" id="where-title" className="display col-span-12 text-[clamp(2.2rem,1.4rem+2.8vw,3.8rem)] md:col-span-6" text="Where to see the work" />
+          <p className="col-span-12 max-w-[44ch] self-end text-[1.02rem] md:col-span-5 md:col-start-8">{t('The public works stand in the open, where anyone can visit them.')}</p>
+        </div>
+        <PublicWorksMap className="mt-14 md:mt-20" />
       </section>
 
       <section aria-labelledby="materials-title" className="wrap py-28 md:py-40">
         <div className="grid grid-cols-12 gap-x-6 gap-y-10">
           <div className="col-span-12 md:col-span-5">
             <SplitText as="h2" id="materials-title" className="display text-[clamp(2.2rem,1.4rem+2.8vw,3.8rem)]" text="Materials" />
-            <p className="mt-6 max-w-[46ch] text-[1.04rem]">{artist.materialsNote}</p>
+            <p className="mt-6 max-w-[46ch] text-[1.04rem]">{t(artist.materialsNote)}</p>
           </div>
           <ul className="col-span-12 md:col-span-6 md:col-start-7">
             {materials.map((m) => (
               <li key={m.name} className="grid grid-cols-[4.5rem_1fr] items-center gap-5 border-b border-stone py-4 first:border-t">
                 <ArtImage image={{ src: null, alt: `${m.name} surface`, plate: m.plate }} ratio="1/1" tag={false} />
                 <div>
-                  <h3 className="display text-[1.5rem] leading-none">{m.name}</h3>
-                  <p className="caption mt-1.5">{m.note}</p>
+                  <h3 className="display text-[1.5rem] leading-none">{t(m.name)}</h3>
+                  <p className="caption mt-1.5">{t(m.note)}</p>
                 </div>
               </li>
             ))}
@@ -94,12 +107,12 @@ export default function About() {
         <div className="wrap grid grid-cols-12 gap-x-6 gap-y-12">
           <figure className="col-span-12 sm:col-span-8 md:col-span-4">
             <ArtImage image={workshopImage} ratio="3/4" sizes="(min-width: 768px) 33vw, 100vw" />
-            <figcaption className="caption mt-3">{workshopImage.alt}</figcaption>
+            <figcaption className="caption mt-3">{t(workshopImage.alt)}</figcaption>
           </figure>
           <div className="col-span-12 md:col-span-7 md:col-start-6">
             <SplitText as="h2" id="workshop-title" className="display text-[clamp(2.2rem,1.4rem+2.8vw,3.8rem)]" text="The workshop" />
             <Reveal as="p" className="mt-6 max-w-[52ch] text-[1.04rem]">
-              The work is made in the workshop of {site.studio}, the studio {site.name} leads, at {site.workshop.lines[1]}, near {site.basedIn}. Studio visits are by appointment.
+              {t('The work is made in the workshop of {studio}, the studio {name} leads, at {place}, near {city}. Studio visits are by appointment.', { studio: site.studio, name: site.name, place: site.workshop.lines[1], city: site.basedIn })}
             </Reveal>
           </div>
         </div>
@@ -109,51 +122,45 @@ export default function About() {
         <div className="grid grid-cols-12 gap-x-6 gap-y-12">
           <div className="col-span-12 md:col-span-4">
             <SplitText as="h2" id="record-title" className="display text-[clamp(2.2rem,1.4rem+2.8vw,3.8rem)]" text="Record" />
-            <Link to="/exhibitions" className="text-link mt-8 inline-block text-[0.95rem]">Exhibitions</Link>
+            <Link to="/exhibitions" className="text-link mt-8 inline-block text-[0.95rem]">{t('Exhibitions')}</Link>
+            <a href={site.portfolioPdf} download className="arrow-link mt-8 flex w-fit">{t('Download portfolio (PDF)')}</a>
           </div>
           <div className="col-span-12 space-y-16 md:col-span-7 md:col-start-6">
-            <CvList title="Education" rows={[{ year: '', text: artist.education }]} />
+            <CvList title={t('Education')} rows={[{ year: '', text: t(artist.education) }]} />
             <CvList
-              title="Public works"
+              title={t('Public works')}
               rows={artist.publicWorks.map((w) => ({
                 year: w.year,
                 text: (
                   <>
-                    <Link to={workPath(projectBySlug[w.slug])} className="label-title text-[1.14em] hover:text-geru">{projectBySlug[w.slug].title}</Link>, {w.place}
+                    <Link to={workPath(projectBySlug[w.slug])} className="label-title text-[1.14em] hover:text-geru">{t(projectBySlug[w.slug].title)}</Link>, {t(w.place)}
                   </>
                 ),
               }))}
             />
             <CvList
-              title="Studio"
+              title={t('Studio')}
               rows={[
-                { year: site.since, text: `${site.studio} founded in ${site.basedIn}` },
+                { year: site.since, text: t('{studio} founded in {city}', { studio: site.studio, city: site.basedIn }) },
               ]}
             />
             <CvList
-              title="Exhibitions"
+              title={t('Exhibitions')}
               rows={shows.map((x) => ({
                 year: x.start.slice(0, 4),
                 text: (
                   <>
-                    <span className="label-title text-[1.14em]">{x.title}</span>, {x.kind.toLowerCase()}, {x.venue}, {x.city}. {dateRange(x)}
-                  </>
-                ),
-              }))}
-            />
-            <CvList
-              title="Press"
-              rows={artist.press.map((x) => ({
-                year: x.year,
-                text: (
-                  <>
-                    <span className="label-title text-[1.14em]">{x.title}</span>, {x.outlet}
+                    <span className="label-title text-[1.14em]">{t(x.title)}</span>, {t(x.kind).toLowerCase()}, {t(x.venue)}, {t(x.city)}. {dateRange(x, lang)}
                   </>
                 ),
               }))}
             />
             <div>
-              <h3 className="caption">Selected commissions</h3>
+              <h3 className="caption">{t('Press')}</h3>
+              <PressClippings items={artist.press} className="mt-4" />
+            </div>
+            <div>
+              <h3 className="caption">{t('Selected commissions')}</h3>
               <ul className="mt-3 columns-1 gap-x-8 sm:columns-2">
                 {artist.commissions.map((c) => (
                   <li key={c} className="break-inside-avoid border-b border-stone py-2.5 text-[0.98rem]">{c}</li>

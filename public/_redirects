@@ -1,1 +1,2 @@
-/*  /index.html  200
+# Every page is pre-rendered to its own file by scripts/prerender.mjs, so no catch-all rewrite
+# is needed: unknown addresses get dist/404.html with a real 404 status.

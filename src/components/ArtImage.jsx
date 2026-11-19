@@ -14,6 +14,17 @@ import { images } from '../data/images'
 */
 export const photo = (image) => (image?.id ? images[image.id] : null)
 
+/*
+  Every WebP in public/img has an AVIF copy beside it (scripts/make-avif.sh), about half the size.
+  `srcSetOf(files)` lists the WebP files for srcset; `srcSetOf(files, true)` the AVIF copies, given
+  in a <picture> <source> so browsers that read AVIF take it and the rest fall back to WebP.
+  The <picture> is display: contents, so the <img> sizes against the same box as before.
+*/
+export const srcSetOf = (files, avif = false) =>
+  Object.entries(files)
+    .map(([w, url]) => `${avif ? url.replace(/\.webp$/, '.avif') : url} ${w}w`)
+    .join(', ')
+
 export function srcFor(image, max = 1600) {
   const meta = photo(image)
   if (!meta) return image?.src || null
@@ -61,12 +72,14 @@ export default function ArtImage({
   let srcSet = image.srcSet
   if (meta) {
     src = srcFor(image)
-    srcSet = Object.entries(meta.files).map(([width, url]) => `${url} ${width}w`).join(', ')
+    srcSet = srcSetOf(meta.files)
   }
 
   return (
     <div ref={ref} className={`relative overflow-hidden ${isPlate ? 'grain bg-stone' : ''} ${fill ? 'h-full w-full' : ''} ${className}`} style={style}>
       {src ? (
+        <picture className="contents">
+        {meta && <source type="image/avif" srcSet={srcSetOf(meta.files, true)} sizes={sizes} />}
         <img
           src={src}
           srcSet={srcSet}
@@ -79,6 +92,7 @@ export default function ArtImage({
           className={`absolute inset-0 h-full w-full transition-[opacity,scale] duration-[1.1s] ease-gallery ${image.fit === 'contain' ? 'object-contain' : 'object-cover'} ${loaded || priority ? 'scale-100 opacity-100' : 'scale-[1.04] opacity-0'}`}
           style={image.position ? { objectPosition: image.position } : undefined}
         />
+        </picture>
       ) : (
         <Plate {...image.plate} ratio={measured || w / h} title={image.alt} className="absolute inset-0 h-full w-full" />
       )}

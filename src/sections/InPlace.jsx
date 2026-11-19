@@ -6,10 +6,11 @@ import { disciplineBySlug } from '../data/disciplines'
 import { projectBySlug, workPath } from '../data/projects'
 
 import { SplitText } from '../components/Motion'
+import { useT } from '../i18n'
 
 // Works seen where they stand: [work slug, which photo of it]. Only works from the portfolio.
 const sited = [
-  ['sculpture-of-hawker', 4],
+  ['sculpture-of-hawker', 0],
   ['runner-around-a-column', 0],
   ['dancers-relief-lobby-wall', 0],
   ['columns-of-climbing-figures', 0],
@@ -21,6 +22,7 @@ const sited = [
 
 // Works in their places, scrolled sideways at the reader's pace (no scroll hijacking).
 export default function InPlace() {
+  const t = useT()
   const track = useRef(null)
   const scroll = (dir) => {
     const el = track.current
@@ -34,14 +36,14 @@ export default function InPlace() {
         <div>
           <SplitText as="h2" id="inplace-title" className="display text-[clamp(2.4rem,1.4rem+3.6vw,4.6rem)]" text="In place" />
           <p className="mt-4 max-w-[50ch] text-[1rem]">
-            Works in the places they were made for: a lobby, a stairwell, a garden, a park.
+            {t('Works in the places they were made for: a lobby, a stairwell, a garden, a park.')}
           </p>
         </div>
         <div className="hidden gap-2 md:flex">
-          <button type="button" onClick={() => scroll(-1)} aria-label="Scroll back" className="border border-ink/30 p-3 transition-colors hover:bg-ink hover:text-paper">
+          <button type="button" onClick={() => scroll(-1)} aria-label={t('Scroll back')} className="border border-ink/30 p-3 transition-colors hover:bg-ink hover:text-paper">
             <ChevronLeft size={18} strokeWidth={1.25} />
           </button>
-          <button type="button" onClick={() => scroll(1)} aria-label="Scroll forward" className="border border-ink/30 p-3 transition-colors hover:bg-ink hover:text-paper">
+          <button type="button" onClick={() => scroll(1)} aria-label={t('Scroll forward')} className="border border-ink/30 p-3 transition-colors hover:bg-ink hover:text-paper">
             <ChevronRight size={18} strokeWidth={1.25} />
           </button>
         </div>
@@ -50,7 +52,7 @@ export default function InPlace() {
       <ul
         ref={track}
         className="no-scrollbar mt-14 flex snap-x snap-mandatory gap-5 overflow-x-auto scroll-px-[var(--gutter)] px-[var(--gutter)] md:gap-8"
-        aria-label="Works in place"
+        aria-label={t('Works in place')}
       >
         {sited.map(([slug, view], i) => {
           const p = projectBySlug[slug]
@@ -66,9 +68,9 @@ export default function InPlace() {
                   </div>
                 </div>
                 <p className="mt-4 text-[1.1rem] transition-colors duration-300 group-hover:text-geru">
-                  <span className="label-title text-[1.14em]">{p.title}</span>
+                  <span className="label-title text-[1.14em]">{t(p.title)}</span>
                 </p>
-                <p className="caption">{disciplineBySlug[p.discipline].name}</p>
+                <p className="caption">{t(disciplineBySlug[p.discipline].name)}</p>
               </Link>
             </li>
           )

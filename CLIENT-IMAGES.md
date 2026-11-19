@@ -23,13 +23,13 @@ facts come from the Lokmat Times clipping of 7 January 2015 (`english.jpg`, `eng
 
 ---
 
-## 1. On the site now (ready, 26 images)
+## 1. On the site now (ready, 31 images)
 
 | Original | Site id | Where it is used |
 |---|---|---|
 | `IMG_0740edit.jpg` | kiran/freedom-of-press-night | Statue of Freedom of Press: cover |
 | `IMG_0734.JPG` | kiran/freedom-of-press-night-close | Statue page; About: full-width plate |
-| `IMG_0732.JPG` | kiran/freedom-of-press-night-wide | Home: full-width plate (Monument); Statue page |
+| `Freedom of Press Sculpture at Lokmat.png` (cleaned version supplied separately, in ~/Downloads) | kiran/freedom-of-press-day | Home: the large plate; Statue page, third view |
 | `IMG_0639.JPG` | kiran/freedom-of-press-in-the-yard | Home: "From block to statue" 05; Statue page |
 | `IMG_0442.JPG` | kiran/freedom-of-press-carving | Home: "From block to statue" 04; Statue page |
 | `IMG_0266.JPG` | kiran/freedom-of-press-block | Home: "From block to statue" 01; Statue page |
@@ -53,9 +53,14 @@ facts come from the Lokmat Times clipping of 7 January 2015 (`english.jpg`, `eng
 | `DSC02062.jpg` | kiran/reclining-couple-above | Reclining couple page |
 | `DSC02061.jpg` | kiran/two-torsos | Two torsos: cover; Sculpture (body of work): cover; Home: Bodies of work |
 | `DSC02055.JPG` | kiran/carving-with-a-pointing-machine | Home: artist section; About |
+| `english.jpg` | kiran/press-lokmat-times-front | About › Press; Hawker page › In the press |
+| `english.jpg1.jpg` | kiran/press-lokmat-times-adate | About › Press; Hawker page › In the press |
+| `hindi.jpg` | kiran/press-lokmat-samachar-front | About › Press; Hawker page › In the press |
+| `hindi.jpg1.jpg` | kiran/press-lokmat-samachar-inside | About › Press; Hawker page › In the press |
+| `7 jan 2015 lokmat.jpg` | kiran/press-lokmat-marathi | About › Press; Hawker page › In the press |
 
-The press clippings are used as text, not as images: About › Record › Press, the artist's quote on
-the home page and the Hawker page, and the biography (Parali Vaijnath, J.J. School of Art).
+The clippings are shown as pages that open full size, and are also the source of the artist's quote
+(home page, Hawker page) and the biography (Parali Vaijnath, J.J. School of Art).
 
 ---
 
@@ -105,9 +110,6 @@ These are on the site now. A `fix-` version replaces the original automatically 
 ### `IMG_0734.JPG` → `fix-IMG_0734.JPG`
 > Night photograph of a lit stone sculpture of two seated figures reading a newspaper. Remove the white jeep at the right edge and any other parked vehicles, filling with matching dark night background. Reduce noise in the dark areas, keep the warm uplight on the stone, keep the street lamps. Do not change the sculpture.
 
-### `IMG_0732.JPG` → `fix-IMG_0732.JPG`
-> Night photograph of a lit stone sculpture on a stepped plinth with three uplights. Remove the parked white jeep on the right, the cables and loose tools on the gravel around the plinth; keep the gravel bed. Reduce noise, keep the warm light and the dark sky. Do not change the sculpture or the plinth.
-
 ### `IMG_0639.JPG` → `fix-IMG_0639.JPG`
 > Dusk photograph of a finished stone sculpture of two seated figures among stone blocks in a stone yard. Lift the exposure by about one stop and open the shadows so the carving and the newspaper read clearly; keep the stone blocks around it as the setting. Neutral grey stone colour, reduce noise. Do not change the sculpture.
 
@@ -131,6 +133,7 @@ These are on the site now. A `fix-` version replaces the original automatically 
 |---|---|
 | `04.jpg`, `Copy of IMG_0636.JPG`, `english.jpg1 - Copy.jpg` | Exact duplicates of `IMG_0740edit.jpg`, `IMG_0636.JPG`, `english.jpg1.jpg` |
 | `05 (1) copy.jpg`, `05.jpg` | Same embracing-couple piece already on the site from the studio catalogue; these are 400 px wide |
+| `IMG_0732` | Night view of the Statue; too dark for the large home-page plate, replaced there by the cleaned daylight photograph with the plaque |
 | `IMG_0739`, `IMG_0740`, `IMG_0741`, `IMG_0745`, `IMG_0746`, `IMG_0747`, `IMG_0753`, `IMG_0758`, `IMG_0759` | More night views of the Statue of Freedom of Press; the best three are used (`IMG_0759` also has a date stamp) |
 | `00 (3).JPG`, `Copy of IMG_0762.JPG`, `IMG_0760`–`IMG_0764`, `IMG_0766` | Sunset views with a burnt-in date stamp; `IMG_0765` (the best) is in the fix list |
 | `IMG_0697`, `IMG_0699`, `IMG_0700`, `IMG_0708`–`IMG_0710` | Installation under a canopy, with scaffolding and date stamps |
@@ -140,7 +143,6 @@ These are on the site now. A `fix-` version replaces the original automatically 
 | `03092007367-001`, `03092007373-001`, `03092007375-001`, `03092007378`, `03092007382`, `04092007390`, `04092007394`, `04092007395-002`, `13092007415`, `16092007421`, `16092007425`, `17092007431`, `18092007444`, `20092007450`, `20092007452`, `20092007453`, `20092007461`, `21092007473`, `23092007484`, `23092007486`, `24072007116`, `24092007487`, `29092007524`–`29092007534`, `02102007553`, `02102007558` | Phone photos of the Hawker being made (2007); three are used, the rest repeat them or are badly over- or under-exposed |
 | `MSR_2090`, `MSR_2091`, `MSR_2092`, `MSR_2094` | Other frames of the 2015 unveiling; `MSR_2093` is used |
 | `2015-01-07~06ngp-vruttapatra_ns.jpg`, `sculpture of hawkers.jpg` | The unveiling crowd; small and crowded |
-| `7 jan 2015 lokmat.jpg`, `english.jpg`, `english.jpg1.jpg`, `hindi.jpg`, `hindi.jpg1.jpg` | Newspaper pages: used as the source of the text (Press, quote, biography), not shown as pictures |
 | `DSC02051`–`DSC02053`, `DSC02056`–`DSC02060` | Stone carving in 2012, alternates of `DSC02055`, and pieces still in progress |
 | `07 (1).JPG` | The expectant couple with a person standing beside it; the other three views are better |
 | `LANDSCAPE ART INSTALLATION I.jpg`, `… II.jpg` | Same piece as "Sliced figures on a rock", already on the site; heavily compressed |

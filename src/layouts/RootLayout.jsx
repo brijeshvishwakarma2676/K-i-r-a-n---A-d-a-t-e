@@ -3,6 +3,8 @@ import { useLocation, useOutlet } from 'react-router'
 import { AnimatePresence, MotionConfig, motion, useReducedMotion } from 'framer-motion'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
+import Analytics from '../components/Analytics'
+import { LangProvider, useT } from '../i18n'
 import { ScrollProgress, ease, easeInOut } from '../components/Motion'
 import { site } from '../data/site'
 import { disciplineBySlug } from '../data/disciplines'
@@ -34,9 +36,11 @@ export default function RootLayout() {
   const outlet = useOutlet()
 
   return (
+    <LangProvider>
     <MotionConfig reducedMotion="user">
-      <a href="#main" className="skip-link">Skip to content</a>
+      <SkipLink />
       <ScrollProgress />
+      <Analytics />
       <Header />
       <AnimatePresence mode="wait" onExitComplete={() => {
           window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
@@ -49,7 +53,13 @@ export default function RootLayout() {
         </div>
       </AnimatePresence>
     </MotionConfig>
+    </LangProvider>
   )
+}
+
+function SkipLink() {
+  const t = useT()
+  return <a href="#main" className="skip-link">{t('Skip to content')}</a>
 }
 
 // One page and the footer. They fade in under the lifting curtain, except on the first visit.
@@ -78,10 +88,11 @@ function Page({ children }) {
 function Curtain() {
   const { pathname } = useLocation()
   const reduce = useReducedMotion()
+  const t = useT()
   const first = useFirstPaint()
   if (reduce) return null
   return (
-    <div aria-hidden="true" className="on-dark pointer-events-none fixed inset-0 z-[80] flex items-end text-bone">
+    <div aria-hidden="true" className="curtain on-dark pointer-events-none fixed inset-0 z-[80] flex items-end text-bone">
       {/* Arriving: covers the screen, then lifts towards the top */}
       <motion.div
         className="absolute inset-0 bg-basalt"
@@ -103,9 +114,9 @@ function Curtain() {
         animate={{ opacity: 0, y: -30, transition: { duration: 0.5, ease, delay: 0.1 } }}
         exit={{ opacity: [0, 1], y: [40, 0], transition: { duration: 0.6, ease, delay: 0.1 } }}
       >
-        <p className="caption">{site.name}</p>
+        <p className="caption">{t(site.name)}</p>
         <p className="display mt-3 max-w-[14ch] text-[clamp(2.8rem,1.6rem+5vw,7rem)] font-light leading-[0.9]">
-          {labelFor(pathname)}
+          {t(labelFor(pathname))}
         </p>
       </motion.div>
     </div>

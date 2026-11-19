@@ -22,6 +22,17 @@
     medium      material or finish, where known
     views       caption for each photo, in the same order as `images`
     images      photo ids from images.js; the first is the cover
+    making      optional dated steps of how the work was made: { date, label, note, id? }, shown
+                as a timeline on the work's page (`makingIntro` introduces it)
+    beforeAfter optional { before: { id, label }, after: { id, label } }: two photos of the same
+                shape, compared with a slider at the top of the making timeline
+    turnaround  optional [{ id, label }]: photos from `images` taken around the work, in walking
+                order; the work's page lets visitors drag to walk around it
+    film        optional film of the work: { src, poster?, caption, date, length?, captions? }.
+                `src` is a file in public/film (made with scripts/make-film.sh), `poster` a photo id
+                (default: the cover), `date` the day it was published (YYYY-MM-DD, for Google),
+                `length` like '2:40', `captions` an optional .vtt file in public/film. Shown on the
+                work's page in "On film"; works without a film show no such section.
     featured    shown on the home page
     listed      false keeps an entry out of the works (lists, counts, work pages); see EXTRA
 
@@ -62,10 +73,20 @@ const RAW = [
   { slug: 'figure-with-kites', code: 'IFA-SC-035', codes: ['IFA-SC-035', 'IFA-SC-036'], title: 'Figure with kites', discipline: 'sculpture', group: 'figures', views: ['Figure with kites', 'Figure with kites, side view'], images: ['gallery/sculptures/44', 'gallery/sculptures/45'] },
   { slug: 'figure-at-the-spinning-wheel', code: 'IFA-SC-037', codes: ['IFA-SC-037', 'IFA-SC-038', 'IFA-SC-039', 'IFA-SC-040'], title: 'Figure at the spinning wheel', discipline: 'sculpture', group: 'figures', views: ['Figure at the spinning wheel', 'Figure at the spinning wheel, side view', 'Figure at the spinning wheel, detail', 'Figure at the spinning wheel, rear view'], images: ['gallery/sculptures/46', 'gallery/sculptures/47', 'gallery/sculptures/48', 'gallery/sculptures/49'] },
   { slug: 'sculpture-of-hawker', code: 'IFA-SC-041', title: 'Sculpture of Hawker', discipline: 'sculpture', group: 'figures', year: '2007–08', location: 'Samvidhan Square, Nagpur', featured: true,
-    views: ['Sculpture of Hawker', 'Sculpture of Hawker, detail', 'Sculpture of Hawker, side view', 'Sculpture of Hawker, from behind', 'Sculpture of Hawker, before installation, 2008', 'The frame in the workshop, 2007', 'Building up the figure, 2007', 'In the workshop, 2007', 'The unveiling in Nagpur, 6 January 2015'],
-    images: ['kiran/hawker-front', 'kiran/hawker-detail', 'kiran/hawker-side', 'kiran/hawker-back', 'kiran/hawker-gate', 'kiran/hawker-frame', 'kiran/hawker-welding', 'kiran/hawker-workshop', 'kiran/hawker-unveiling'],
+    views: ['Sculpture of Hawker', 'Sculpture of Hawker, detail', 'Sculpture of Hawker, side view', 'Sculpture of Hawker, from behind'],
+    images: ['kiran/hawker-front', 'kiran/hawker-detail', 'kiran/hawker-side', 'kiran/hawker-back'],
+    beforeAfter: { before: { id: 'kiran/hawker-frame', label: 'The frame, 2007' }, after: { id: 'kiran/hawker-front', label: 'Finished' } },
+    turnaround: [{ id: 'kiran/hawker-front', label: 'Front' }, { id: 'kiran/hawker-side', label: 'Side' }, { id: 'kiran/hawker-back', label: 'Back' }],
+    makingIntro: 'From the first frame in the workshop in September 2007 to the unveiling in Nagpur in January 2015. Dates are from the photographs taken along the way.',
+    making: [
+      { date: 'September 2007', label: 'The frame', note: 'The figure and the bicycle begin as a frame in the workshop.', id: 'kiran/hawker-frame' },
+      { date: 'September 2007', label: 'Building up', note: 'The figure is built up over the frame.', id: 'kiran/hawker-welding' },
+      { date: 'September 2007', label: 'In the workshop', note: 'The sculpture nearly complete, in the workshop.', id: 'kiran/hawker-workshop' },
+      { date: 'January 2008', label: 'On site', note: 'In Nagpur, before installation.', id: 'kiran/hawker-gate' },
+      { date: '6 January 2015', label: 'Unveiled', note: 'Unveiled at Samvidhan Square, Nagpur, and reported as the country’s first sculpture of a hawker.', id: 'kiran/hawker-unveiling' },
+    ],
     description: [
-      'A newspaper hawker on his bicycle, holding up the day’s paper. Installed by Lokmat Media at Samvidhan Square in Nagpur, it was unveiled on 6 January 2015, and reported as the country’s first sculpture of a hawker.',
+      'A newspaper hawker on his bicycle, holding up the day’s paper. Installed by Lokmat Media at Samvidhan Square in Nagpur, it was unveiled on 6 January 2015 by a senior hawker, Gajanan Meshram, in the presence of the Chief Minister of Maharashtra, Devendra Fadnavis, and reported as the country’s first sculpture of a hawker.',
       '“Capturing the laborious devotion and commitment of the hawker, who, irrespective of seasons – rainy, summer or winter, carries out his task, was a challenge. It was this challenge that strengthened my conviction and this is how I could create the Sculpture of Hawker.” Kiran Adate, in Lokmat Times, January 2015.',
     ] },
   { slug: 'pair-of-dancers', code: 'IFA-SC-042', title: 'Pair of dancers', discipline: 'sculpture', group: 'figures', images: ['gallery/sculptures/51'] },
@@ -76,8 +97,18 @@ const RAW = [
   { slug: 'leaning-figure-with-a-silver-mane', code: 'IFA-SC-048', codes: ['IFA-SC-048', 'IFA-SC-049', 'IFA-SC-050'], title: 'Leaning figure with a silver mane', discipline: 'sculpture', group: 'abstract', views: ['Leaning figure with a silver mane', 'Leaning figure with a silver mane, side view', 'Leaning figure with a silver mane, front view'], images: ['gallery/sculptures/57', 'gallery/sculptures/58', 'gallery/sculptures/59'], featured: true },
   { slug: 'relief-figure-on-a-rock', code: 'IFA-SC-051', title: 'Relief figure on a rock', discipline: 'sculpture', group: 'figures', images: ['gallery/sculptures/60'] },
   { slug: 'statue-of-freedom-of-press', code: 'IFA-SC-052', title: 'Statue of Freedom of Press', discipline: 'sculpture', group: 'figures', medium: 'Stone', year: 2007, location: 'Lokmat Media printing press, Butibori, Nagpur', featured: true,
-    views: ['Statue of Freedom of Press, at night', 'Statue of Freedom of Press, detail', 'Statue of Freedom of Press, on its plinth', 'Finished, in the stone yard, March 2007', 'Carving the two figures, 2006', 'Splitting the block, November 2006', 'Roughing out the block, November 2006', 'Carving, December 2006', 'Statue of Freedom of Press, with its plaque'],
-    images: ['kiran/freedom-of-press-night', 'kiran/freedom-of-press-night-close', 'kiran/freedom-of-press-night-wide', 'kiran/freedom-of-press-in-the-yard', 'kiran/freedom-of-press-carving', 'kiran/freedom-of-press-block', 'kiran/freedom-of-press-team', 'kiran/freedom-of-press-dust', 'gallery/sculptures/61'],
+    views: ['Statue of Freedom of Press, at night', 'Statue of Freedom of Press, detail', 'Statue of Freedom of Press, by day, with its plaque'],
+    images: ['kiran/freedom-of-press-night', 'kiran/freedom-of-press-night-close', 'kiran/freedom-of-press-day'],
+    beforeAfter: { before: { id: 'kiran/freedom-of-press-team', label: 'Roughing out, 2006' }, after: { id: 'kiran/freedom-of-press-in-the-yard', label: 'Finished, 2007' } },
+    makingIntro: 'From the raw block in November 2006 to the statue at Butibori in April 2007. Dates are from the photographs taken along the way.',
+    making: [
+      { date: 'November 2006', label: 'The block', note: 'The block is split to size in the stone yard.', id: 'kiran/freedom-of-press-block' },
+      { date: 'November 2006', label: 'Roughing out', note: 'The block is cut down to the rough shape of the two figures.', id: 'kiran/freedom-of-press-team' },
+      { date: 'December 2006', label: 'Carving', note: 'The forms are carved, in a cloud of stone dust.', id: 'kiran/freedom-of-press-dust' },
+      { date: 'December 2006', label: 'The figures', note: 'The two figures, and the newspaper across their laps, take shape.', id: 'kiran/freedom-of-press-carving' },
+      { date: 'March 2007', label: 'Finished', note: 'The finished statue in the stone yard, before it leaves for Nagpur.', id: 'kiran/freedom-of-press-in-the-yard' },
+      { date: 'April 2007', label: 'Installed', note: 'Installed at Lokmat Media’s printing press in Butibori, Nagpur.' },
+    ],
     description: [
       'Two figures sit side by side, reading the newspaper that lies across their laps. The idea came from Vijay Darda, chairman of the Editorial Board of Lokmat Media; the statue stands at Lokmat Media’s printing press in Butibori, Nagpur.',
       'Carved from a block of stone between November 2006 and March 2007, and installed in April 2007.',
@@ -247,7 +278,19 @@ const build = (w) => {
     alt: w.listed === false ? captionFor(w, i) : `${captionFor(w, i)}, by Kiran Adate`,
     caption: captionFor(w, i),
   }))
-  return { ...w, cover: pics[0], gallery: pics.slice(1) }
+  // The making: dated steps, each with an optional photograph.
+  const making = w.making?.map((s) => ({
+    ...s,
+    image: s.id ? { id: s.id, alt: `${w.title}: ${s.note}`, caption: `${s.label}, ${s.date}. ${s.note}` } : null,
+  }))
+  // Walk around: views (from `images`) in the order of a walk around the work.
+  const turnaround = w.turnaround?.map((t) => ({ label: t.label, image: pics[w.images.indexOf(t.id)] }))
+  // Before and after: { before, after } each { id, label }, compared with a slider.
+  const side = (s) => s && { label: s.label, image: { id: s.id, alt: `${w.title}: ${s.label}` } }
+  const beforeAfter = w.beforeAfter && { before: side(w.beforeAfter.before), after: side(w.beforeAfter.after) }
+  // Film: the still shown before it plays is a photo of the work (the cover unless named).
+  const film = w.film && { ...w.film, poster: w.film.poster ? { id: w.film.poster, alt: '' } : { ...pics[0], alt: '' } }
+  return { ...w, cover: pics[0], gallery: pics.slice(1), making, turnaround, beforeAfter, film }
 }
 
 const bySlug = Object.fromEntries(RAW.map((w) => [w.slug, w]))

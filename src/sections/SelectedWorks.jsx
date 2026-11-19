@@ -2,6 +2,7 @@ import { Link } from 'react-router'
 import ProjectCard from '../components/ProjectCard'
 import { projectBySlug } from '../data/projects'
 import { SplitText } from '../components/Motion'
+import { useT } from '../i18n'
 
 // Hand-placed rather than a uniform grid: each work gets a size and position of its own.
 // Ratios follow each photograph's own orientation so nothing important is cropped away.
@@ -17,11 +18,12 @@ const layout = [
 ]
 
 export default function SelectedWorks() {
+  const t = useT()
   return (
     <section aria-labelledby="selected-title" className="wrap py-28 md:py-40">
       <div className="flex flex-wrap items-end justify-between gap-6">
         <SplitText as="h2" id="selected-title" className="display text-[clamp(2.4rem,1.4rem+3.6vw,4.6rem)]" text="Selected works" />
-        <Link to="/works" className="text-link text-[0.95rem]">All works</Link>
+        <Link to="/works" className="text-link text-[0.95rem]">{t('All works')}</Link>
       </div>
       <div className="mt-16 grid grid-cols-1 gap-x-6 gap-y-16 md:mt-24 md:grid-cols-12 md:gap-y-24">
         {layout.map(({ slug, ratio, cls }) => (

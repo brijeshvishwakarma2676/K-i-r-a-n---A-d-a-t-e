@@ -22,8 +22,8 @@
   --color-ochre: #7F5F22;
   --color-steel: #44515A;
 
-  --font-display: "Cormorant Garamond Variable", "Cormorant Garamond", Garamond, "Times New Roman", serif;
-  --font-sans: "Archivo Variable", "Archivo", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-display: "Cormorant Garamond Variable", "Cormorant Garamond", "Noto Serif Devanagari Variable", Garamond, "Times New Roman", serif;
+  --font-sans: "Archivo Variable", "Archivo", "Noto Sans Devanagari Variable", "Helvetica Neue", Helvetica, Arial, sans-serif;
 
   --ease-gallery: cubic-bezier(0.22, 1, 0.36, 1);
 }
@@ -317,6 +317,64 @@ body::after {
 
   /* The cover that lifts off a revealing image matches the panel it sits on. */
   .bg-paper { --reveal: var(--color-paper); }
+
+  /*
+    Rooms: whole sections painted in a material, so the page moves between rooms the way a gallery
+    does instead of sitting on one pale colour. Each room is a static background (nothing animates)
+    and re-points the colour tokens, so all text, links, rules and reveal covers inside it follow.
+  */
+  .room-dark {
+    --color-limestone: #262522;
+    --color-paper: #2E2D29;
+    --color-stone: #3A3834;
+    --color-concrete: #5E5A53;
+    --color-ink: #ECE7DD;
+    --color-ink-soft: #ABA59A;
+    --color-geru: #D9957A;
+    --reveal: #262522;
+    --thumb: rgb(236 231 221 / 0.3);
+    color-scheme: dark;
+    background:
+      radial-gradient(ellipse 60% 50% at 85% 0%, rgb(255 236 210 / 0.07), transparent 70%),
+      radial-gradient(ellipse 55% 45% at 0% 100%, rgb(255 236 210 / 0.05), transparent 70%),
+      #262522;
+    color: var(--color-ink);
+  }
+  .room-dark .caption { color: var(--color-ink-soft); }
+  .room-dark :focus-visible { outline-color: #C9B79E; }
+  .room-dark ::selection { background: #D9957A; color: #22211E; }
+
+  .room-clay {
+    --color-paper: #E8DECE;
+    --color-stone: #CDBFA8;
+    --reveal: #DCCFBA;
+    background:
+      radial-gradient(ellipse 60% 55% at 90% 10%, rgb(255 250 240 / 0.45), transparent 70%),
+      #DCCFBA;
+  }
+}
+
+/*
+  Hindi and Marathi (html lang="hi" / "mr", set by the language switch). Devanagari needs more line
+  height than the tight Latin display settings (its vowel signs sit above and below the line), no
+  negative tracking, and no italic: the Devanagari fonts have none, and a slanted fake reads poorly.
+  The large Latin name in the hero and the footer (.latin) keeps its own settings.
+*/
+html:is(:lang(hi), :lang(mr)) :is(.display, .lede, .label-title):not(.latin) {
+  line-height: 1.25 !important;
+  letter-spacing: 0 !important;
+}
+html:is(:lang(hi), :lang(mr)) :is(.italic, .label-title, blockquote, em):not(.latin) { font-style: normal !important; }
+html:is(:lang(hi), :lang(mr)) .caption { letter-spacing: 0; line-height: 1.6; }
+html:is(:lang(hi), :lang(mr)) body { line-height: 1.75; }
+
+/* The portfolio document (/portfolio): one A4 landscape page per sheet when printed or saved as PDF. */
+@page { size: A4 landscape; margin: 0; }
+@media print {
+  html, body { background: #E7E3DA !important; }
+  body::before, body::after { display: none; }
+  .portfolio .sheet { break-after: page; }
+  * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 }
 
 @keyframes marquee {

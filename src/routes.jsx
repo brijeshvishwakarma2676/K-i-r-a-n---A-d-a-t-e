@@ -20,4 +20,6 @@ export const routes = [
       { path: '*', lazy: page(() => import('./pages/NotFound')) },
     ],
   },
+  // The portfolio as printable A4 sheets, outside the site's header and footer.
+  { path: '/portfolio', lazy: page(() => import('./pages/Portfolio')) },
 ]

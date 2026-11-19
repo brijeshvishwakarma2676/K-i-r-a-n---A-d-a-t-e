@@ -10,7 +10,8 @@ yet are skipped. Originals are only read, never changed.
 
 For each image it writes responsive WebP files to public/img/kiran/<name>-<width>.<hash>.webp
 (EXIF orientation applied, metadata such as GPS dropped) and regenerates src/data/clientImages.js,
-which src/data/images.js merges into the photo manifest. Run it again whenever fix- files arrive.
+which src/data/images.js merges into the photo manifest. Run it again whenever fix- files arrive,
+then run `sh scripts/make-avif.sh` to make the AVIF copies of the new files.
 """
 import hashlib
 import json
@@ -55,7 +56,7 @@ def main(src_dir):
         digest = hashlib.md5(data).hexdigest()[:8]
         name = image_id.split('/', 1)[1]
         for old in os.listdir(OUT_DIR):
-            if old.startswith(name + '-') and old.endswith('.webp'):
+            if old.startswith(name + '-') and old.endswith(('.webp', '.avif')):
                 os.remove(os.path.join(OUT_DIR, old))
 
         im = ImageOps.exif_transpose(Image.open(path)).convert('RGB')

@@ -39,8 +39,17 @@ export const site = {
     // CONFIRM: the source says Thane; Nalasopara is now in Palghar district
     lines: ['Opp. Jag Mata Mandir, Wagholi Road', 'Nalasopara West', 'Thane 401203, Maharashtra'],
     map: 'https://www.google.com/maps/search/?api=1&query=19.4196725,72.7856904',
+    lat: 19.42,
+    lon: 72.79,
   },
   visits: 'Studio visits by appointment.',
+  // Visitor statistics without cookies (so no cookie banner is needed). Off while both are null.
+  // Cloudflare Web Analytics (free): paste the token from its dashboard. Plausible (paid): the
+  // site's domain as registered there. Only one is used; Cloudflare wins if both are set.
+  analytics: { cloudflareToken: null, plausibleDomain: null },
+
+  // The portfolio as a PDF, made from /portfolio by scripts/make-portfolio-pdf.mjs.
+  portfolioPdf: '/kiran-adate-portfolio.pdf',
 
   // The studio's product lines (planters, FRP and GRC architectural work, water and garden work)
   // are not part of the portfolio; one line in the footer and on the Works page points to them.
@@ -80,15 +89,19 @@ export const artist = {
   },
 
   // Facts reported in the same article: home village, art school, and how the two Nagpur works began.
+  // The client's clippings from 7 January 2015, all on the unveiling of the Sculpture of Hawker.
   press: [
-    { year: 2015, title: 'Capturing commitment in a tough task: Adate', outlet: 'Lokmat Times, Nagpur, 7 January 2015' },
-    { year: 2015, title: 'Salute to untiring efforts!', outlet: 'Lokmat Times, Nagpur, 7 January 2015, on the unveiling of the Sculpture of Hawker' },
-    { year: 2015, title: 'समर्पण का शिल्प बनाना चुनौतीपूर्ण', outlet: 'Lokmat Samachar, Nagpur, January 2015' },
-    { year: 2015, title: 'कष्टाला सलाम, त्यागाचा गौरव', outlet: 'Lokmat, Nagpur, 7 January 2015' },
+    { year: 2015, title: 'Salute to untiring efforts!', outlet: 'Lokmat Times, Nagpur, 7 January 2015, front page', image: 'kiran/press-lokmat-times-front', work: 'sculpture-of-hawker' },
+    { year: 2015, title: 'Capturing commitment in a tough task: Adate', outlet: 'Lokmat Times, Nagpur, 7 January 2015', image: 'kiran/press-lokmat-times-adate', work: 'sculpture-of-hawker' },
+    { year: 2015, title: 'श्रम को सलाम', outlet: 'Lokmat Samachar, Nagpur, 7 January 2015, front page', image: 'kiran/press-lokmat-samachar-front', work: 'sculpture-of-hawker' },
+    { year: 2015, title: 'समर्पण का शिल्प बनाना चुनौतीपूर्ण', outlet: 'Lokmat Samachar, Nagpur, January 2015', image: 'kiran/press-lokmat-samachar-inside', work: 'sculpture-of-hawker' },
+    { year: 2015, title: 'कष्टाला सलाम, त्यागाचा गौरव', outlet: 'Lokmat, Nagpur, 7 January 2015', image: 'kiran/press-lokmat-marathi', work: 'sculpture-of-hawker' },
   ],
   publicWorks: [
-    { year: 2007, slug: 'statue-of-freedom-of-press', place: 'Lokmat Media printing press, Butibori, Nagpur' },
-    { year: 2015, slug: 'sculpture-of-hawker', place: 'Samvidhan Square, Nagpur; unveiled 6 January 2015' },
+    // lat/lon place each work on the chart on the About page (town level, not exact); `map` opens
+    // the place in Google Maps by name.
+    { year: 2007, slug: 'statue-of-freedom-of-press', place: 'Lokmat Media printing press, Butibori, Nagpur', town: 'Butibori', lat: 20.93, lon: 78.95, map: 'https://www.google.com/maps/search/?api=1&query=Lokmat+printing+press+Butibori+Nagpur' },
+    { year: 2015, slug: 'sculpture-of-hawker', place: 'Samvidhan Square, Nagpur; unveiled 6 January 2015', town: 'Nagpur', lat: 21.15, lon: 79.08, map: 'https://www.google.com/maps/search/?api=1&query=Samvidhan+Square+Nagpur' },
   ],
   education: 'J.J. School of Art, Mumbai',
 
@@ -140,4 +153,13 @@ export const artist = {
     'White Shadow, Coimbatore',
     'Zenith Group, Kamothe',
   ],
+}
+
+// A WhatsApp chat with the studio, opened with a first message already written (about one work,
+// when `work` is given). Visitors can edit it before sending.
+export function whatsappLink(work) {
+  const text = work
+    ? `Hello, I would like to ask about “${work.title}” by ${site.name}: ${site.url}/works/${work.discipline}/${work.slug}`
+    : `Hello, I would like to ask about a work by ${site.name}.`
+  return `${site.whatsapp}?text=${encodeURIComponent(text)}`
 }

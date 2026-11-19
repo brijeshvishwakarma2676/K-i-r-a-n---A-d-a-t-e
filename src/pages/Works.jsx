@@ -9,6 +9,7 @@ import { ease, SplitText } from '../components/Motion'
 import { disciplines } from '../data/disciplines'
 import { projects, projectsFor } from '../data/projects'
 import { site } from '../data/site'
+import { useT } from '../i18n'
 
 // Two hand-composed arrangements, alternated chapter by chapter so no two read the same.
 const arrangements = [
@@ -29,6 +30,7 @@ const arrangements = [
 ]
 
 export default function Works() {
+  const t = useT()
   const [filter, setFilter] = useState('all')
   const options = [{ slug: 'all', shortName: 'All', count: projects.length }, ...disciplines.map((d) => ({ ...d, count: projectsFor(d.slug).length }))]
 
@@ -39,11 +41,11 @@ export default function Works() {
         <div className="grid grid-cols-12 gap-x-6 gap-y-8">
           <SplitText as="h1" className="display col-span-12 text-[clamp(4rem,2rem+9vw,11rem)] font-light leading-[0.82] md:col-span-7" text="Works" immediate delay={0.3} />
           <p className="col-span-12 max-w-[46ch] self-end text-[1.02rem] md:col-span-4 md:col-start-9">
-            A selection of sculpture and relief murals, in steel, stone, bronze and fibre.
+            {t('A selection of sculpture and relief murals, in steel, stone, bronze and fibre.')}
           </p>
         </div>
 
-        <div role="group" aria-label="Show works by body of work" className="mt-14 flex flex-wrap gap-x-8 gap-y-3 border-b border-stone md:mt-20">
+        <div role="group" aria-label={t('Show works by body of work')} className="mt-14 flex flex-wrap gap-x-8 gap-y-3 border-b border-stone md:mt-20">
           {options.map((o) => (
             <button
               key={o.slug}
@@ -54,8 +56,8 @@ export default function Works() {
                 filter === o.slug ? 'border-ink italic text-ink' : 'border-transparent text-ink-soft hover:text-ink'
               }`}
             >
-              {o.shortName}
-              <sup className="font-sans text-[0.68rem] not-italic tabular-nums opacity-70">{o.count}</sup>
+              {t(o.shortName)}
+              <sup className="font-sans text-[0.68rem] not-italic tabular-nums">{o.count}</sup>
             </button>
           ))}
         </div>
@@ -69,7 +71,7 @@ export default function Works() {
             <div className="wrap pb-20 pt-6">
               <Masonry projects={projectsFor(filter)} />
               <Link to={`/works/${filter}`} className="text-link text-[0.95rem]">
-                About {disciplines.find((d) => d.slug === filter)?.name.toLowerCase()}
+                {t('About {topic}', { topic: t(disciplines.find((d) => d.slug === filter)?.name).toLowerCase() })}
               </Link>
             </div>
           )}
@@ -77,7 +79,7 @@ export default function Works() {
       </AnimatePresence>
 
       <p className="wrap caption pt-10">
-        {site.products.note} by the studio are on{' '}
+        {t('{what} by the studio are on', { what: site.products.note })}{' '}
         <a href={site.products.url} target="_blank" rel="noreferrer" className="text-link">{site.products.name}</a>.
       </p>
       <div className="pt-16">
@@ -89,6 +91,7 @@ export default function Works() {
 
 // Each chapter shows five works, featured ones first, and links to the full body of work.
 function Chapter({ d, arrangement }) {
+  const t = useT()
   const all = projectsFor(d.slug)
   const list = [...all.filter((p) => p.featured), ...all.filter((p) => !p.featured)].slice(0, arrangement.length)
   return (
@@ -96,10 +99,10 @@ function Chapter({ d, arrangement }) {
       <div className="grid grid-cols-12 items-end gap-x-6 gap-y-5">
         <SplitText as="h2" id={`ch-${d.slug}`} className="display col-span-12 text-[clamp(2.4rem,1.4rem+3vw,4.2rem)] leading-none md:col-span-7" text={d.name} />
         <div className="col-span-12 md:col-span-4 md:col-start-9">
-          <p className="display text-[1.3rem] italic" style={{ color: d.accent }}>{d.headline}</p>
-          <p className="caption mt-2">{d.materials.join(', ')}</p>
+          <p className="display text-[1.3rem] italic" style={{ color: d.accent }}>{t(d.headline)}</p>
+          <p className="caption mt-2">{d.materials.map((m) => t(m)).join(', ')}</p>
           <Link to={`/works/${d.slug}`} className="text-link mt-3 inline-block text-[0.9rem]">
-            About {d.shortName.toLowerCase()}
+            {t('About {topic}', { topic: t(d.shortName).toLowerCase() })}
           </Link>
         </div>
       </div>
@@ -111,7 +114,7 @@ function Chapter({ d, arrangement }) {
       </div>
       {all.length > list.length && (
         <Link to={`/works/${d.slug}`} className="arrow-link mt-16 md:mt-20">
-          All {all.length} works in {d.shortName.toLowerCase()}
+          {t('All {n} works in {topic}', { n: all.length, topic: t(d.shortName).toLowerCase() })}
         </Link>
       )}
     </section>
