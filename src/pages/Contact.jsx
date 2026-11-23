@@ -83,7 +83,7 @@ export default function Contact() {
 
       <section className="wrap grid grid-cols-12 gap-x-6 gap-y-20 py-20 md:py-28">
         <div className="col-span-12 lg:col-span-7">
-          <AnimatePresence mode="wait">
+          <AnimatePresence mode="wait" initial={false}>
             {status === 'done' ? (
               <motion.div key="done" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.5, ease }} role="status" className="border-t border-ink pt-8">
                 {result?.sent ? (

@@ -6,7 +6,8 @@ import { workPath } from '../data/projects'
 import { useT } from '../i18n'
 
 // A work in a grid, captioned like a gallery wall label: title, then medium and size where known.
-export default function ProjectCard({ project, ratio = '4/5', className = '', showDiscipline = true, sizes }) {
+// `image` shows another of the work's photographs instead of its cover.
+export default function ProjectCard({ project, image = project.cover, ratio = '4/5', className = '', showDiscipline = true, sizes }) {
   const t = useT()
   const d = disciplineBySlug[project.discipline]
   const label = [t(project.medium), project.dimensions].filter(Boolean).join(' · ')
@@ -15,7 +16,7 @@ export default function ProjectCard({ project, ratio = '4/5', className = '', sh
       <ImageReveal>
         <div className="sheen overflow-hidden">
           <div className="transition-transform duration-[1.2s] ease-gallery group-hover:scale-[1.045]">
-            <ArtImage image={project.cover} ratio={ratio} sizes={sizes} />
+            <ArtImage image={image} ratio={ratio} sizes={sizes} />
           </div>
         </div>
       </ImageReveal>

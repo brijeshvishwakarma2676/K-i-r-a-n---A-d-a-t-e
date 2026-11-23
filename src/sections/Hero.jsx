@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import { Link } from 'react-router'
 import { Pause, Play } from 'lucide-react'
 import {
@@ -6,8 +6,7 @@ import {
   motion,
   useAnimationFrame,
   useInView,
-    useMotionValue,
-  useReducedMotion,
+  useMotionValue,
   useScroll,
   useSpring,
   useTransform,
@@ -19,6 +18,8 @@ import { ease, easeInOut } from '../components/Motion'
 import { site } from '../data/site'
 import { projectBySlug, workPath } from '../data/projects'
 import { dateRange, featuredExhibition, statusOf } from '../data/exhibitions'
+import { useMedia, useReducedMotion } from '../lib/media'
+import { useToday } from '../lib/useToday'
 
 /*
   The opening plate, in two scenes that take turns:
@@ -28,6 +29,8 @@ import { dateRange, featuredExhibition, statusOf } from '../data/exhibitions'
   stays stacked and the portrait and the work change places above it, standing on the name.
   The scenes change every SCENE_MS, pause while the hero is off screen or when the visitor presses
   pause, and do not change by themselves with reduced motion.
+  The opening entrance (the name's letters, the portrait, the text) is CSS (.enter-up, .enter-fade
+  in global.css), so on a first visit it plays as soon as the page arrives, before any script.
   `heroSlug` picks what scene 02 shows: any work's slug from projects.js, or 'kiran-adate' (the
   portrait, an unlisted entry there) - an unlisted entry links to About instead of a work page.
 */
@@ -37,24 +40,11 @@ const heroSlug = 'sculpture-of-hawker'
 // Scene 01's cut-out portrait, from images.js like every other photo.
 const portrait = { ...images['portrait/kiran-adate'], alt: `Portrait of ${site.name}` }
 
-// True on screens at least `md` wide, kept in step with resizing.
-function useWide() {
-  const query = '(min-width: 768px)'
-  const [wide, setWide] = useState(() => typeof window !== 'undefined' && window.matchMedia(query).matches)
-  useEffect(() => {
-    const mq = window.matchMedia(query)
-    const on = () => setWide(mq.matches)
-    mq.addEventListener('change', on)
-    return () => mq.removeEventListener('change', on)
-  }, [])
-  return wide
-}
-
 export default function Hero() {
   const t = useT()
   const ref = useRef(null)
   const reduce = useReducedMotion()
-  const wide = useWide()
+  const wide = useMedia('(min-width: 768px)') // screens at least `md` wide
   const inView = useInView(ref, { amount: 0.35 })
   const work = projectBySlug[heroSlug]
   const isWorkPage = work.listed !== false
@@ -109,8 +99,9 @@ export default function Hero() {
     py.set((e.clientY - r.top) / r.height)
   }
 
-  const show = featuredExhibition()
-  const showStatus = show && statusOf(show)
+  const today = useToday()
+  const show = featuredExhibition(today)
+  const showStatus = show && statusOf(show, today)
   const words = site.name.split(' ')
   const enterDelay = firstScene.current ? 0.35 : 0.15
   const isWork = scene === 1
@@ -133,12 +124,7 @@ export default function Hero() {
       />
 
       <div className="wrap relative z-20 grid grid-cols-12 gap-x-6 pt-[calc(var(--header-h)+env(safe-area-inset-top,0px)+1.5rem)] md:pt-[calc(var(--header-h)+4rem)]">
-        <motion.div
-          className="col-span-12 sm:col-span-8 md:col-span-5 lg:col-span-4"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1.2, ease, delay: 0.9 }}
-        >
+        <div className="enter-fade col-span-12 sm:col-span-8 md:col-span-5 lg:col-span-4" style={{ '--enter-delay': '0.9s' }}>
           <p className="lede max-w-[18ch]">{t(site.tagline)}</p>
           <p className="caption mt-4 max-w-[34ch] md:mt-5 md:max-w-[30ch] [@media(max-height:700px)_and_(max-width:767px)]:hidden">
             {t('Sculptor, Mumbai. Figures, devotional forms, animals and abstract work, and relief murals.')}
@@ -186,7 +172,7 @@ export default function Hero() {
               </button>
             )}
           </div>
-        </motion.div>
+        </div>
       </div>
 
       {/* The stage: above the name on phones, the whole hero on wide screens */}
@@ -210,7 +196,7 @@ export default function Hero() {
               <div className="absolute bottom-0 right-[4vw] h-full overflow-hidden md:relative md:right-0">
                 <picture className="contents">
                 <source type="image/avif" srcSet={srcSetOf(portrait.files, true)} sizes="(min-width: 768px) 46vw, 80vw" />
-                <motion.img
+                <img
                   src={portrait.files[800]}
                   srcSet={srcSetOf(portrait.files)}
                   sizes="(min-width: 768px) 46vw, 80vw"
@@ -219,10 +205,8 @@ export default function Hero() {
                   alt={portrait.alt}
                   fetchPriority="high"
                   decoding="async"
-                  className="block h-full w-auto max-w-none"
-                  initial={reduce ? false : { y: '100%' }}
-                  animate={{ y: '0%' }}
-                  transition={{ duration: 1.5, ease: easeInOut, delay: enterDelay }}
+                  className="enter-up block h-full w-auto max-w-none"
+                  style={{ '--enter-from': '100%', '--enter-dur': '1.5s', '--enter-ease': 'var(--ease-gallery-in-out)', '--enter-delay': `${enterDelay}s` }}
                 />
                 </picture>
               </div>
@@ -302,14 +286,9 @@ export default function Hero() {
                 const i = n++
                 return (
                   <span key={i} className="inline-block overflow-hidden pb-[0.12em]">
-                    <motion.span
-                      className="inline-block"
-                      initial={{ y: '105%' }}
-                      animate={{ y: '0%' }}
-                      transition={{ duration: 1.2, ease, delay: 0.1 + i * 0.045 }}
-                    >
+                    <span className="enter-up inline-block" style={{ '--enter-delay': `${(0.1 + i * 0.045).toFixed(3)}s` }}>
                       {ch}
-                    </motion.span>
+                    </span>
                   </span>
                 )
               })}

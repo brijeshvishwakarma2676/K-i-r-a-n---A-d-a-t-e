@@ -70,10 +70,14 @@ The portrait is a cut-out (transparent WebP) from `public/img/portrait/kiran-ada
 
 ## Client photographs
 
-Kiran Adate's own photographs (ids `kiran/…`) are imported from the client's "Kiran Stone" folder by
-`scripts/import-client-images.py`, using the list in `scripts/client-images.json`. The script writes
-WebP files to `public/img/kiran/` and the manifest `src/data/clientImages.js` (merged into
-`src/data/images.js`). Originals are never changed.
+Kiran Adate's own photographs (ids `kiran/…`) are imported by `scripts/import-client-images.py`,
+using the list in `scripts/client-images.json`, from three sources: the "Kiran Stone" drive (file
+names), the "Kiran Adate" folder in Documents (full paths), and the photographs in his profile PDF
+(taken out with `scripts/extract-profile-photos.py` into `client-sources/`, which is not in git).
+The script writes WebP files to `public/img/kiran/` and the manifest `src/data/clientImages.js`
+(merged into `src/data/images.js`), converting colours to sRGB. Originals are never changed. A
+photo whose source is not at hand (drive unplugged) keeps its earlier files. A work can list a
+photo that is still waiting for its `fix-` file: it is skipped until imported, then appears.
 
 Some photographs need retouching first. `CLIENT-IMAGES.md` lists each one with a ready-to-use
 prompt for an AI image editor. Save the result next to the original as `fix-<original filename>`
@@ -81,7 +85,7 @@ and run the script again: a `fix-` file is always preferred, and images that wer
 appear on the site.
 
 ```bash
-python3 -I scripts/import-client-images.py "/run/media/brijesh/0050-1781/Kiran Stone"
+python3 -I scripts/import-client-images.py "/run/media/brijesh/0050-1781/Kiran Stone"   # or no folder
 sh scripts/make-avif.sh                      # AVIF copies of new photos (the build checks)
 python3 -I scripts/make-share-images.py      # link-preview pictures, if a cover changed
 ```
@@ -129,6 +133,46 @@ Motion lives in `src/components/Motion.jsx` and `src/layouts/RootLayout.jsx`:
 All of it respects the visitor's reduced-motion setting: the page is then shown still, with no curtain.
 
 **Performance.** Everything that moves is animated with `transform` and `opacity`, which the GPU composites without repainting: reveals lift a cover in the page's colour instead of animating `clip-path`, the curtain is two scaled panels, the hero light is a moved gradient disc. Avoid animating CSS variables, `filter`, `clip-path`, `backdrop-filter` or `mix-blend-mode` on large areas: on an ordinary laptop those made scrolling drop to about 20 frames a second. Home-page sections far from the screen use `.cv-auto` (`content-visibility: auto`), so they are not rendered until they come near.
+
+## Speed
+
+The site is built to open fast and scroll smoothly on modest phones. Measured on a phone-class
+device (CPU slowed 6×, slow 4G), the main picture or heading appears in about 1 to 3 seconds, and
+scrolling holds 60 frames a second. How, and what to keep doing when changing it:
+
+- **Pages arrive ready.** Every page is pre-rendered, and the browser shows it before any script
+  runs. React then takes over that same page (`hydrateRoot` in `src/main.jsx`), in small slices
+  so the page stays responsive. The first render in the browser must match the HTML exactly. For
+  anything the build cannot know, use the hooks in `src/lib`: `useMedia` / `useReducedMotion`
+  (screen size, motion setting), `useToday` (today's date), `useHydrated`. Do not read `window`,
+  `localStorage` or the date while rendering. A mismatch makes React redraw the page, and shows
+  in the console as "Page redrawn instead of reused".
+- **Nothing on screen waits for scripts.** Entrances as a page opens are CSS animations
+  (`.enter-*`). Reveals while scrolling are CSS transitions started by one shared observer
+  (`src/lib/reveal.js`): use `Reveal`, `Stagger`, `SplitText`, `ClipReveal`, `ImageReveal` from
+  `src/components/Motion.jsx` rather than framer-motion's `whileInView`, and don't give content
+  `initial={{ opacity: 0 }}` on first render. framer-motion is for motion that follows the scroll
+  or the pointer, drags, overlays and page changes.
+- **Only what a page needs is downloaded.** The Hindi and Marathi dictionaries load when chosen,
+  Lenis only on devices with a mouse or trackpad, the placeholder plates only where shown. Every
+  section below a page's first screen takes the `cv-auto` class: the browser skips drawing it, and
+  its fonts and photos wait, until it comes near.
+- **Animate only `transform` and `opacity`**, which the GPU moves without repainting the page.
+
+### Smooth scrolling
+
+Mouse wheels and trackpads glide (Lenis, `src/lib/smoothScroll.js`); phones keep their own touch
+scrolling, and visitors who ask for less motion get the browser's normal scrolling. Overlays pause
+it through `useLockBody`. Anything that scrolls by itself inside the page needs `data-lenis-prevent`
+(or `data-lenis-prevent-horizontal` for a sideways strip), or the wheel will move the page instead.
+
+### Checking locally
+
+`npm run preview` serves `/about` (no trailing slash) with the home page's HTML, so open pages as
+`/about/` there; the live host serves each page's own file. `scripts/check-pages.mjs` opens every
+page in English and Hindi against a running preview and reports any page that is redrawn instead
+of reused, or logs an error (see the top of the script for how to run it). To see the details of a
+mismatch, build with React's development checks first: `NODE_ENV=development npm run build`.
 
 ## Languages
 

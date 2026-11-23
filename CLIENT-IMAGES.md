@@ -66,6 +66,23 @@ The clippings are shown as pages that open full size, and are also the source of
 
 ## 2. Waiting for a fixed version (not on the site until `fix-` exists)
 
+**Fixes received 2026-11-23** (saved as `.png` in `~/Documents/Kiran Adate/`) and checked by eye
+against the originals. An AI fix may only clean the photograph; if it changes the sculpture itself,
+it cannot be used, because the site would show a work Kiran Adate did not make.
+
+| Fix | Result |
+|---|---|
+| `fix-IMG_0005 (33).png` | **Used**: the form matches the original; shown as the new work "Stone column" (working title) |
+| `fix-DSC05062.png` | **Imported, not shown**: faithful; still needs the exhibition and the two people confirmed |
+| `fix-IMG_0765.png` | **Not used**: the stone figures were given realistic faces, hair and clothes; the real sculpture's heads are smooth and abstract. Redo it and tell the tool not to touch the figures (or mask them) |
+| `fix-02102007557.png` | **Not used**: the figure got a face and a different raised hand, and the whole background was invented |
+| `fix-29092007535.png` | **Not used**: the sculpture got a face and a scaled surface; the worker at the back is a different face |
+| `fix-000 (1).png` | **Not used**: the rods inside the frame are a different number and arrangement |
+| `fix-IMG_0092.png` | **Not used**: wrong picture. It shows the Freedom of Press statue at sunset, not the Hawker by day |
+
+An entry in `scripts/client-images.json` points at a fix kept elsewhere with `"fix": "<full path>"`.
+A `fix-` file next to the original may now be `.jpg`, `.png` or `.webp`.
+
 ### `IMG_0765.JPG` → `fix-IMG_0765.JPG`
 Statue of Freedom of Press at sunset, in front of the Lokmat building (to be used as kiran/freedom-of-press-sunset).
 
@@ -149,3 +166,91 @@ These are on the site now. A `fix-` version replaces the original automatically 
 | `DSC05064.JPG` | Second, weaker frame of the 2012 exhibition (`DSC05062` is in the fix list) |
 | `01102007542-002.jpg`, `24092007503.jpg` | Portraits of a man (2007). **If this is Kiran Adate, say so**: `01102007542-002.jpg` would suit the About page after enhancement |
 | `Thumbs.db` | Windows thumbnail cache, not an image |
+
+---
+
+# Client photographs ("Kiran Adate" folder, November 2026)
+
+Source: `/home/brijesh/Documents/Kiran Adate` (120 photographs, Kiran Adate's profile PDF, and
+Mac `._` files that are not images). The originals are never changed. The profile's own photographs
+are larger than the folder's copies of the same works; they are taken out of the PDF with
+`python3 -I scripts/extract-profile-photos.py "/home/brijesh/Documents/Kiran Adate/Kiran Adate_ Profile.pdf"`
+into `client-sources/profile-pdf/` (not in git).
+
+**Why the photos look soft.** They are exports from Apple Photos, not the camera originals:
+files ending `_4_5005_c` are 360×480 previews, files ending `_1_105_c` are 768×1024 copies. The
+iPhone originals (about 3024×4032) are far sharper than any enhancement can make these.
+**Best fix: ask Kiran Adate to export the originals** (Photos → select → File → Export → *Export
+Unmodified Original*, or AirDrop) and put them in the folder with the same names; any `fix-` file
+can then be made from the original instead.
+
+**How fixes work here.** Save the enhanced image next to its original in the "Kiran Adate" folder
+as `fix-<original filename>`, then run `python3 -I scripts/import-client-images.py` (no folder
+needed for these), `sh scripts/make-avif.sh` and `python3 -I scripts/make-share-images.py`.
+Images marked **waiting** appear on their work's page by themselves once imported.
+
+**How to enhance.** Use a faithful upscaler, not an image generator: **Upscayl** (free desktop app,
+model "Real-ESRGAN" / "Ultrasharp", 4× for the 360×480 files, 2× for the 768×1024 ones), or
+Topaz Photo AI. Generators (ChatGPT, Gemini, Midjourney) redraw the picture and can change the
+artwork, which a portfolio must not do. If one is used anyway, give it this prompt with the photo:
+
+> Enhance this photograph of a sculpture for an artist's portfolio. Increase resolution and
+> sharpness, remove noise and JPEG artefacts, correct white balance and exposure. Do NOT change
+> the sculpture in any way: same shape, proportions, surface, texture, reflections, colours,
+> welds and details; do not add, remove, smooth or invent anything on the artwork. Keep the
+> background, framing and aspect ratio exactly as they are. Output a realistic photograph, not an
+> illustration. Size: <2× or 4×> the original.
+
+Check every result against the original at 100% before using it.
+
+## A. Waiting: on the site once a `fix-` file exists (5)
+
+| Original | Site id | Work |
+|---|---|---|
+| `87A12801-67F5-4334-8B32-408A7C3F2883_4_5005_c.jpeg` | kiran/cube-column-installing | Column of mirrored cubes, being installed |
+| `317EAAC5-5875-45F4-B60E-71CE3B2A156B_4_5005_c.jpeg` | kiran/terrace-twist-view | Twisted form on a terrace |
+| `78EC8EC9-B368-49D7-A209-CB4C70FB93C0_4_5005_c.jpeg` | kiran/lanterns-night | Pierced steel lanterns, at night |
+| `A00A2A4A-CE25-49C5-A991-75CAE7C5EDDC_4_5005_c.jpeg` | kiran/lantern-among-pebbles | Pierced steel lanterns |
+| `E195452C-7B38-4225-BAAC-49847D0AFE6F_4_5005_c.jpeg` | kiran/lanterns-row | Pierced steel lanterns |
+
+(and `IMG_0765.JPG` etc. from the "Kiran Stone" list above, unchanged)
+
+## B. On the site now; a 2× version would make them sharper (most useful first)
+
+Profile photographs (cover images; enhance the PDF copies in `client-sources/profile-pdf/`, save as
+`fix-<name>.jpg` there): `freedom.jpg`, `beyond-boundaries.jpg`, `eternal-orbit.jpg`,
+`extraction-of-negative-energy.jpg`, `kinetic-equilibrium.jpg`, `couple.jpg`, `hugging.jpg`,
+`spectator.jpg` (720×1280, the smallest).
+
+From the folder (768×1024 or similar), with the work each belongs to:
+
+| Original | Work |
+|---|---|
+| `66C84A94-9619-4567-B057-91A3F3575E6F_1_105_c.jpeg` | Soaring Higher (home page). Its only photo is a close-up, and the mirror bird reflects the photographer's face: a photo of the whole wall is wanted |
+| `AB2395F5-FA54-490E-AF17-09903E569501.jpeg` | Lit relief in a lounge (home page) |
+| `7D1FB97C-3B86-44C9-93B3-E98B3483C31C_1_105_c.jpeg` | Pierced steel lanterns (home page) |
+| `C8B93FF1-9066-43BD-B8B5-F8C5D8791213_1_105_c.jpeg` | Sliced figures on a rock (home page) |
+| `FCB5C23B-05B1-4D44-B79D-90BFDAA85905_1_105_c.jpeg`, `F92D2410-…_1_105_c.jpeg`, `FD6884BC-…_1_105_c.jpeg` | Ribbon in a reception lobby |
+| `D1ACAA60-…_1_105_c.jpeg`, `276EA6F8-…_1_105_c.jpeg`, `63470D65-…_1_105_c.jpeg` | Polished oval with an opening |
+| `62C3A6FC-D07D-47BF-A455-02D0EFB05A25_1_201_a.jpeg` | Column of mirrored cubes |
+| `1EE6134E-AE04-4FC8-BDDF-0FA7412264C0_1_105_c.jpeg` | Figure in flight |
+| `9D5BBE63-BD5C-4606-9CA0-D743257E3E26.jpeg`, `5A5BB8DB-…_1_105_c.jpeg` | Folded steel form |
+| `C123B869-…_1_105_c.jpeg`, `7F975FE0-…_1_105_c.jpeg`, `D3F29C00-…_1_105_c.jpeg` | Flowing wall installation |
+
+The full list of files and the work each is used for is in `scripts/client-images.json`.
+
+## C. Good subjects not on the site yet (need a name, a clean photo, or both)
+
+| File(s) | What it shows | What is needed |
+|---|---|---|
+| `D48ACEDB-319A-4A9A-8B9F-4B929FDC33AF.png` | "Inner Silence", black marble, H 30 × W 9 × L 16 in | A plain photo: this is a designed card with the title printed over the sculpture |
+| `5B2EB9AD-BD47-4486-A5CA-76A29B325EEC.png` | "Expected Angle" (Angel?), black marble, H 30 × 11 × 12 in | Same; and confirm the spelling of the title |
+| `596EFD27-…`, `A1692A8C-…`, `BF02B55B-…`, `63B7A2A1-…`, `FE7D5852-…` (`_4_5005_c`) | Steel fruit: strawberry, apple and star fruit, pineapple, grapes | Originals or 4× fixes; a title for the series |
+| `6F2ADF35-…`, `9F47E713-…` (`_4_5005_c`) | Large perforated crescent ring, outdoors | Originals or fixes; name and place |
+| `353A08F8-…_4_5005_c`, `A8001C57-…_1_105_c` | Radiating "wings" on a roundabout (finished, and being built) | Name and place |
+| `781DFD1F-…`, `852FB3AF-…` (`_4_5005_c`) | Twisted steel helix at a building entrance | Originals or fixes; name |
+| `9ECE2953-9779-44C5-9DF1-9283745B3393.jpeg`, `F13019A7-…_1_105_c.jpeg` | Lion of machine parts (gold, and red) | Is it the lion already on the site, repainted, or another one? |
+| `3FEC3DC4-…`, `42F31E41-…`, `5EE0E9A3-…` (`_4_5005_c`) | Rings at night; wire string forms | Originals or fixes; names |
+| `0BE8E9D5-8BE5-4B6F-81F3-290A98BE6555.jpeg` | Plaque of Soaring Higher (used for its facts) | Nothing: kept as the source of the text |
+| `WhatsApp Image 2026-11-21 at 1.47.35 PM.jpeg`, `…1.47.48 PM.jpeg` | Portrait (full size, 3024×4032) | Confirm it is Kiran Adate and that it may be used; could replace the About portrait |
+| profile PDF page 1 (`client-sources/profile-pdf/kiran-adate-portrait.jpg`) | Kiran Adate's portrait from the profile | Could be used on About or in the portfolio PDF |

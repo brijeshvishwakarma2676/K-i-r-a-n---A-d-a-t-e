@@ -37,7 +37,19 @@ export function statusOf(x, now = today()) {
 // Dates are written in the visitor's language (en, hi, mr), with Latin digits throughout.
 const LOCALE = { en: 'en-GB', hi: 'hi-IN-u-nu-latn', mr: 'mr-IN-u-nu-latn' }
 const TO = { en: ' to ', hi: ' से ', mr: ' ते ' }
-const fmt = (iso, opts, lang = 'en') => new Date(`${iso}T00:00:00`).toLocaleDateString(LOCALE[lang] || 'en-GB', opts)
+// English dates ("17 May 2016") are written directly. Hindi and Marathi use the browser's date
+// formatter, which is slow to set up, so each one (per language and style) is made once and kept.
+const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+const formatters = new Map()
+function fmt(iso, opts, lang = 'en') {
+  if (!LOCALE[lang] || lang === 'en') {
+    const [y, m, d] = iso.split('-').map(Number)
+    return [opts.day && d, opts.month && MONTHS[m - 1], opts.year && y].filter(Boolean).join(' ')
+  }
+  const key = `${lang} ${JSON.stringify(opts)}`
+  if (!formatters.has(key)) formatters.set(key, new Intl.DateTimeFormat(LOCALE[lang], opts))
+  return formatters.get(key).format(new Date(`${iso}T00:00:00`))
+}
 
 // "17 to 23 May 2016", "16 October to 20 December 2026", or with both years across a new year
 export function dateRange(x, lang = 'en') {

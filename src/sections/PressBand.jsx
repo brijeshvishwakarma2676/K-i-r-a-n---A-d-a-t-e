@@ -30,7 +30,7 @@ export default function PressBand() {
         ))}
       </Marquee>
       {/* The headlines as a list for screen readers, since the moving band is hidden from them. */}
-      <ul className="sr-only">
+      <ul className="sr-only font-display">
         {items.map((x) => <li key={x.image}>“{x.title}”, {t(x.outlet)}</li>)}
       </ul>
       <div className="wrap mt-10 md:mt-14">

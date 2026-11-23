@@ -5,6 +5,35 @@ All content on this site comes from the studio's old website (inventfineart.com,
 site-v4 (`site-v4/app/data`, `site-v4/CONTENT-GAPS.md`). Nothing has been invented. These
 items still need the owner's confirmation or input before launch.
 
+## From Kiran Adate's profile and photo folder (added 2026-11-23)
+
+- **Eight works from the profile** are now first among the works, with Kiran Adate's own titles,
+  sizes, materials and texts: Freedom, Beyond Boundaries, Extraction of Negative Energy, Eternal
+  Orbit, Kinetic Equilibrium, Hugging, Spectator, Couple. The texts were lightly copy-edited (e.g.
+  "within an ever-changes" became "within an ever-changing whole"; "W-8'" and "W-78'" read as
+  inches). Please confirm, and give a year and a place for each if they can be shown.
+- **Soaring Higher** (murals): facts from its plaque: SBICAPS, 2023, The Good Edge with Invent Fine
+  Art, 74-foot wall, 1,733 stainless steel pieces. Confirm the credit wording and that SBICAPS may
+  be named.
+- **Working titles** for installations from the folder (describing what the photos show, no
+  places named): Figure in flight; Polished oval with an opening; Ribbon in a reception lobby;
+  Column of mirrored cubes; Twisted form on a terrace; Interlocking rings; Folded steel form; Tall
+  twisting form; Steel arch; Rings of steel rod in a garden; Pierced steel lanterns; Flowing wall
+  installation; Lit relief in a lounge; Gold and black relief wall. Replace with the real names,
+  and add material, year and client where they may be published.
+- **Sliced figures on a rock** now has a newer, sharper photo from the folder.
+- **About**: the statement is now Kiran Adate's own sentence from the profile; education is "G.D.
+  Art, Sculpture & Modelling, Sir J.J. School of Art, Mumbai, 2005"; a paragraph on the move from
+  stone and bronze to stainless steel follows his profile.
+- **Home**: "Selected works" now shows Kiran Adate's recent pieces.
+- **Photographs**: most folder photos are small Apple Photos exports; the originals are wanted
+  (see CLIENT-IMAGES.md, "Kiran Adate" folder). Inner Silence and Expected Angle(l) came only as
+  designed cards with text over the sculpture and are not used yet.
+- New Hindi and Marathi translations for all of the above need the same native-speaker reading.
+
+- **"Stone column"** (added 2026-11-23 from `IMG_0005 (33).jpg`, enhanced): a working title for the
+  pale stone column with cut-in planes. Ask for its real title, stone, size and year.
+
 ## New on the site (added 2026-11-18)
 
 - **Hindi and Marathi.** The whole site can be read in Hindi and Marathi (`src/i18n/hi.js`,

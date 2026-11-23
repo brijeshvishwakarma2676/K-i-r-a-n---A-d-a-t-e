@@ -5,6 +5,7 @@ import { projects, projectBySlug } from '../data/projects'
 import { disciplineBySlug } from '../data/disciplines'
 import { exhibitions, yearOf } from '../data/exhibitions'
 import { artist, site } from '../data/site'
+import { useToday } from '../lib/useToday'
 
 /*
   The portfolio as a document: A4 landscape sheets made from the same data as the site, to save
@@ -20,16 +21,26 @@ const FEATURE_LAYOUT = {
   'statue-of-freedom-of-press': { image: 'kiran/freedom-of-press-day', cols: 'grid-cols-[1.75fr_1fr]' },
   'sculpture-of-hawker': { cols: 'grid-cols-[1.2fr_1fr]' },
 }
-const PAIRS = [['expectant-couple', 'standing-couple'], ['reclining-couple', 'two-torsos']]
+// Kiran Adate's own recent pieces (from his profile) first, then the stone pairs.
+const PAIRS = [
+  ['freedom', 'beyond-boundaries'],
+  ['extraction-of-negative-energy', 'eternal-orbit'],
+  ['hugging', 'spectator'],
+  ['couple', 'kinetic-equilibrium'],
+  ['expectant-couple', 'standing-couple'],
+  ['reclining-couple', 'two-torsos'],
+]
 const shown = new Set([...FEATURE, ...PAIRS.flat()])
 const rest = projects.filter((p) => !shown.has(p.slug))
-const perSheet = 12
-const indexSheets = Array.from({ length: Math.ceil(rest.length / perSheet) }, (_, i) => rest.slice(i * perSheet, (i + 1) * perSheet))
-const year = new Date().getFullYear()
+// At most 12 to a sheet, spread evenly so the last sheet is not left with one or two.
+const sheetCount = Math.ceil(rest.length / 12)
+const perSheet = Math.ceil(rest.length / sheetCount)
+const indexSheets = Array.from({ length: sheetCount }, (_, i) => rest.slice(i * perSheet, (i + 1) * perSheet))
 
-const label = (p) => [disciplineBySlug[p.discipline]?.name, p.medium, p.year].filter(Boolean).join(', ')
+const label = (p) => [disciplineBySlug[p.discipline]?.name, p.medium, p.dimensions, p.year].filter(Boolean).join(', ')
 
 export default function Portfolio() {
+  const year = useToday().slice(0, 4)
   return (
     <main className="portfolio bg-[#d5d0c6] py-10 print:bg-transparent print:py-0">
       <Seo title="Portfolio" description={`Portfolio of ${site.name}, sculptor, ${site.basedIn}: selected works, public works and press.`} />
@@ -68,7 +79,7 @@ export default function Portfolio() {
           <div className="mt-auto pt-6"><ArtImage image={artist.portrait} ratio="16/9" priority sizes="120mm" /></div>
         </div>
         <div className="text-[9.5pt]">
-          <Record title="Education" rows={[['', artist.education]]} />
+          <Record title="Education" rows={[[artist.education.year, `${artist.education.course}, ${artist.education.school}`]]} />
           <Record title="Public works" rows={artist.publicWorks.map((w) => [w.year, `${projectBySlug[w.slug].title}, ${w.place}`])} />
           <Record title="Exhibitions" rows={exhibitions.map((x) => [yearOf(x), `${x.title}, ${x.kind.toLowerCase()}, ${x.venue}, ${x.city}`])} />
           <Record title="Press" rows={artist.press.map((x) => [x.year, `${x.title}. ${x.outlet}`])} />
@@ -109,14 +120,14 @@ export default function Portfolio() {
         )
       })}
 
-      {/* Stone works, two to a sheet */}
+      {/* Works two to a sheet, each shown whole (never cropped) */}
       {PAIRS.map((pair) => (
         <Sheet key={pair[0]} className="grid grid-cols-2 gap-[10mm] p-[12mm]">
           {pair.map((slug) => {
             const p = projectBySlug[slug]
             return (
               <figure key={slug} className="flex min-h-0 flex-col">
-                <div className="min-h-0 flex-1"><ArtImage image={p.cover} fill priority sizes="130mm" /></div>
+                <div className="min-h-0 flex-1"><ArtImage image={{ ...p.cover, fit: 'contain' }} fill priority sizes="130mm" /></div>
                 <figcaption className="mt-3">
                   <span className="label-title text-[15pt]">{p.title}</span>
                   <span className="caption ml-2">{label(p)}</span>

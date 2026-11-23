@@ -80,7 +80,7 @@ export function personLd(artist) {
     image: `${site.url}${srcFor({ id: artist.portrait.id }, 960)}`,
     description: site.description,
     address: { '@type': 'PostalAddress', addressLocality: 'Mumbai', addressCountry: 'IN' },
-    alumniOf: { '@type': 'CollegeOrUniversity', name: artist.education },
+    alumniOf: { '@type': 'CollegeOrUniversity', name: artist.education.school },
     worksFor: { '@type': 'Organization', name: site.studio },
   }
 }

@@ -1,196 +1,448 @@
 {
-  "_about": "Client photographs from the 'Kiran Stone' folder used on the site. status 'ready' = imported from the original now; status 'fix' = imported only once a fix-<src> file exists next to the original. For any entry, a fix-<src> file is preferred over the original when present. Prompts for the fixes are in CLIENT-IMAGES.md. Run: python3 -I scripts/import-client-images.py \"/run/media/brijesh/0050-1781/Kiran Stone\"",
-  "images": [
-    {
-      "src": "IMG_0740edit.jpg",
-      "id": "kiran/freedom-of-press-night",
-      "status": "ready"
-    },
-    {
-      "src": "IMG_0734.JPG",
-      "id": "kiran/freedom-of-press-night-close",
-      "status": "ready"
-    },
-    {
-      "src": "/home/brijesh/Downloads/Freedom of Press Sculpture at Lokmat.png",
-      "id": "kiran/freedom-of-press-day",
-      "status": "ready",
-      "note": "Cleaned daylight photograph supplied separately (not in the Kiran Stone folder); an absolute src is read as is."
-    },
-    {
-      "src": "IMG_0639.JPG",
-      "id": "kiran/freedom-of-press-in-the-yard",
-      "status": "ready"
-    },
-    {
-      "src": "IMG_0442.JPG",
-      "id": "kiran/freedom-of-press-carving",
-      "status": "ready"
-    },
-    {
-      "src": "IMG_0266.JPG",
-      "id": "kiran/freedom-of-press-block",
-      "status": "ready"
-    },
-    {
-      "src": "IMG_0283.JPG",
-      "id": "kiran/freedom-of-press-team",
-      "status": "ready"
-    },
-    {
-      "src": "IMG_0427.JPG",
-      "id": "kiran/freedom-of-press-dust",
-      "status": "ready"
-    },
-    {
-      "src": "IMG_0765.JPG",
-      "id": "kiran/freedom-of-press-sunset",
-      "status": "fix"
-    },
-    {
-      "src": "IMG_1090.jpg",
-      "id": "kiran/hawker-front",
-      "status": "ready"
-    },
-    {
-      "src": "IMG_1095.jpg",
-      "id": "kiran/hawker-detail",
-      "status": "ready"
-    },
-    {
-      "src": "IMG_1091.jpg",
-      "id": "kiran/hawker-side",
-      "status": "ready"
-    },
-    {
-      "src": "IMG_1093.jpg",
-      "id": "kiran/hawker-back",
-      "status": "ready"
-    },
-    {
-      "src": "IMG_0093.jpg",
-      "id": "kiran/hawker-gate",
-      "status": "ready"
-    },
-    {
-      "src": "03092007380.jpg",
-      "id": "kiran/hawker-frame",
-      "status": "ready"
-    },
-    {
-      "src": "20092007457.jpg",
-      "id": "kiran/hawker-welding",
-      "status": "ready"
-    },
-    {
-      "src": "23092007485.jpg",
-      "id": "kiran/hawker-workshop",
-      "status": "ready"
-    },
-    {
-      "src": "MSR_2093.JPG",
-      "id": "kiran/hawker-unveiling",
-      "status": "ready"
-    },
-    {
-      "src": "IMG_0092.jpg",
-      "id": "kiran/hawker-wide",
-      "status": "fix"
-    },
-    {
-      "src": "02102007557.jpg",
-      "id": "kiran/hawker-night",
-      "status": "fix"
-    },
-    {
-      "src": "29092007535.jpg",
-      "id": "kiran/hawker-finishing",
-      "status": "fix"
-    },
-    {
-      "src": "kiran1.jpg",
-      "id": "kiran/expectant-couple",
-      "status": "ready"
-    },
-    {
-      "src": "IMG_0584.JPG",
-      "id": "kiran/expectant-couple-front",
-      "status": "ready"
-    },
-    {
-      "src": "07.JPG",
-      "id": "kiran/expectant-couple-side",
-      "status": "ready"
-    },
-    {
-      "src": "DSC02065.jpg",
-      "id": "kiran/standing-couple",
-      "status": "ready"
-    },
-    {
-      "src": "DSC02064.JPG",
-      "id": "kiran/standing-couple-in-the-yard",
-      "status": "ready"
-    },
-    {
-      "src": "DSC02063.JPG",
-      "id": "kiran/reclining-couple",
-      "status": "ready"
-    },
-    {
-      "src": "DSC02062.jpg",
-      "id": "kiran/reclining-couple-above",
-      "status": "ready"
-    },
-    {
-      "src": "DSC02061.jpg",
-      "id": "kiran/two-torsos",
-      "status": "ready"
-    },
-    {
-      "src": "DSC02055.JPG",
-      "id": "kiran/carving-with-a-pointing-machine",
-      "status": "ready"
-    },
-    {
-      "src": "DSC05062.JPG",
-      "id": "kiran/exhibition-2012",
-      "status": "fix"
-    },
-    {
-      "src": "000 (1).JPG",
-      "id": "kiran/stone-frame",
-      "status": "fix"
-    },
-    {
-      "src": "IMG_0005 (33).jpg",
-      "id": "kiran/stone-column",
-      "status": "fix"
-    },
-    {
-      "src": "english.jpg",
-      "id": "kiran/press-lokmat-times-front",
-      "status": "ready"
-    },
-    {
-      "src": "english.jpg1.jpg",
-      "id": "kiran/press-lokmat-times-adate",
-      "status": "ready"
-    },
-    {
-      "src": "hindi.jpg",
-      "id": "kiran/press-lokmat-samachar-front",
-      "status": "ready"
-    },
-    {
-      "src": "hindi.jpg1.jpg",
-      "id": "kiran/press-lokmat-samachar-inside",
-      "status": "ready"
-    },
-    {
-      "src": "7 jan 2015 lokmat.jpg",
-      "id": "kiran/press-lokmat-marathi",
-      "status": "ready"
-    }
-  ]
+ "_about": "Client photographs used on the site: from the 'Kiran Stone' folder (file names), from the 'Kiran Adate' folder in Documents (full paths, added 2026-11-23) and from Kiran Adate's profile PDF (client-sources/, see scripts/extract-profile-photos.py). status 'ready' = imported from the original now; status 'fix' = imported only once a fix-<src> file exists next to the original. For any entry, a fix-<src> file is preferred over the original when present. Prompts for the fixes are in CLIENT-IMAGES.md. An entry's optional 'fix' is the full path of its enhanced version when that is kept elsewhere. Run: python3 -I scripts/import-client-images.py ~/Documents/\"Kiran Stone\"",
+ "images": [
+  {
+   "src": "IMG_0740edit.jpg",
+   "id": "kiran/freedom-of-press-night",
+   "status": "ready"
+  },
+  {
+   "src": "IMG_0734.JPG",
+   "id": "kiran/freedom-of-press-night-close",
+   "status": "ready"
+  },
+  {
+   "src": "/home/brijesh/Downloads/Freedom of Press Sculpture at Lokmat.png",
+   "id": "kiran/freedom-of-press-day",
+   "status": "ready",
+   "note": "Cleaned daylight photograph supplied separately (not in the Kiran Stone folder); an absolute src is read as is."
+  },
+  {
+   "src": "IMG_0639.JPG",
+   "id": "kiran/freedom-of-press-in-the-yard",
+   "status": "ready"
+  },
+  {
+   "src": "IMG_0442.JPG",
+   "id": "kiran/freedom-of-press-carving",
+   "status": "ready"
+  },
+  {
+   "src": "IMG_0266.JPG",
+   "id": "kiran/freedom-of-press-block",
+   "status": "ready"
+  },
+  {
+   "src": "IMG_0283.JPG",
+   "id": "kiran/freedom-of-press-team",
+   "status": "ready"
+  },
+  {
+   "src": "IMG_0296.JPG",
+   "id": "kiran/freedom-of-press-roughed-out",
+   "status": "ready"
+  },
+  {
+   "src": "IMG_0427.JPG",
+   "id": "kiran/freedom-of-press-dust",
+   "status": "ready"
+  },
+  {
+   "src": "IMG_0765.JPG",
+   "id": "kiran/freedom-of-press-sunset",
+   "status": "fix"
+  },
+  {
+   "src": "IMG_1090.jpg",
+   "id": "kiran/hawker-front",
+   "status": "ready"
+  },
+  {
+   "src": "IMG_1095.jpg",
+   "id": "kiran/hawker-detail",
+   "status": "ready"
+  },
+  {
+   "src": "IMG_1091.jpg",
+   "id": "kiran/hawker-side",
+   "status": "ready"
+  },
+  {
+   "src": "IMG_1093.jpg",
+   "id": "kiran/hawker-back",
+   "status": "ready"
+  },
+  {
+   "src": "IMG_0093.jpg",
+   "id": "kiran/hawker-gate",
+   "status": "ready"
+  },
+  {
+   "src": "03092007380.jpg",
+   "id": "kiran/hawker-frame",
+   "status": "ready"
+  },
+  {
+   "src": "20092007457.jpg",
+   "id": "kiran/hawker-welding",
+   "status": "ready"
+  },
+  {
+   "src": "23092007485.jpg",
+   "id": "kiran/hawker-workshop",
+   "status": "ready"
+  },
+  {
+   "src": "MSR_2093.JPG",
+   "id": "kiran/hawker-unveiling",
+   "status": "ready"
+  },
+  {
+   "src": "IMG_0092.jpg",
+   "id": "kiran/hawker-wide",
+   "status": "fix"
+  },
+  {
+   "src": "02102007557.jpg",
+   "id": "kiran/hawker-night",
+   "status": "fix"
+  },
+  {
+   "src": "29092007535.jpg",
+   "id": "kiran/hawker-finishing",
+   "status": "fix"
+  },
+  {
+   "src": "kiran1.jpg",
+   "id": "kiran/expectant-couple",
+   "status": "ready"
+  },
+  {
+   "src": "IMG_0584.JPG",
+   "id": "kiran/expectant-couple-front",
+   "status": "ready"
+  },
+  {
+   "src": "07.JPG",
+   "id": "kiran/expectant-couple-side",
+   "status": "ready"
+  },
+  {
+   "src": "DSC02065.jpg",
+   "id": "kiran/standing-couple",
+   "status": "ready"
+  },
+  {
+   "src": "DSC02064.JPG",
+   "id": "kiran/standing-couple-in-the-yard",
+   "status": "ready"
+  },
+  {
+   "src": "DSC02063.JPG",
+   "id": "kiran/reclining-couple",
+   "status": "ready"
+  },
+  {
+   "src": "DSC02062.jpg",
+   "id": "kiran/reclining-couple-above",
+   "status": "ready"
+  },
+  {
+   "src": "DSC02061.jpg",
+   "id": "kiran/two-torsos",
+   "status": "ready"
+  },
+  {
+   "src": "DSC02055.JPG",
+   "id": "kiran/carving-with-a-pointing-machine",
+   "status": "ready"
+  },
+  {
+   "src": "DSC05062.JPG",
+   "id": "kiran/exhibition-2012",
+   "status": "fix",
+   "fix": "/home/brijesh/Documents/Kiran Adate/fix-DSC05062.png"
+  },
+  {
+   "src": "000 (1).JPG",
+   "id": "kiran/stone-frame",
+   "status": "fix"
+  },
+  {
+   "src": "IMG_0005 (33).jpg",
+   "id": "kiran/stone-column",
+   "status": "fix",
+   "fix": "/home/brijesh/Documents/Kiran Adate/fix-IMG_0005 (33).png"
+  },
+  {
+   "src": "english.jpg",
+   "id": "kiran/press-lokmat-times-front",
+   "status": "ready"
+  },
+  {
+   "src": "english.jpg1.jpg",
+   "id": "kiran/press-lokmat-times-adate",
+   "status": "ready"
+  },
+  {
+   "src": "hindi.jpg",
+   "id": "kiran/press-lokmat-samachar-front",
+   "status": "ready"
+  },
+  {
+   "src": "hindi.jpg1.jpg",
+   "id": "kiran/press-lokmat-samachar-inside",
+   "status": "ready"
+  },
+  {
+   "src": "7 jan 2015 lokmat.jpg",
+   "id": "kiran/press-lokmat-marathi",
+   "status": "ready"
+  },
+  {
+   "src": "client-sources/profile-pdf/freedom.jpg",
+   "id": "kiran/freedom",
+   "status": "ready"
+  },
+  {
+   "src": "/home/brijesh/Documents/Kiran Adate/0C5913E2-76C6-4E21-9D1D-44887396FFB5_1_105_c.jpeg",
+   "id": "kiran/freedom-gallery",
+   "status": "ready"
+  },
+  {
+   "src": "client-sources/profile-pdf/extraction-of-negative-energy.jpg",
+   "id": "kiran/extraction-of-negative-energy",
+   "status": "ready"
+  },
+  {
+   "src": "/home/brijesh/Documents/Kiran Adate/6AD6C4C0-43A5-41A0-BFF8-9011DE69005A_1_105_c.jpeg",
+   "id": "kiran/extraction-of-negative-energy-front",
+   "status": "ready"
+  },
+  {
+   "src": "/home/brijesh/Documents/Kiran Adate/8C88AC72-A034-486E-8B36-6B580C538215_1_105_c.jpeg",
+   "id": "kiran/extraction-of-negative-energy-side",
+   "status": "ready"
+  },
+  {
+   "src": "client-sources/profile-pdf/beyond-boundaries.jpg",
+   "id": "kiran/beyond-boundaries",
+   "status": "ready"
+  },
+  {
+   "src": "/home/brijesh/Documents/Kiran Adate/042F4E48-079A-4124-9E7D-E3486EDD4940_1_105_c.jpeg",
+   "id": "kiran/beyond-boundaries-gallery",
+   "status": "ready"
+  },
+  {
+   "src": "client-sources/profile-pdf/eternal-orbit.jpg",
+   "id": "kiran/eternal-orbit",
+   "status": "ready"
+  },
+  {
+   "src": "/home/brijesh/Documents/Kiran Adate/38F8B67C-3FC9-4FF7-BD92-0469ED5ABEC2_1_105_c.jpeg",
+   "id": "kiran/eternal-orbit-side",
+   "status": "ready"
+  },
+  {
+   "src": "/home/brijesh/Documents/Kiran Adate/F0BD7187-1B42-4AFE-8FC6-39F388C57BA7_1_105_c.jpeg",
+   "id": "kiran/eternal-orbit-gallery",
+   "status": "ready"
+  },
+  {
+   "src": "client-sources/profile-pdf/kinetic-equilibrium.jpg",
+   "id": "kiran/kinetic-equilibrium",
+   "status": "ready"
+  },
+  {
+   "src": "/home/brijesh/Documents/Kiran Adate/DD3C58B7-0C06-4DA6-9C85-CF9011500EEE_1_105_c.jpeg",
+   "id": "kiran/kinetic-equilibrium-gallery",
+   "status": "ready"
+  },
+  {
+   "src": "client-sources/profile-pdf/couple.jpg",
+   "id": "kiran/couple",
+   "status": "ready"
+  },
+  {
+   "src": "/home/brijesh/Documents/Kiran Adate/B541DE44-48FD-4E0A-9FAD-BCC1C393A3C7_1_105_c.jpeg",
+   "id": "kiran/couple-front",
+   "status": "ready"
+  },
+  {
+   "src": "client-sources/profile-pdf/hugging.jpg",
+   "id": "kiran/hugging",
+   "status": "ready"
+  },
+  {
+   "src": "/home/brijesh/Documents/Kiran Adate/4C5982BD-B2C9-4F1B-96D9-D0D86E2797A9_1_105_c.jpeg",
+   "id": "kiran/hugging-front",
+   "status": "ready"
+  },
+  {
+   "src": "/home/brijesh/Documents/Kiran Adate/85BDDCB5-0D54-44B7-8961-C783386B3A06_1_105_c.jpeg",
+   "id": "kiran/hugging-side",
+   "status": "ready"
+  },
+  {
+   "src": "client-sources/profile-pdf/spectator.jpg",
+   "id": "kiran/spectator",
+   "status": "ready"
+  },
+  {
+   "src": "/home/brijesh/Documents/Kiran Adate/32541F00-91FC-46DD-B42C-80275BD55EF1_1_105_c.jpeg",
+   "id": "kiran/spectator-front",
+   "status": "ready"
+  },
+  {
+   "src": "/home/brijesh/Documents/Kiran Adate/66C84A94-9619-4567-B057-91A3F3575E6F_1_105_c.jpeg",
+   "id": "kiran/soaring-higher",
+   "status": "ready"
+  },
+  {
+   "src": "/home/brijesh/Documents/Kiran Adate/FCB5C23B-05B1-4D44-B79D-90BFDAA85905_1_105_c.jpeg",
+   "id": "kiran/lobby-ribbon",
+   "status": "ready"
+  },
+  {
+   "src": "/home/brijesh/Documents/Kiran Adate/F92D2410-8534-40DF-B019-14F17671DAAB_1_105_c.jpeg",
+   "id": "kiran/lobby-ribbon-side",
+   "status": "ready"
+  },
+  {
+   "src": "/home/brijesh/Documents/Kiran Adate/FD6884BC-9C51-4159-A6A5-AC0FC5BC1DCA_1_105_c.jpeg",
+   "id": "kiran/lobby-ribbon-wide",
+   "status": "ready"
+  },
+  {
+   "src": "/home/brijesh/Documents/Kiran Adate/D1ACAA60-558D-4227-A724-ACC3BA13C468_1_105_c.jpeg",
+   "id": "kiran/polished-oval",
+   "status": "ready"
+  },
+  {
+   "src": "/home/brijesh/Documents/Kiran Adate/276EA6F8-C0CA-4AC9-955E-5886793E80A8_1_105_c.jpeg",
+   "id": "kiran/polished-oval-entrance",
+   "status": "ready"
+  },
+  {
+   "src": "/home/brijesh/Documents/Kiran Adate/63470D65-8BA2-4EA5-98D4-2812450FC3B2_1_105_c.jpeg",
+   "id": "kiran/polished-oval-side",
+   "status": "ready"
+  },
+  {
+   "src": "/home/brijesh/Documents/Kiran Adate/5A8CCCD3-1AE4-47D9-A775-579E6CE9BC8C_1_105_c.jpeg",
+   "id": "kiran/interlocking-rings",
+   "status": "ready"
+  },
+  {
+   "src": "/home/brijesh/Documents/Kiran Adate/BB256FDD-7EC9-4A79-8E11-C110A10BED12_1_105_c.jpeg",
+   "id": "kiran/interlocking-rings-side",
+   "status": "ready"
+  },
+  {
+   "src": "/home/brijesh/Documents/Kiran Adate/62C3A6FC-D07D-47BF-A455-02D0EFB05A25_1_201_a.jpeg",
+   "id": "kiran/cube-column",
+   "status": "ready"
+  },
+  {
+   "src": "/home/brijesh/Documents/Kiran Adate/87A12801-67F5-4334-8B32-408A7C3F2883_4_5005_c.jpeg",
+   "id": "kiran/cube-column-installing",
+   "status": "fix"
+  },
+  {
+   "src": "/home/brijesh/Documents/Kiran Adate/E5CAF113-593A-431C-9536-61E0FBABEB79_1_105_c.jpeg",
+   "id": "kiran/terrace-twist",
+   "status": "ready"
+  },
+  {
+   "src": "/home/brijesh/Documents/Kiran Adate/BDE1C9AF-F563-4594-A4C8-08DF33FAD86D_1_105_c.jpeg",
+   "id": "kiran/terrace-twist-side",
+   "status": "ready"
+  },
+  {
+   "src": "/home/brijesh/Documents/Kiran Adate/317EAAC5-5875-45F4-B60E-71CE3B2A156B_4_5005_c.jpeg",
+   "id": "kiran/terrace-twist-view",
+   "status": "fix"
+  },
+  {
+   "src": "/home/brijesh/Documents/Kiran Adate/7D1FB97C-3B86-44C9-93B3-E98B3483C31C_1_105_c.jpeg",
+   "id": "kiran/lanterns",
+   "status": "ready"
+  },
+  {
+   "src": "/home/brijesh/Documents/Kiran Adate/78EC8EC9-B368-49D7-A209-CB4C70FB93C0_4_5005_c.jpeg",
+   "id": "kiran/lanterns-night",
+   "status": "fix"
+  },
+  {
+   "src": "/home/brijesh/Documents/Kiran Adate/A00A2A4A-CE25-49C5-A991-75CAE7C5EDDC_4_5005_c.jpeg",
+   "id": "kiran/lantern-among-pebbles",
+   "status": "fix"
+  },
+  {
+   "src": "/home/brijesh/Documents/Kiran Adate/E195452C-7B38-4225-BAAC-49847D0AFE6F_4_5005_c.jpeg",
+   "id": "kiran/lanterns-row",
+   "status": "fix"
+  },
+  {
+   "src": "/home/brijesh/Documents/Kiran Adate/C123B869-18F8-43EE-887E-A678B725C862_1_105_c.jpeg",
+   "id": "kiran/flowing-wall",
+   "status": "ready"
+  },
+  {
+   "src": "/home/brijesh/Documents/Kiran Adate/7F975FE0-E78B-4F35-A573-9FC2B9CA3C04_1_105_c.jpeg",
+   "id": "kiran/flowing-wall-room",
+   "status": "ready"
+  },
+  {
+   "src": "/home/brijesh/Documents/Kiran Adate/D3F29C00-8A73-456D-81EB-D61ACBFE43C1_1_105_c.jpeg",
+   "id": "kiran/flowing-wall-detail",
+   "status": "ready"
+  },
+  {
+   "src": "/home/brijesh/Documents/Kiran Adate/AB2395F5-FA54-490E-AF17-09903E569501.jpeg",
+   "id": "kiran/lit-relief",
+   "status": "ready"
+  },
+  {
+   "src": "/home/brijesh/Documents/Kiran Adate/CBE2B6C5-494E-40B0-8F4A-741D79FD15FC_1_105_c.jpeg",
+   "id": "kiran/gold-relief-wall",
+   "status": "ready"
+  },
+  {
+   "src": "/home/brijesh/Documents/Kiran Adate/1EE6134E-AE04-4FC8-BDDF-0FA7412264C0_1_105_c.jpeg",
+   "id": "kiran/figure-in-flight",
+   "status": "ready"
+  },
+  {
+   "src": "/home/brijesh/Documents/Kiran Adate/9D5BBE63-BD5C-4606-9CA0-D743257E3E26.jpeg",
+   "id": "kiran/folded-form",
+   "status": "ready"
+  },
+  {
+   "src": "/home/brijesh/Documents/Kiran Adate/5A5BB8DB-4002-4216-9EE4-5C56F17EF1CD_1_105_c.jpeg",
+   "id": "kiran/folded-form-side",
+   "status": "ready"
+  },
+  {
+   "src": "/home/brijesh/Documents/Kiran Adate/70EDB59A-A792-4D2C-9226-80924AE6814D_1_105_c.jpeg",
+   "id": "kiran/tall-twisting-form",
+   "status": "ready"
+  },
+  {
+   "src": "/home/brijesh/Documents/Kiran Adate/15604E06-2F75-4DF1-BD1E-34AF252D3141_1_105_c.jpeg",
+   "id": "kiran/steel-arch",
+   "status": "ready"
+  },
+  {
+   "src": "/home/brijesh/Documents/Kiran Adate/31D75D74-5C98-4C57-B06E-5BDAEBDCA8DC_1_105_c.jpeg",
+   "id": "kiran/garden-rings",
+   "status": "ready"
+  },
+  {
+   "src": "/home/brijesh/Documents/Kiran Adate/C8B93FF1-9066-43BD-B8B5-F8C5D8791213_1_105_c.jpeg",
+   "id": "kiran/sliced-figures-on-a-rock",
+   "status": "ready"
+  }
+ ]
 }

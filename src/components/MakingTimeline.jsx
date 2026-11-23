@@ -1,5 +1,6 @@
 import { useRef } from 'react'
-import { motion, useReducedMotion, useScroll } from 'framer-motion'
+import { motion, useScroll } from 'framer-motion'
+import { useReducedMotion } from '../lib/media'
 import ArtImage, { photo } from './ArtImage'
 import { Reveal } from './Motion'
 import { useT } from '../i18n'

@@ -1,5 +1,6 @@
 import { Link } from 'react-router'
-import { motion, useReducedMotion } from 'framer-motion'
+import { motion } from 'framer-motion'
+import { useReducedMotion } from '../lib/media'
 import ArtImage from './ArtImage'
 import { Stagger } from './Motion'
 import { projectBySlug, workPath } from '../data/projects'
@@ -83,12 +84,12 @@ export default function PublicWorksMap({ className = '' }) {
 
           {/* The public works; the second label sits below its point so the two do not collide */}
           {works.map((w, i) => (
-            <a key={w.slug} href={w.map} target="_blank" rel="noreferrer" aria-label={t('{title}, {town}: open in Google Maps', { title: w.p.title, town: w.town })}>
+            <a key={w.slug} href={w.map} target="_blank" rel="noreferrer" aria-label={`${t(w.p.title)} ${t(w.town)}, ${t('open in Google Maps')}`}>
               <g transform={`translate(${x(w.lon)},${y(w.lat)})`} className="transition-opacity hover:opacity-70">
                 <circle r="13" fill="var(--color-geru)" fillOpacity="0.15" />
                 <circle r="6" fill="var(--color-geru)" />
                 <text x="-18" y={i === 0 ? 30 : -14} textAnchor="end" className="display" fontSize="22" fontStyle="italic" fill="currentColor">{t(w.p.title)}</text>
-                <text x="-18" y={i === 0 ? 48 : -36} textAnchor="end" className="caption" fontSize="12" fill="currentColor" fillOpacity="0.65">{t(w.town)}</text>
+                <text x="-18" y={i === 0 ? 48 : -36} textAnchor="end" className="caption" fontSize="12" fill="currentColor" fillOpacity="0.65">{' '}{t(w.town)}</text>
               </g>
             </a>
           ))}

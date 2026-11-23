@@ -45,12 +45,13 @@ export default function About() {
         </figure>
       </header>
 
-      <section aria-labelledby="statement-title" className="room-dark"><div className="wrap py-28 md:py-40">
+      <section aria-labelledby="statement-title" className="cv-auto room-dark"><div className="wrap py-28 md:py-40">
         <figure className="grid grid-cols-12 gap-x-6">
           <h2 id="statement-title" className="caption col-span-12 mb-8 md:col-span-10 md:col-start-2">{t('On the work')}</h2>
           <blockquote className="display col-span-12 text-[clamp(2rem,1.2rem+2.8vw,3.8rem)] italic leading-[1.08] md:col-span-10 md:col-start-2">
             <ScrollWords text={artist.statement} />
           </blockquote>
+          <figcaption className="caption col-span-12 mt-8 md:col-span-10 md:col-start-2">{t(artist.statementSource)}</figcaption>
         </figure>
 
         <div className="mt-24 grid grid-cols-12 gap-x-6 gap-y-10 md:mt-32">
@@ -66,7 +67,7 @@ export default function About() {
         </div>
       </div></section>
 
-      <section aria-label={t('On site')}>
+      <section aria-label={t('On site')} className="cv-auto">
         <ClipReveal>
           <Parallax amount={5} className="aspect-[4/5] sm:aspect-[16/9] lg:aspect-[21/9]">
             <ArtImage image={siteImage} fill sizes="100vw" />
@@ -83,7 +84,7 @@ export default function About() {
         <PublicWorksMap className="mt-14 md:mt-20" />
       </section>
 
-      <section aria-labelledby="materials-title" className="wrap py-28 md:py-40">
+      <section aria-labelledby="materials-title" className="cv-auto wrap py-28 md:py-40">
         <div className="grid grid-cols-12 gap-x-6 gap-y-10">
           <div className="col-span-12 md:col-span-5">
             <SplitText as="h2" id="materials-title" className="display text-[clamp(2.2rem,1.4rem+2.8vw,3.8rem)]" text="Materials" />
@@ -103,7 +104,7 @@ export default function About() {
         </div>
       </section>
 
-      <section aria-labelledby="workshop-title" className="bg-paper py-28 md:py-40">
+      <section aria-labelledby="workshop-title" className="cv-auto bg-paper py-28 md:py-40">
         <div className="wrap grid grid-cols-12 gap-x-6 gap-y-12">
           <figure className="col-span-12 sm:col-span-8 md:col-span-4">
             <ArtImage image={workshopImage} ratio="3/4" sizes="(min-width: 768px) 33vw, 100vw" />
@@ -118,7 +119,7 @@ export default function About() {
         </div>
       </section>
 
-      <section aria-labelledby="record-title" className="wrap py-28 md:py-40">
+      <section aria-labelledby="record-title" className="cv-auto wrap py-28 md:py-40">
         <div className="grid grid-cols-12 gap-x-6 gap-y-12">
           <div className="col-span-12 md:col-span-4">
             <SplitText as="h2" id="record-title" className="display text-[clamp(2.2rem,1.4rem+2.8vw,3.8rem)]" text="Record" />
@@ -126,7 +127,7 @@ export default function About() {
             <a href={site.portfolioPdf} download className="arrow-link mt-8 flex w-fit">{t('Download portfolio (PDF)')}</a>
           </div>
           <div className="col-span-12 space-y-16 md:col-span-7 md:col-start-6">
-            <CvList title={t('Education')} rows={[{ year: '', text: t(artist.education) }]} />
+            <CvList title={t('Education')} rows={[{ year: artist.education.year, text: `${t(artist.education.course)}, ${t(artist.education.school)}` }]} />
             <CvList
               title={t('Public works')}
               rows={artist.publicWorks.map((w) => ({

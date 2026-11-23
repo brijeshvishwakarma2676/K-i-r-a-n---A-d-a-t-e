@@ -6,15 +6,17 @@ import Invitation from '../sections/Invitation'
 import { dateRange, exhibitions, statusOf, yearOf } from '../data/exhibitions'
 import { projectBySlug, workPath } from '../data/projects'
 import { useLang, useT } from '../i18n'
+import { useToday } from '../lib/useToday'
 
 const LABEL = { current: 'Now showing', upcoming: 'Upcoming' }
 
 export default function Exhibitions() {
   const t = useT()
   const { lang } = useLang()
+  const today = useToday()
   const sorted = [...exhibitions].sort((a, b) => (a.start < b.start ? 1 : -1))
-  const live = sorted.filter((x) => statusOf(x) !== 'past')
-  const past = sorted.filter((x) => statusOf(x) === 'past')
+  const live = sorted.filter((x) => statusOf(x, today) !== 'past')
+  const past = sorted.filter((x) => statusOf(x, today) === 'past')
   const years = [...new Set(past.map(yearOf))]
 
   return (
@@ -47,7 +49,7 @@ export default function Exhibitions() {
               </div>
             )}
             <div className={`col-span-12 self-end ${x.image ? 'md:col-span-4' : 'md:col-span-8'}`}>
-              <p className="caption text-geru">{t(LABEL[statusOf(x)])}</p>
+              <p className="caption text-geru">{t(LABEL[statusOf(x, today)])}</p>
               <h2 id={`x-${x.slug}`} className="label-title mt-3 text-[clamp(2.4rem,1.6rem+2.6vw,4rem)] leading-[0.98]">{t(x.title)}</h2>
               <p className="mt-5 text-[1.02rem]">
                 {t(x.kind)}

@@ -4,6 +4,7 @@ import { ClipReveal, SplitText } from '../components/Motion'
 import { dateRange, featuredExhibition, statusOf } from '../data/exhibitions'
 import { projectBySlug, workPath } from '../data/projects'
 import { useLang, useT } from '../i18n'
+import { useToday } from '../lib/useToday'
 
 const LABEL = { current: 'Now showing', upcoming: 'Opening soon', past: 'Exhibition' }
 
@@ -11,7 +12,8 @@ const LABEL = { current: 'Now showing', upcoming: 'Opening soon', past: 'Exhibit
 export default function RecentExhibition() {
   const t = useT()
   const { lang } = useLang()
-  const x = featuredExhibition()
+  const today = useToday()
+  const x = featuredExhibition(today)
   if (!x) return null
   const shown = x.works.map((s) => projectBySlug[s]).filter(Boolean)
 
@@ -26,7 +28,7 @@ export default function RecentExhibition() {
           )}
         </div>
         <div className="col-span-12 flex flex-col md:col-span-4 md:col-start-9">
-          <p className="caption">{t(LABEL[statusOf(x)])}</p>
+          <p className="caption">{t(LABEL[statusOf(x, today)])}</p>
           <SplitText as="h2" id="exhibition-title" className="label-title mt-4 text-[clamp(2.4rem,1.6rem+2.6vw,4rem)] leading-[0.98]" text={x.title} />
           <p className="mt-5 text-[1.02rem]">
             {t(x.kind)}

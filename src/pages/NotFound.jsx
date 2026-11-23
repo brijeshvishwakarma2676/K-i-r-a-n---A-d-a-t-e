@@ -1,6 +1,6 @@
 import { Link } from 'react-router'
 import Seo from '../components/Seo'
-import Plate from '../components/Plate'
+import Plate from '../components/LazyPlate'
 import { SplitText } from '../components/Motion'
 import { T } from '../i18n'
 

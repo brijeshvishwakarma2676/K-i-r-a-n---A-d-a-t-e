@@ -1,5 +1,6 @@
 import { useRef, useState } from 'react'
-import { animate, motion, useMotionValue, useMotionValueEvent, useReducedMotion, useTransform } from 'framer-motion'
+import { animate, motion, useInView, useMotionValue, useMotionValueEvent, useTransform } from 'framer-motion'
+import { useReducedMotion } from '../lib/media'
 import ArtImage from './ArtImage'
 import { ease } from './Motion'
 import { useT } from '../i18n'
@@ -9,6 +10,8 @@ import { useT } from '../i18n'
   stacked, and dragging across the picture cross-fades from one to the next, as if stepping around
   the work. Only opacity changes, so it stays smooth on modest devices. The stops below the picture
   (and the arrow keys on them) do the same without dragging. `views` are { image, label }.
+  Only the first view is in the page at first; the others are added as the picture comes near the
+  screen, so their photographs do not compete with the page's main photograph while it loads.
 */
 export default function Turnaround({ views, title, className = '' }) {
   const t = useT()
@@ -18,6 +21,7 @@ export default function Turnaround({ views, title, className = '' }) {
   const [stop, setStop] = useState(0)
   const drag = useRef(null)
   const box = useRef(null)
+  const near = useInView(box, { once: true, margin: '0px 0px 300px 0px' })
 
   useMotionValueEvent(pos, 'change', (v) => setStop(Math.round(v)))
 
@@ -58,7 +62,7 @@ export default function Turnaround({ views, title, className = '' }) {
       >
         {views.map((v, i) => (
           <Layer key={v.image.id} pos={pos} i={i}>
-            <ArtImage image={v.image} fill sizes="(min-width: 768px) 45vw, 100vw" />
+            {(i === 0 || near) && <ArtImage image={v.image} fill sizes="(min-width: 768px) 45vw, 100vw" />}
           </Layer>
         ))}
         <span className="caption pointer-events-none absolute bottom-3 left-3 bg-[#1b1a18]/70 px-2.5 py-1.5 !text-[#ECE7DD]">

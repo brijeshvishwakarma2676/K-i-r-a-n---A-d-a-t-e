@@ -26,6 +26,7 @@
   --font-sans: "Archivo Variable", "Archivo", "Noto Sans Devanagari Variable", "Helvetica Neue", Helvetica, Arial, sans-serif;
 
   --ease-gallery: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-gallery-in-out: cubic-bezier(0.76, 0, 0.24, 1);
 }
 
 /* Optional dark tokens. index.html pins data-theme="light" because the gallery is designed
@@ -155,7 +156,7 @@ body::after {
 
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
-    *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+    *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; transition-delay: 0s !important; animation-delay: 0s !important; }
     .marquee-track, .glow-breathe { animation: none !important; }
   }
 }
@@ -312,8 +313,67 @@ body::after {
   [data-live="false"] .glow-breathe { animation-play-state: paused; }
 
   /* Sections far from the screen are not rendered until they come near (the browser keeps their
-     last known height), which keeps style and paint work small on long pages. */
+     last known height), which keeps style and paint work small on long pages, and lets fonts and
+     lazy photographs used only there wait until they are needed. Every section below a page's
+     first screen takes it (Home, About, a work's page). */
   .cv-auto { content-visibility: auto; contain-intrinsic-size: auto 1200px; }
+
+  /*
+    Reveals (src/lib/reveal.js, used by src/components/Motion.jsx). Each block's finished look is
+    its default; data-reveal="out" is the starting point, set only on what is still off screen,
+    and data-reveal="in" plays the transition back to the default. Going out is instant.
+    --rv-delay, --rv-step (between words or items), --rv-i (a word's or item's place) and --rv-y
+    (how far a block rises) are set inline by the components.
+  */
+  [data-reveal="out"], [data-reveal="out"] * { transition: none !important; }
+
+  .rv-rise { transition: opacity 1.1s var(--ease-gallery) var(--rv-delay, 0s), transform 1.1s var(--ease-gallery) var(--rv-delay, 0s); }
+  .rv-rise[data-reveal="out"] { opacity: 0; transform: translateY(var(--rv-y, 28px)); }
+
+  .rv-stagger > .rv-item {
+    transition: opacity 1s var(--ease-gallery), transform 1s var(--ease-gallery);
+    transition-delay: calc(var(--rv-i) * var(--rv-step, 0.08s));
+  }
+  .rv-stagger[data-reveal="out"] > .rv-item { opacity: 0; transform: translateY(var(--rv-y, 24px)); }
+
+  .rv-clip { transition: opacity 1.3s var(--ease-gallery) var(--rv-delay, 0s); }
+  .rv-clip[data-reveal="out"] { opacity: 0.4; }
+  .rv-clip > .reveal-cover { transform: scaleY(0); transition: transform 1.3s var(--ease-gallery) var(--rv-delay, 0s); }
+  .rv-clip[data-reveal="out"] > .reveal-cover { transform: scaleY(0.18); }
+
+  .rv-image > .rv-zoom { transition: transform 1.8s var(--ease-gallery) var(--rv-delay, 0s); }
+  .rv-image[data-reveal="out"] > .rv-zoom { transform: scale(1.18); }
+  .rv-image > .reveal-cover { transform: scaleY(0); transition: transform 1.2s var(--ease-gallery-in-out) var(--rv-delay, 0s); }
+  .rv-image[data-reveal="out"] > .reveal-cover { transform: scaleY(1); }
+
+  /* Words of a heading (SplitText) or letters (the footer's name) rising out of their masks */
+  .rv-words .rv-word {
+    transition: transform var(--rv-dur, 1.1s) var(--ease-gallery);
+    transition-delay: calc(var(--rv-delay, 0s) + var(--rv-i) * var(--rv-step, 0.07s));
+  }
+  .rv-words[data-reveal="out"] .rv-word { transform: translateY(var(--rv-from, 110%)) rotate(var(--rv-turn, 2deg)); }
+
+  /*
+    Entrances that play as a page opens, with no script: on a first visit they start as soon as the
+    HTML and this stylesheet arrive. --enter-delay offsets one; words and letters add their place.
+  */
+  .enter-words .rv-word {
+    animation: word-rise 1.1s var(--ease-gallery) both;
+    animation-delay: calc(var(--rv-delay, 0s) + var(--rv-i) * var(--rv-step, 0.07s));
+  }
+  .enter-fade { animation: fade-in var(--enter-dur, 1.2s) var(--ease-gallery) var(--enter-delay, 0s) both; }
+  .enter-rise { animation: rise-in var(--enter-dur, 1.1s) var(--ease-gallery) var(--enter-delay, 0s) both; }
+  .enter-up { animation: up-in var(--enter-dur, 1.2s) var(--enter-ease, var(--ease-gallery)) var(--enter-delay, 0s) both; }
+
+  /* The language switch's हिं and मरा use the phone's own Devanagari font, so English pages do not
+     download a whole Devanagari font for two labels. */
+  .lang-label { font-family: "Archivo Variable", "Archivo", system-ui, sans-serif; }
+
+  /* A photograph still downloading when its page opened (ArtImage); it fades in on arrival */
+  .art-img[data-wait] { opacity: 0; scale: 1.04; }
+
+  /* A passage lit word by word as it is read (ScrollWords): --p is the scroll progress, 0 to 1 */
+  .sw-word { opacity: clamp(0.16, calc(0.16 + 0.84 * (var(--p, 1) * var(--n) - var(--i))), 1); }
 
   /* The cover that lifts off a revealing image matches the panel it sits on. */
   .bg-paper { --reveal: var(--color-paper); }
@@ -376,6 +436,11 @@ html:is(:lang(hi), :lang(mr)) body { line-height: 1.75; }
   .portfolio .sheet { break-after: page; }
   * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 }
+
+@keyframes word-rise { from { transform: translateY(110%) rotate(2deg); } }
+@keyframes fade-in { from { opacity: 0; } }
+@keyframes rise-in { from { opacity: 0; transform: translateY(20px); } }
+@keyframes up-in { from { transform: translateY(var(--enter-from, 105%)); } }
 
 @keyframes marquee {
   from { transform: translateX(0); }

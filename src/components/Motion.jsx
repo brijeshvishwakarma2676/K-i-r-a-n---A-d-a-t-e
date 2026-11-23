@@ -1,78 +1,49 @@
 import { Children, useEffect, useRef } from 'react'
-import {
-  animate,
-  motion,
-  useInView,
-  useMotionValue,
-  useReducedMotion,
-  useScroll,
-  useSpring,
-  useTransform,
-} from 'framer-motion'
+import { motion, useMotionValueEvent, useScroll, useSpring, useTransform } from 'framer-motion'
 import { useT } from '../i18n'
+import { useReveal } from '../lib/reveal'
+import { useReducedMotion } from '../lib/media'
 
 /*
   The site's motion vocabulary. Everything is slow and eased, like light moving across a gallery
   wall, and everything falls back to a still page when the visitor asks for reduced motion.
+
+  How it is built, for speed on modest phones:
+    - Reveals as things come into view (ClipReveal, ImageReveal, Reveal, Stagger, SplitText) are
+      CSS transitions started by one shared observer (src/lib/reveal.js), not a JavaScript
+      animation per element. Their CSS is under "Reveals" in src/styles/global.css.
+    - Entrances that play as a page opens (SplitText `immediate`) are CSS animations, so on the
+      first visit they start as soon as the page's HTML and CSS arrive, without waiting for scripts.
+    - framer-motion is kept for motion that follows the scroll position or the pointer
+      (Parallax, ScrollWords, ScrollProgress), and elsewhere for page changes, drags and overlays.
+  Only transform and opacity are animated: the GPU moves them without repainting the page.
 */
 const ease = [0.22, 1, 0.36, 1]
 const easeInOut = [0.76, 0, 0.24, 1]
-const view = { once: true, margin: '0px 0px -12% 0px' }
 
-/*
-  Reveals use a cover in the page's colour that shrinks away (a transform, which the GPU animates
-  without repainting) rather than an animated clip-path, which repaints the image on every frame.
-*/
+const vars = (o) => Object.fromEntries(Object.entries(o).filter(([, v]) => v != null))
+const secs = (s) => (s ? `${s}s` : null)
 
 // Reveals large images: the plate rises into view as a cover lifts off its upper part.
 export function ClipReveal({ children, className = '', delay = 0 }) {
-  const reduce = useReducedMotion()
-  if (reduce) return <div className={className}>{children}</div>
+  const ref = useRef(null)
+  useReveal(ref)
   return (
-    <motion.div
-      className={`relative overflow-hidden ${className}`}
-      initial={{ opacity: 0.4 }}
-      whileInView={{ opacity: 1 }}
-      viewport={view}
-      transition={{ duration: 1.3, ease, delay }}
-    >
+    <div ref={ref} className={`rv-clip relative overflow-hidden ${className}`} style={vars({ '--rv-delay': secs(delay) })}>
       {children}
-      <motion.span
-        aria-hidden="true"
-        className="reveal-cover pointer-events-none absolute inset-0 z-10 bg-[var(--reveal,var(--color-limestone))]"
-        style={{ originY: 0 }}
-        initial={{ scaleY: 0.18 }}
-        whileInView={{ scaleY: 0 }}
-        viewport={view}
-        transition={{ duration: 1.3, ease, delay }}
-      />
-    </motion.div>
+      <span aria-hidden="true" className="reveal-cover pointer-events-none absolute inset-0 z-10 origin-top bg-[var(--reveal,var(--color-limestone))]" />
+    </div>
   )
 }
 
 // An image uncovered from below while it settles from a slight zoom: used on every work card.
 export function ImageReveal({ children, className = '', delay = 0 }) {
-  const reduce = useReducedMotion()
-  if (reduce) return <div className={className}>{children}</div>
+  const ref = useRef(null)
+  useReveal(ref)
   return (
-    <div className={`relative overflow-hidden ${className}`}>
-      <motion.div
-        initial={{ scale: 1.18 }}
-        whileInView={{ scale: 1 }}
-        viewport={view}
-        transition={{ duration: 1.8, ease, delay }}
-      >
-        {children}
-      </motion.div>
-      <motion.span
-        aria-hidden="true"
-        className="reveal-cover pointer-events-none absolute inset-0 z-10 bg-[var(--reveal,var(--color-limestone))]"
-        style={{ originY: 0 }}
-        initial={{ scaleY: 1 }}
-        whileInView={{ scaleY: 0 }}
-        viewport={view}
-        transition={{ duration: 1.2, ease: easeInOut, delay }}
-      />
+    <div ref={ref} className={`rv-image relative overflow-hidden ${className}`} style={vars({ '--rv-delay': secs(delay) })}>
+      <div className="rv-zoom">{children}</div>
+      <span aria-hidden="true" className="reveal-cover pointer-events-none absolute inset-0 z-10 origin-top bg-[var(--reveal,var(--color-limestone))]" />
     </div>
   )
 }
@@ -92,79 +63,26 @@ export function Parallax({ children, amount = 6, className = '' }) {
   )
 }
 
-// Quiet fade for text blocks that follow an image reveal.
-export function FadeIn({ children, className = '', delay = 0, as = 'div' }) {
-  const reduce = useReducedMotion()
-  const Tag = motion[as]
-  if (reduce) {
-    const Plain = as
-    return <Plain className={className}>{children}</Plain>
-  }
-  return (
-    <Tag
-      className={className}
-      initial={{ opacity: 0 }}
-      whileInView={{ opacity: 1 }}
-      viewport={view}
-      transition={{ duration: 1, ease, delay }}
-    >
-      {children}
-    </Tag>
-  )
-}
-
 // Fades a block in while it rises a little into place.
-export function Reveal({ children, className = '', delay = 0, y = 28, as = 'div', ...rest }) {
-  const reduce = useReducedMotion()
-  if (reduce) {
-    const Plain = as
-    return <Plain className={className} {...rest}>{children}</Plain>
-  }
-  const Tag = motion[as]
+export function Reveal({ children, className = '', delay = 0, y = 28, as: Tag = 'div', style, ...rest }) {
+  const ref = useRef(null)
+  useReveal(ref)
   return (
-    <Tag
-      className={className}
-      initial={{ opacity: 0, y }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={view}
-      transition={{ duration: 1.1, ease, delay }}
-      {...rest}
-    >
+    <Tag ref={ref} className={`rv-rise ${className}`} style={{ ...vars({ '--rv-delay': secs(delay), '--rv-y': y === 28 ? null : `${y}px` }), ...style }} {...rest}>
       {children}
     </Tag>
   )
 }
 
 // Children appear one after another. Each direct child is wrapped, so pass list items as `as`.
-export function Stagger({ children, className = '', as = 'div', itemAs = 'div', itemClassName = '', step = 0.08, y = 24, ...rest }) {
-  const reduce = useReducedMotion()
+export function Stagger({ children, className = '', as: Tag = 'div', itemAs: Item = 'div', itemClassName = '', step = 0.08, y = 24, ...rest }) {
+  const ref = useRef(null)
+  useReveal(ref)
   const items = Children.toArray(children)
-  if (reduce) {
-    const Plain = as
-    const Item = itemAs
-    return (
-      <Plain className={className} {...rest}>
-        {items.map((c, i) => <Item key={c.key ?? i} className={itemClassName}>{c}</Item>)}
-      </Plain>
-    )
-  }
-  const Tag = motion[as]
-  const Item = motion[itemAs]
   return (
-    <Tag
-      className={className}
-      initial="hidden"
-      whileInView="show"
-      viewport={view}
-      variants={{ show: { transition: { staggerChildren: step } } }}
-      {...rest}
-    >
+    <Tag ref={ref} className={`rv-stagger ${className}`} style={{ '--rv-step': `${step}s`, '--rv-y': `${y}px` }} {...rest}>
       {items.map((c, i) => (
-        <Item
-          key={c.key ?? i}
-          className={itemClassName}
-          variants={{ hidden: { opacity: 0, y }, show: { opacity: 1, y: 0, transition: { duration: 1, ease } } }}
-        >
+        <Item key={c.key ?? i} className={`rv-item ${itemClassName}`} style={{ '--rv-i': i }}>
           {c}
         </Item>
       ))}
@@ -174,35 +92,26 @@ export function Stagger({ children, className = '', as = 'div', itemAs = 'div', 
 
 /*
   A heading whose words rise one by one out of a mask. `text` must be a plain string.
-  `immediate` plays on mount (page titles); otherwise it plays when scrolled into view.
+  `immediate` plays as the page opens (page titles); otherwise it plays when scrolled into view.
 */
-export function SplitText({ text: english, as = 'h2', className = '', delay = 0, step = 0.07, immediate = false, ...rest }) {
-  const reduce = useReducedMotion()
+export function SplitText({ text: english, as: Tag = 'h2', className = '', delay = 0, step = 0.07, immediate = false, ...rest }) {
+  const ref = useRef(null)
+  useReveal(ref, !immediate)
   const text = useT()(english) // headings translate themselves (src/i18n)
-  if (reduce) {
-    const Plain = as
-    return <Plain className={className} {...rest}>{text}</Plain>
-  }
-  const Tag = motion[as]
   const words = String(text).split(' ')
-  const trigger = immediate ? { animate: 'show' } : { whileInView: 'show', viewport: view }
   return (
     <Tag
-      className={className}
-      initial="hidden"
-      {...trigger}
-      variants={{ show: { transition: { staggerChildren: step, delayChildren: delay } } }}
+      ref={ref}
+      className={`${immediate ? 'enter-words' : 'rv-words'} ${className}`}
+      style={vars({ '--rv-delay': secs(delay), '--rv-step': step === 0.07 ? null : `${step}s` })}
       {...rest}
     >
       {words.map((w, i) => (
         <span key={i}>
           <span className="-mb-[0.14em] -mr-[0.06em] inline-block overflow-hidden pb-[0.14em] pr-[0.06em] align-bottom">
-            <motion.span
-              className="inline-block"
-              variants={{ hidden: { y: '110%', rotate: 2 }, show: { y: '0%', rotate: 0, transition: { duration: 1.1, ease } } }}
-            >
+            <span className="rv-word inline-block" style={{ '--rv-i': i }}>
               {w}
-            </motion.span>
+            </span>
           </span>
           {i < words.length - 1 && ' '}
         </span>
@@ -211,50 +120,32 @@ export function SplitText({ text: english, as = 'h2', className = '', delay = 0,
   )
 }
 
-// A passage whose words brighten one after another as it is scrolled through.
+/*
+  A passage whose words brighten one after another as it is scrolled through. The scroll position
+  is written once per frame as --p on the paragraph; each word's opacity is worked out from it in
+  CSS (.sw-word), so the words themselves are plain text. Without scripts every word is lit.
+*/
 export function ScrollWords({ text: english, className = '' }) {
   const ref = useRef(null)
   const text = useT()(english)
   const reduce = useReducedMotion()
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start 0.88', 'end 0.55'] })
-  if (reduce) return <p className={className}>{text}</p>
+  const write = (v) => ref.current?.style.setProperty('--p', reduce ? 1 : v.toFixed(3))
+  useMotionValueEvent(scrollYProgress, 'change', write)
+  useEffect(() => write(scrollYProgress.get()))
   const words = text.split(' ')
   return (
-    <p ref={ref} className={className}>
+    <p ref={ref} className={className} style={{ '--n': words.length }}>
       <span className="sr-only">{text}</span>
       <span aria-hidden="true">
         {words.map((w, i) => (
-          <Word key={i} progress={scrollYProgress} range={[i / words.length, (i + 1) / words.length]}>
+          <span key={i} className="sw-word" style={{ '--i': i }}>
             {w}
             {i < words.length - 1 && ' '}
-          </Word>
+          </span>
         ))}
       </span>
     </p>
-  )
-}
-
-function Word({ progress, range, children }) {
-  const opacity = useTransform(progress, range, [0.16, 1])
-  return <motion.span style={{ opacity }}>{children}</motion.span>
-}
-
-// A number that counts up from zero the first time it comes into view.
-export function Counter({ to, duration = 2, className = '' }) {
-  const ref = useRef(null)
-  const reduce = useReducedMotion()
-  const inView = useInView(ref, { once: true, margin: '0px 0px -10% 0px' })
-  const value = useMotionValue(0)
-  const shown = useTransform(value, (v) => Math.round(v))
-  useEffect(() => {
-    if (!inView || reduce) return
-    const controls = animate(value, to, { duration, ease })
-    return () => controls.stop()
-  }, [inView, reduce, to, duration, value])
-  return (
-    <motion.span ref={ref} className={`tabular-nums ${className}`}>
-      {reduce ? to : shown}
-    </motion.span>
   )
 }
 

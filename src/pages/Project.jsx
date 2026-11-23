@@ -1,12 +1,11 @@
 import { useState } from 'react'
 import { Link, useParams } from 'react-router'
-import { motion } from 'framer-motion'
 import { Expand } from 'lucide-react'
 import Seo, { shareImageFor } from '../components/Seo'
 import ArtImage, { photo, srcFor } from '../components/ArtImage'
 import ProjectCard from '../components/ProjectCard'
 import Lightbox from '../components/Lightbox'
-import { ClipReveal, SplitText, ease } from '../components/Motion'
+import { ClipReveal, SplitText } from '../components/Motion'
 import Invitation from '../sections/Invitation'
 import PressClippings from '../components/PressClippings'
 import MakingTimeline from '../components/MakingTimeline'
@@ -123,15 +122,10 @@ export default function Project() {
             <span aria-hidden="true" className="mx-2">/</span>
             <Link to={`/works/${d.slug}`} className="hover:underline">{t(d.name)}</Link>
           </nav>
-          <motion.h1
-            className="label-title mt-5 text-[clamp(2.4rem,1.4rem+3.2vw,4.6rem)] font-light leading-[0.95]"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1.1, ease }}
-          >
+          <h1 className="enter-rise label-title mt-5 text-[clamp(2.4rem,1.4rem+3.2vw,4.6rem)] font-light leading-[0.95]">
             {t(p.title)}
             {p.year && <span className="display not-italic">, {p.year}</span>}
-          </motion.h1>
+          </h1>
 
           <dl className="mt-8 border-t border-stone">
             {facts.map((f) => (
@@ -171,7 +165,7 @@ export default function Project() {
       </div>
 
       {p.gallery.length > 0 && (
-        <section aria-label={t('More views')} className="room-dark"><div className="wrap py-24 md:py-32">
+        <section aria-label={t('More views')} className="cv-auto room-dark"><div className="wrap py-24 md:py-32">
           {p.turnaround && (
             <div className="mb-24 grid grid-cols-12 gap-x-6 gap-y-10 md:mb-32">
               <Turnaround views={p.turnaround.map((v) => ({ ...v, label: t(v.label) }))} title={t(p.title)} className="col-span-12 md:col-span-6 lg:col-span-5 lg:col-start-2" />
@@ -200,7 +194,7 @@ export default function Project() {
       )}
 
       {p.making && (
-        <section aria-labelledby="making-title" className="wrap py-24 md:py-36">
+        <section aria-labelledby="making-title" className="cv-auto wrap py-24 md:py-36">
           <div className="grid grid-cols-12 gap-x-6 gap-y-6">
             <SplitText as="h2" id="making-title" className="display col-span-12 text-[clamp(2.4rem,1.4rem+3.2vw,4.4rem)] md:col-span-6" text="The making" />
             {p.makingIntro && <p className="col-span-12 max-w-[46ch] self-end text-[1.02rem] md:col-span-5 md:col-start-8">{t(p.makingIntro)}</p>}
@@ -218,14 +212,14 @@ export default function Project() {
       )}
 
       {p.film && (
-        <section aria-labelledby="film-title" className="room-dark"><div className="wrap py-24 md:py-32">
+        <section aria-labelledby="film-title" className="cv-auto room-dark"><div className="wrap py-24 md:py-32">
           <SplitText as="h2" id="film-title" className="display text-[clamp(2.4rem,1.4rem+3.2vw,4.4rem)]" text="On film" />
           <Film film={p.film} title={t(p.title)} className="mt-12 max-w-[72rem] md:mt-16" />
         </div></section>
       )}
 
       {press.length > 0 && (
-        <section aria-labelledby="press-title" className="room-clay"><div className="wrap py-20 md:py-28">
+        <section aria-labelledby="press-title" className="cv-auto room-clay"><div className="wrap py-20 md:py-28">
           <h2 id="press-title" className="display text-[clamp(2rem,1.4rem+2vw,3.2rem)]">{t('In the press')}</h2>
           <PressClippings items={press} className="mt-10 md:mt-14" />
         </div></section>
@@ -243,7 +237,7 @@ export default function Project() {
       </nav>
 
       {related.length > 0 && (
-        <section aria-labelledby="related-title" className="wrap py-24 md:py-32">
+        <section aria-labelledby="related-title" className="cv-auto wrap py-24 md:py-32">
           <div className="flex flex-wrap items-end justify-between gap-6">
             <h2 id="related-title" className="display text-[clamp(2rem,1.4rem+2vw,3.2rem)]">
               {t('Also in {topic}', { topic: t(groupName || d.name).toLowerCase() })}

@@ -1,13 +1,16 @@
+import { useRef } from 'react'
 import { Link } from 'react-router'
-import { motion } from 'framer-motion'
-import { ease } from './Motion'
+import { useReveal } from '../lib/reveal'
+import { useToday } from '../lib/useToday'
 import { site } from '../data/site'
 import { disciplines } from '../data/disciplines'
 import { useT } from '../i18n'
 
 export default function Footer() {
-  const year = new Date().getFullYear()
+  const year = useToday().slice(0, 4)
   const t = useT()
+  const name = useRef(null)
+  useReveal(name)
   return (
     <footer className="on-dark overflow-hidden bg-basalt text-bone">
       <div className="wrap pb-10 pt-20 md:pt-24">
@@ -59,25 +62,20 @@ export default function Footer() {
         </div>
 
         {/* The name, rising letter by letter as the page ends */}
-        <motion.p
+        <p
+          ref={name}
           aria-hidden="true"
-          className="display latin mt-16 select-none whitespace-nowrap pb-[0.16em] text-center text-[13.5vw] font-light leading-[0.8] tracking-[-0.03em] text-bone/[0.08] md:mt-20"
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, margin: '0px 0px -5% 0px' }}
-          variants={{ show: { transition: { staggerChildren: 0.05 } } }}
+          className="rv-words display latin mt-16 select-none whitespace-nowrap pb-[0.16em] text-center text-[13.5vw] font-light leading-[0.8] tracking-[-0.03em] text-bone/[0.08] md:mt-20"
+          style={{ '--rv-step': '0.05s', '--rv-dur': '1.2s', '--rv-from': '100%', '--rv-turn': '0deg' }}
         >
           {site.name.split('').map((ch, i) => (
             <span key={i} className="-mb-[0.16em] inline-block overflow-hidden pb-[0.16em]">
-              <motion.span
-                className="inline-block whitespace-pre"
-                variants={{ hidden: { y: '100%' }, show: { y: '0%', transition: { duration: 1.2, ease } } }}
-              >
+              <span className="rv-word inline-block whitespace-pre" style={{ '--rv-i': i }}>
                 {ch}
-              </motion.span>
+              </span>
             </span>
           ))}
-        </motion.p>
+        </p>
 
         <div className="flex flex-col gap-2 border-t border-bone/15 pt-6 sm:flex-row sm:justify-between">
           <p className="caption">© {year} {site.name}</p>

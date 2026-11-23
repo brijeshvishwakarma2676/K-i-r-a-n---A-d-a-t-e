@@ -5,14 +5,15 @@ import { projectBySlug, workPath } from '../data/projects'
 import { useT } from '../i18n'
 
 // How a work is made, shown with one work: the Statue of Freedom of Press, from the raw block in
-// the stone yard to the finished statue. Photographs are the client's own, dated from the camera.
+// the stone yard to the statue in place. Photographs are the client's own, dated from the camera;
+// the sharpest of each stage were chosen (this is on the home page).
 const work = projectBySlug['statue-of-freedom-of-press']
 const steps = [
   { id: 'kiran/freedom-of-press-block', label: 'The block', note: 'Splitting the stone, November 2006' },
-  { id: 'kiran/freedom-of-press-team', label: 'Roughing out', note: 'Cutting the block to shape, November 2006' },
+  { id: 'kiran/freedom-of-press-roughed-out', label: 'Roughing out', note: 'The figures roughed out of the block, December 2006' },
   { id: 'kiran/freedom-of-press-dust', label: 'Carving', note: 'Working the forms, December 2006' },
   { id: 'kiran/freedom-of-press-carving', label: 'The figures', note: 'The figures and the newspaper, December 2006' },
-  { id: 'kiran/freedom-of-press-in-the-yard', label: 'Finished', note: 'In the stone yard, March 2007', position: '50% 30%' },
+  { id: 'kiran/freedom-of-press-night', label: 'Installed', note: 'Lit at night at Butibori, Nagpur, May 2007', position: '50% 40%' },
 ]
 
 export default function Studio() {
@@ -30,7 +31,7 @@ export default function Studio() {
           </Reveal>
         </div>
 
-        <ol className="no-scrollbar -mx-[var(--gutter)] mt-16 flex snap-x snap-mandatory gap-5 overflow-x-auto px-[var(--gutter)] md:mx-0 md:mt-24 md:grid md:grid-cols-5 md:overflow-visible md:px-0">
+        <ol data-lenis-prevent-horizontal className="no-scrollbar -mx-[var(--gutter)] mt-16 flex snap-x snap-mandatory gap-5 overflow-x-auto px-[var(--gutter)] md:mx-0 md:mt-24 md:grid md:grid-cols-5 md:overflow-visible md:px-0">
           {steps.map((s, i) => (
             <Reveal as="li" key={s.id} delay={i * 0.08} className="group w-[68vw] shrink-0 snap-start sm:w-[40vw] md:w-auto">
               <div className="sheen overflow-hidden">

@@ -76,11 +76,13 @@ export const nav = [
 // (see CONTENT-TO-CONFIRM.md); until they are, `statement` describes the work shown on the site and
 // `practice` restates how the old studio site described the making, without the sales language.
 export const artist = {
+  // Kiran Adate's own words, from his artist profile (2026).
   statement:
-    'The work moves between the figure and the abstract: dancers, a cyclist and a cellist; the Buddha and Ganesha; a lion built from machine parts and a rhinoceros in metal mesh; ribbons of metal turning in space. Each piece begins as a sketch or a small model and is carved, cast or welded, then finished by hand.',
+    'For me, sculpture is an ongoing dialogue between material, imagination and space: a process of transforming matter into a meaningful visual experience.',
+  statementSource: 'Kiran Adate, artist profile',
 
   shortBio:
-    'Kiran Adate is a sculptor in Mumbai, from Parali Vaijnath in Beed district, Maharashtra, and studied at the J.J. School of Art in Mumbai. The work ranges from public sculpture, such as the Statue of Freedom of Press and the Sculpture of Hawker in Nagpur, to figures carved in stone. It is made in the workshop of Invent Fine Art, the studio Kiran Adate leads.',
+    'Kiran Adate is a sculptor in Mumbai, from Parali Vaijnath in Beed district, Maharashtra, who trained in sculpture and modelling at the Sir J.J. School of Art in Mumbai. The work, in stone, bronze and more and more in stainless steel, ranges from public sculpture, such as the Statue of Freedom of Press and the Sculpture of Hawker in Nagpur, to figures and abstract forms for galleries and buildings. It is made in the workshop of Invent Fine Art, the studio Kiran Adate leads.',
 
   // Kiran Adate's own words, as printed in Lokmat Times, Nagpur, 7 January 2015 (client's clipping).
   quote: {
@@ -103,7 +105,7 @@ export const artist = {
     { year: 2007, slug: 'statue-of-freedom-of-press', place: 'Lokmat Media printing press, Butibori, Nagpur', town: 'Butibori', lat: 20.93, lon: 78.95, map: 'https://www.google.com/maps/search/?api=1&query=Lokmat+printing+press+Butibori+Nagpur' },
     { year: 2015, slug: 'sculpture-of-hawker', place: 'Samvidhan Square, Nagpur; unveiled 6 January 2015', town: 'Nagpur', lat: 21.15, lon: 79.08, map: 'https://www.google.com/maps/search/?api=1&query=Samvidhan+Square+Nagpur' },
   ],
-  education: 'J.J. School of Art, Mumbai',
+  education: { course: 'G.D. Art, Sculpture & Modelling', school: 'Sir J.J. School of Art, Mumbai', year: 2005 },
 
   // The artist's work in progress: carving stone with a pointing machine (client photograph, 2012).
   portrait: { id: 'kiran/carving-with-a-pointing-machine', alt: 'Carving stone with a pointing machine, 2012' },
@@ -111,9 +113,10 @@ export const artist = {
   practice: [
     'A work begins with a sketch, a reference photograph or an idea, and often with the place where it will stand. A small model fixes the form before the full piece is made.',
     'The piece is then modelled, cast, welded or carved in the workshop at Nalasopara, near Mumbai, and finished by hand.',
+    'After many sculptures in stone and bronze, the work has turned more and more to stainless steel. Strong, lasting and reflective, it suits abstract forms, geometric compositions and organic shapes, and lets a sculpture answer the light and the space around it. The interests stay the same: form, balance, proportion and space.',
   ],
 
-  materialsNote: 'Sculpture in steel, stone, bronze and FRP; murals in steel, FRP, GRC and mixed media.',
+  materialsNote: 'Sculpture in stainless steel, stone, bronze and FRP; murals in steel, FRP, GRC and mixed media.',
 
   // Clients named on the old site (our_client.html, 2017), shown only on the About page as a
   // record of commissions. CONFIRM: is the list current, and may it be published?

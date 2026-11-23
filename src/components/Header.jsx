@@ -16,7 +16,7 @@ export default function Header() {
   const [open, setOpen] = useState(false)
   const t = useT()
   // Pages whose opening section is dark get light lettering until the header turns solid.
-  const darkTop = pathname === '/works/murals' && !solid
+  const darkTop = pathname.replace(/\/$/, '') === '/works/murals' && !solid
 
   useMotionValueEvent(scrollY, 'change', (y) => {
     const prev = scrollY.getPrevious() ?? 0
@@ -37,7 +37,7 @@ export default function Header() {
         transition={{ duration: 0.45, ease }}
       >
         <div className="wrap flex h-[var(--header-h)] items-center justify-between gap-6">
-          <Link to="/" className="group flex items-baseline gap-3" aria-label={`${site.name}, home`}>
+          <Link to="/" className="group flex items-baseline gap-3">
             <span className="display latin text-[1.7rem] leading-none">{site.name}</span>
             <span className="caption hidden xl:inline">{t(site.short)}</span>
           </Link>
@@ -103,9 +103,9 @@ function LangSwitch({ dark = false, className = '' }) {
             type="button"
             lang={l.code}
             aria-pressed={lang === l.code}
-            aria-label={l.label}
+            aria-label={l.code === 'en' ? 'EN, English' : `${l.short}, ${l.label}`}
             onClick={() => setLang(l.code)}
-            className={`px-1 py-2 transition-colors ${lang === l.code ? (dark ? 'text-bone' : 'text-ink underline decoration-geru underline-offset-4') : dark ? 'text-bone/60 hover:text-bone' : 'text-ink-soft hover:text-ink'}`}
+            className={`lang-label px-1 py-2 transition-colors ${lang === l.code ? (dark ? 'text-bone' : 'text-ink underline decoration-geru underline-offset-4') : dark ? 'text-bone/60 hover:text-bone' : 'text-ink-soft hover:text-ink'}`}
           >
             {l.short}
           </button>
@@ -141,7 +141,7 @@ function MobileMenu({ onClose }) {
           {t('Close')} <X size={18} strokeWidth={1.25} aria-hidden="true" />
         </button>
       </div>
-      <nav aria-label={t('Main')} className="wrap flex-1 overflow-y-auto pt-6">
+      <nav aria-label={t('Main')} className="wrap flex-1 overflow-y-auto pt-6" data-lenis-prevent>
         <ul>
           {[{ to: '/', label: 'Home' }, ...nav].map((item, i) => (
             <motion.li

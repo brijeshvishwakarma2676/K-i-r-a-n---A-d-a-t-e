@@ -8,14 +8,15 @@ import { projectBySlug, workPath } from '../data/projects'
 import { SplitText } from '../components/Motion'
 import { useT } from '../i18n'
 
-// Works seen where they stand: [work slug, which photo of it]. Only works from the portfolio.
+// Works seen where they stand: [work slug, which photo of it]. Only works from the portfolio, and
+// none already shown in Selected works above.
 const sited = [
-  ['sculpture-of-hawker', 0],
+  ['ribbon-in-a-reception-lobby', 0],
   ['runner-around-a-column', 0],
   ['dancers-relief-lobby-wall', 0],
   ['columns-of-climbing-figures', 0],
   ['carved-relief-wall-full-length', 0],
-  ['sliced-figures-on-a-rock', 0],
+  ['polished-oval-with-an-opening', 0],
   ['metal-leaf-wall-installation', 0],
   ['tall-standing-figure', 0],
 ]
@@ -51,6 +52,7 @@ export default function InPlace() {
 
       <ul
         ref={track}
+        data-lenis-prevent-horizontal
         className="no-scrollbar mt-14 flex snap-x snap-mandatory gap-5 overflow-x-auto scroll-px-[var(--gutter)] px-[var(--gutter)] md:gap-8"
         aria-label={t('Works in place')}
       >

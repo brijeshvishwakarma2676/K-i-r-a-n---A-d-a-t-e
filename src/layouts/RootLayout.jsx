@@ -1,11 +1,14 @@
 import { useEffect, useRef } from 'react'
 import { useLocation, useOutlet } from 'react-router'
-import { AnimatePresence, MotionConfig, motion, useReducedMotion } from 'framer-motion'
+import { AnimatePresence, MotionConfig, motion } from 'framer-motion'
+import { useReducedMotion } from '../lib/media'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import Analytics from '../components/Analytics'
 import { LangProvider, useT } from '../i18n'
 import { ScrollProgress, ease, easeInOut } from '../components/Motion'
+import { scrollToTop } from '../lib/smoothScroll'
+import { endFirstPage } from '../lib/reveal'
 import { site } from '../data/site'
 import { disciplineBySlug } from '../data/disciplines'
 import { projectBySlug } from '../data/projects'
@@ -16,6 +19,7 @@ function useFirstPaint() {
   const first = useRef(firstVisit).current
   useEffect(() => {
     firstVisit = false
+    endFirstPage() // from now on, new content plays its reveals (src/lib/reveal.js)
   }, [])
   return first
 }
@@ -43,7 +47,7 @@ export default function RootLayout() {
       <Analytics />
       <Header />
       <AnimatePresence mode="wait" onExitComplete={() => {
-          window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
+          scrollToTop()
           // Move keyboard and screen reader focus to the new page's content.
           document.getElementById('main')?.focus({ preventScroll: true })
         }}>
