@@ -34,6 +34,19 @@ items still need the owner's confirmation or input before launch.
 - **"Stone column"** (added 2026-11-23 from `IMG_0005 (33).jpg`, enhanced): a working title for the
   pale stone column with cut-in planes. Ask for its real title, stone, size and year.
 
+- **Every work page now has the same layout** as the Statue of Freedom of Press (2026-11-24):
+  details, description, further views, and a step-by-step making timeline.
+  - **Descriptions** for 47 works were written from their photographs (what can be seen, nothing
+    more): `DESCRIBED` in `src/data/projects.js`. Kiran's own text replaces them.
+  - **Technique** (carved stone, welded metal, fabricated stainless steel, modelled and cast,
+    relief) is set only where it is certain (Kiran's own facts, or unmistakable in the photos):
+    40 works. The other 18 (e.g. Runner around a column, Embracing couple, Saraswati, Cellist)
+    show no technique or making section until the studio says how they were made.
+  - **"How it is made"** lists the technique's steps as text and shows only the work's own photo:
+    a page never shows another work's photographs (the build stops if one does). Best of all is
+    each work's own dated story with process photos, like the Statue of Freedom of Press: ask for
+    process photos and dates of the main works.
+
 ## New on the site (added 2026-11-18)
 
 - **Hindi and Marathi.** The whole site can be read in Hindi and Marathi (`src/i18n/hi.js`,

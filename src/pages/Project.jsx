@@ -50,7 +50,7 @@ export default function Project() {
   // Photographs of the making open in the same viewer, after the views of the finished work.
   const makingImages = (p.making || []).filter((s) => s.image).map((s) => s.image)
   // The viewer shows the making photographs with their caption in the visitor's language.
-  const makingShown = (p.making || []).filter((s) => s.image).map((s) => ({ ...s.image, caption: `${t(s.label)}, ${t(s.date)}. ${t(s.note)}` }))
+  const makingShown = (p.making || []).filter((s) => s.image).map((s) => ({ ...s.image, caption: `${[t(s.label), t(s.date)].filter(Boolean).join(', ')}. ${t(s.note)}` }))
   const viewer = [...images, ...makingShown]
   // Photos shown in the walk-around are not repeated among the further views.
   const turnIds = new Set((p.turnaround || []).map((t) => t.image.id))
@@ -66,6 +66,7 @@ export default function Project() {
     { term: 'Body of work', value: t(d.name) },
     { term: 'Subject', value: t(groupName || segmentName) },
     { term: 'Medium', value: t(p.medium) },
+    { term: 'Technique', value: t(p.technique) },
     { term: 'Dimensions', value: p.dimensions },
     { term: 'Year', value: p.year },
     {
@@ -196,7 +197,7 @@ export default function Project() {
       {p.making && (
         <section aria-labelledby="making-title" className="cv-auto wrap py-24 md:py-36">
           <div className="grid grid-cols-12 gap-x-6 gap-y-6">
-            <SplitText as="h2" id="making-title" className="display col-span-12 text-[clamp(2.4rem,1.4rem+3.2vw,4.4rem)] md:col-span-6" text="The making" />
+            <SplitText as="h2" id="making-title" className="display col-span-12 text-[clamp(2.4rem,1.4rem+3.2vw,4.4rem)] md:col-span-6" text={p.makingTitle} />
             {p.makingIntro && <p className="col-span-12 max-w-[46ch] self-end text-[1.02rem] md:col-span-5 md:col-start-8">{t(p.makingIntro)}</p>}
           </div>
           {p.beforeAfter && (

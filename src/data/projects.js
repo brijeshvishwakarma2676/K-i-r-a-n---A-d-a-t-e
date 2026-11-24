@@ -27,6 +27,9 @@
                 until it is imported, then appears by itself
     making      optional dated steps of how the work was made: { date, label, note, id? }, shown
                 as a timeline on the work's page (`makingIntro` introduces it)
+    process     how the work was made, only where certain: a key of PROCESSES in process.js (stone,
+                metal, steel, cast, relief). Works without their own `making` show that
+                technique's steps as their timeline, and its name as the work's Technique
     beforeAfter optional { before: { id, label }, after: { id, label } }: two photos of the same
                 shape, compared with a slider at the top of the making timeline
     turnaround  optional [{ id, label }]: photos from `images` taken around the work, in walking
@@ -46,53 +49,54 @@
 */
 
 import { images } from './images.js'
+import { PROCESSES } from './process.js'
 
 const RAW = [
   // SCULPTURE
   // Kiran Adate's own works, from his profile (2026): titles, sizes, materials and texts are his.
-  { slug: 'freedom', title: 'Freedom', discipline: 'sculpture', group: 'figures', medium: 'Stainless steel 316, fabricated mesh', dimensions: 'H 102 × W 78 × L 36 in',
+  { slug: 'freedom', process: 'metal', title: 'Freedom', discipline: 'sculpture', group: 'figures', medium: 'Stainless steel 316, fabricated mesh', dimensions: 'H 102 × W 78 × L 36 in',
     views: ['Freedom', 'Freedom, in the gallery'], images: ['kiran/freedom', 'kiran/freedom-gallery'],
     description: [
       'Freedom is the expression of liberation, hope and the courage to rise beyond limitations. The human figure, with its arms extended towards the sky, embodies openness, confidence and an unrestrained spirit.',
       'The intricate wire structure symbolises the complexity of human experience, while the upward-reaching gesture reflects the desire to break boundaries and embrace endless possibilities.',
     ] },
-  { slug: 'beyond-boundaries', title: 'Beyond Boundaries', discipline: 'sculpture', group: 'figures', medium: 'Stainless steel 316', dimensions: 'H 82 × W 42 × L 82 in',
+  { slug: 'beyond-boundaries', process: 'metal', title: 'Beyond Boundaries', discipline: 'sculpture', group: 'figures', medium: 'Stainless steel 316', dimensions: 'H 82 × W 42 × L 82 in',
     views: ['Beyond Boundaries', 'Beyond Boundaries, in the gallery'], images: ['kiran/beyond-boundaries', 'kiran/beyond-boundaries-gallery'],
     description: [
       'The sculpture symbolises human ambition, strength and the pursuit of infinite possibilities. The upward-reaching figure represents the determination to overcome limitations, while the circular ring signifies infinity, unity and continuity.',
       'The reflective stainless steel connects the work with its surroundings, celebrating the harmony between human potential and the universe.',
     ] },
-  { slug: 'extraction-of-negative-energy', title: 'Extraction of Negative Energy', discipline: 'sculpture', group: 'figures', medium: 'Stainless steel 316', dimensions: 'H 62 × W 42 × D 24 in',
+  { slug: 'extraction-of-negative-energy', process: 'metal', title: 'Extraction of Negative Energy', discipline: 'sculpture', group: 'figures', medium: 'Stainless steel 316', dimensions: 'H 62 × W 42 × D 24 in',
     views: ['Extraction of Negative Energy', 'Extraction of Negative Energy, in the gallery', 'Extraction of Negative Energy, another view'],
     images: ['kiran/extraction-of-negative-energy', 'kiran/extraction-of-negative-energy-front', 'kiran/extraction-of-negative-energy-side'],
     description: [
       'The sculpture represents the act of pulling negative energy out from within. The contorted human figure and the radiating wires symbolise an intense, invisible force drawing out negativity, emotional burdens and inner conflicts.',
       'The dynamic posture captures the struggle and release of this energy: a journey from inner tension towards liberation, balance and renewal.',
     ] },
-  { slug: 'eternal-orbit', title: 'Eternal Orbit', discipline: 'sculpture', group: 'abstract', medium: 'Stainless steel 316 on a wooden base', dimensions: 'H 48 × D 16 in',
+  { slug: 'eternal-orbit', process: 'steel', title: 'Eternal Orbit', discipline: 'sculpture', group: 'abstract', medium: 'Stainless steel 316 on a wooden base', dimensions: 'H 48 × D 16 in',
     views: ['Eternal Orbit', 'Eternal Orbit, from the side', 'Eternal Orbit, in the gallery'], images: ['kiran/eternal-orbit', 'kiran/eternal-orbit-side', 'kiran/eternal-orbit-gallery'],
     description: [
       'A celebration of balance, continuity and the eternal rhythm of life. The flowing metal forms make an infinite loop, while the suspended spheres stand for moments, energies or people moving within the larger cycle of existence.',
       'The sculpture explores the relationship between motion and stillness, the individual and the whole. The intertwined curves follow the continuous journey of life, and the reflective spheres mirror the world around them: we are all connected within an ever-changing whole.',
     ] },
-  { slug: 'kinetic-equilibrium', title: 'Kinetic Equilibrium', discipline: 'sculpture', group: 'abstract', medium: 'Stainless steel 316', dimensions: 'H 68 × W 9 × L 9 in',
+  { slug: 'kinetic-equilibrium', process: 'steel', title: 'Kinetic Equilibrium', discipline: 'sculpture', group: 'abstract', medium: 'Stainless steel 316', dimensions: 'H 68 × W 9 × L 9 in',
     views: ['Kinetic Equilibrium', 'Kinetic Equilibrium, in the gallery'], images: ['kiran/kinetic-equilibrium', 'kiran/kinetic-equilibrium-gallery'],
     description: [
       'An abstract kinetic sculpture about the delicate relationship between movement and balance. Suspended at a single point of balance, its geometric forms create a dynamic interplay of tension, motion and stability: harmony within constant change.',
     ] },
-  { slug: 'hugging', title: 'Hugging', discipline: 'sculpture', group: 'figures', medium: 'Black marble, carved from one block', dimensions: 'H 29 × W 9 × L 16 in',
+  { slug: 'hugging', process: 'stone', title: 'Hugging', discipline: 'sculpture', group: 'figures', medium: 'Black marble, carved from one block', dimensions: 'H 29 × W 9 × L 16 in',
     views: ['Hugging', 'Hugging, from the front', 'Hugging, from the side'], images: ['kiran/hugging', 'kiran/hugging-front', 'kiran/hugging-side'],
     description: [
       '“The emotion of human nature.” The sculpture celebrates the universal human need for love, connection and emotional security. The embracing figures express warmth, trust and togetherness through their intertwined forms and gentle curves.',
       'Carved in stone, it holds an intimate moment where words become unnecessary and emotions speak through touch: the desire to give love, receive comfort and find strength in one another.',
     ] },
-  { slug: 'spectator', title: 'Spectator', discipline: 'sculpture', group: 'figures', medium: 'Black marble, carved from one block', dimensions: 'H 35 × W 9 × L 14 in',
+  { slug: 'spectator', process: 'stone', title: 'Spectator', discipline: 'sculpture', group: 'figures', medium: 'Black marble, carved from one block', dimensions: 'H 35 × W 9 × L 14 in',
     views: ['Spectator', 'Spectator, from the front'], images: ['kiran/spectator', 'kiran/spectator-front'],
     description: [
       'Carved from a single block of black marble, Spectator embodies the silent presence of an observer. Its layered textures and faceless form stand for the complexity of human experience and the emotions hidden beneath the surface.',
       'The sculpture invites reflection on the fine line between watching life unfold and taking part in it.',
     ] },
-  { slug: 'couple', title: 'Couple', discipline: 'sculpture', group: 'figures', medium: 'Bronze', dimensions: 'H 30 × W 8 × L 19 in',
+  { slug: 'couple', process: 'cast', title: 'Couple', discipline: 'sculpture', group: 'figures', medium: 'Bronze', dimensions: 'H 30 × W 8 × L 19 in',
     views: ['Couple', 'Couple, from the front'], images: ['kiran/couple', 'kiran/couple-front'],
     description: [
       'The sculpture represents the emotional bond between two people: love, trust and togetherness. Their close embrace and contrasting textures reflect the beauty of human relationships and the unspoken connection that unites two souls.',
@@ -100,25 +104,25 @@ const RAW = [
   // Installations from the client's photographs (2026). Titles describe what the photos show:
   // working titles until the studio names them (see CONTENT-TO-CONFIRM.md).
   { slug: 'figure-in-flight', title: 'Figure in flight', discipline: 'sculpture', group: 'figures', images: ['kiran/figure-in-flight'] },
-  { slug: 'polished-oval-with-an-opening', title: 'Polished oval with an opening', discipline: 'sculpture', group: 'abstract',
+  { slug: 'polished-oval-with-an-opening', process: 'steel', title: 'Polished oval with an opening', discipline: 'sculpture', group: 'abstract',
     views: ['Polished oval with an opening', 'Polished oval with an opening, at the entrance', 'Polished oval with an opening, from the side'],
     images: ['kiran/polished-oval', 'kiran/polished-oval-entrance', 'kiran/polished-oval-side'] },
-  { slug: 'ribbon-in-a-reception-lobby', title: 'Ribbon in a reception lobby', discipline: 'sculpture', group: 'abstract',
+  { slug: 'ribbon-in-a-reception-lobby', process: 'steel', title: 'Ribbon in a reception lobby', discipline: 'sculpture', group: 'abstract',
     views: ['Ribbon in a reception lobby', 'Ribbon in a reception lobby, from the side', 'Ribbon in a reception lobby, with the reception desk'],
     images: ['kiran/lobby-ribbon', 'kiran/lobby-ribbon-side', 'kiran/lobby-ribbon-wide'] },
-  { slug: 'column-of-mirrored-cubes', title: 'Column of mirrored cubes', discipline: 'sculpture', group: 'abstract',
+  { slug: 'column-of-mirrored-cubes', process: 'steel', title: 'Column of mirrored cubes', discipline: 'sculpture', group: 'abstract',
     views: ['Column of mirrored cubes', 'Column of mirrored cubes, being installed'], images: ['kiran/cube-column', 'kiran/cube-column-installing'] },
-  { slug: 'twisted-form-on-a-terrace', title: 'Twisted form on a terrace', discipline: 'sculpture', group: 'abstract',
+  { slug: 'twisted-form-on-a-terrace', process: 'steel', title: 'Twisted form on a terrace', discipline: 'sculpture', group: 'abstract',
     views: ['Twisted form on a terrace', 'Twisted form on a terrace, from the side', 'Twisted form on a terrace, another view'],
     images: ['kiran/terrace-twist', 'kiran/terrace-twist-side', 'kiran/terrace-twist-view'] },
-  { slug: 'interlocking-rings', title: 'Interlocking rings', discipline: 'sculpture', group: 'abstract',
+  { slug: 'interlocking-rings', process: 'steel', title: 'Interlocking rings', discipline: 'sculpture', group: 'abstract',
     views: ['Interlocking rings, in the workshop', 'Interlocking rings, in the workshop, another view'], images: ['kiran/interlocking-rings', 'kiran/interlocking-rings-side'] },
-  { slug: 'folded-steel-form', title: 'Folded steel form', discipline: 'sculpture', group: 'abstract',
+  { slug: 'folded-steel-form', process: 'steel', title: 'Folded steel form', discipline: 'sculpture', group: 'abstract',
     views: ['Folded steel form', 'Folded steel form, another view'], images: ['kiran/folded-form', 'kiran/folded-form-side'] },
-  { slug: 'tall-twisting-form', title: 'Tall twisting form', discipline: 'sculpture', group: 'abstract', images: ['kiran/tall-twisting-form'] },
-  { slug: 'steel-arch', title: 'Steel arch', discipline: 'sculpture', group: 'abstract', images: ['kiran/steel-arch'] },
-  { slug: 'rings-of-steel-rod-in-a-garden', title: 'Rings of steel rod in a garden', discipline: 'sculpture', group: 'abstract', images: ['kiran/garden-rings'] },
-  { slug: 'pierced-steel-lanterns', title: 'Pierced steel lanterns', discipline: 'sculpture', group: 'nature',
+  { slug: 'tall-twisting-form', process: 'steel', title: 'Tall twisting form', discipline: 'sculpture', group: 'abstract', images: ['kiran/tall-twisting-form'] },
+  { slug: 'steel-arch', process: 'steel', title: 'Steel arch', discipline: 'sculpture', group: 'abstract', images: ['kiran/steel-arch'] },
+  { slug: 'rings-of-steel-rod-in-a-garden', process: 'steel', title: 'Rings of steel rod in a garden', discipline: 'sculpture', group: 'abstract', images: ['kiran/garden-rings'] },
+  { slug: 'pierced-steel-lanterns', process: 'steel', title: 'Pierced steel lanterns', discipline: 'sculpture', group: 'nature',
     views: ['Pierced steel lanterns', 'Pierced steel lanterns, at night', 'A pierced steel lantern among pebbles', 'Pierced steel lanterns in a row'],
     images: ['kiran/lanterns', 'kiran/lanterns-night', 'kiran/lantern-among-pebbles', 'kiran/lanterns-row'] },
   { slug: 'hands-holding-a-beam', code: 'IFA-SC-001', title: 'Hands holding a beam', discipline: 'sculpture', group: 'abstract', images: ['gallery/sculptures/1'] },
@@ -131,7 +135,7 @@ const RAW = [
   { slug: 'abstract-form-in-a-park', code: 'IFA-SC-008', title: 'Abstract form in a park', discipline: 'sculpture', group: 'abstract', images: ['gallery/sculptures/10'] },
   { slug: 'illuminated-coil-hand', code: 'IFA-SC-009', title: 'Illuminated coil hand', discipline: 'sculpture', group: 'abstract', images: ['gallery/sculptures/11'] },
   { slug: 'equestrian-statue', code: 'IFA-SC-010', codes: ['IFA-SC-010', 'IFA-SC-011'], title: 'Equestrian statue', discipline: 'sculpture', group: 'figures', views: ['Equestrian statue', 'Equestrian statue on a plinth'], images: ['gallery/sculptures/13', 'gallery/sculptures/14'] },
-  { slug: 'seated-buddha', code: 'IFA-SC-012', title: 'Seated Buddha', discipline: 'sculpture', group: 'devotional', medium: 'Gold finish', images: ['gallery/sculptures/15'], featured: true },
+  { slug: 'seated-buddha', process: 'cast', code: 'IFA-SC-012', title: 'Seated Buddha', discipline: 'sculpture', group: 'devotional', medium: 'Gold finish', images: ['gallery/sculptures/15'], featured: true },
   { slug: 'abstract-ring-form', code: 'IFA-SC-013', title: 'Abstract ring form', discipline: 'sculpture', group: 'abstract', images: ['gallery/sculptures/16'] },
   { slug: 'elephant-heads-with-a-basket', code: 'IFA-SC-014', title: 'Elephant heads with a basket', discipline: 'sculpture', group: 'animals', images: ['gallery/sculptures/17'] },
   { slug: 'stylised-ganesha', code: 'IFA-SC-015', title: 'Stylised Ganesha', discipline: 'sculpture', group: 'devotional', images: ['gallery/sculptures/18'], featured: true },
@@ -144,14 +148,14 @@ const RAW = [
   { slug: 'dancer-with-a-flowing-robe', code: 'IFA-SC-023', title: 'Dancer with a flowing robe', discipline: 'sculpture', group: 'figures', images: ['gallery/sculptures/30'] },
   { slug: 'dancer-with-a-bird', code: 'IFA-SC-024', title: 'Dancer with a bird', discipline: 'sculpture', group: 'figures', images: ['gallery/sculptures/31'] },
   { slug: 'couple-on-a-boulder', code: 'IFA-SC-025', codes: ['IFA-SC-025', 'IFA-SC-026'], title: 'Couple on a boulder', discipline: 'sculpture', group: 'figures', views: ['Couple on a boulder', 'Couple on a boulder, garden view'], images: ['gallery/sculptures/32', 'gallery/sculptures/33'] },
-  { slug: 'rhinoceros-in-metal-mesh', code: 'IFA-SC-027', codes: ['IFA-SC-027', 'IFA-SC-028'], title: 'Rhinoceros in metal mesh', discipline: 'sculpture', group: 'animals', views: ['Rhinoceros in metal mesh', 'Rhinoceros in metal mesh, on display'], images: ['gallery/sculptures/35', 'gallery/sculptures/36'] },
+  { slug: 'rhinoceros-in-metal-mesh', process: 'metal', code: 'IFA-SC-027', codes: ['IFA-SC-027', 'IFA-SC-028'], title: 'Rhinoceros in metal mesh', discipline: 'sculpture', group: 'animals', views: ['Rhinoceros in metal mesh', 'Rhinoceros in metal mesh, on display'], images: ['gallery/sculptures/35', 'gallery/sculptures/36'] },
   { slug: 'statue-of-liberty-replica', code: 'IFA-SC-029', codes: ['IFA-SC-029', 'IFA-SC-031'], title: 'Statue of Liberty replica', discipline: 'sculpture', group: 'figures', views: ['Statue of Liberty replica', 'Statue of Liberty replica on a plinth'], images: ['gallery/sculptures/37', 'gallery/sculptures/39'] },
   { slug: 'cellist', code: 'IFA-SC-030', title: 'Cellist', discipline: 'sculpture', group: 'figures', images: ['gallery/sculptures/38'] },
-  { slug: 'gandhi-statue', code: 'IFA-SC-032', codes: ['IFA-SC-032', 'IFA-SC-033', 'IFA-SC-045'], title: 'Gandhi statue', discipline: 'sculpture', group: 'figures', views: ['Gandhi statue', 'Gandhi statue, front view', 'Gandhi statue, in the workshop'], images: ['gallery/sculptures/40', 'gallery/sculptures/41', 'gallery/sculptures/54'] },
+  { slug: 'gandhi-statue', process: 'cast', code: 'IFA-SC-032', codes: ['IFA-SC-032', 'IFA-SC-033', 'IFA-SC-045'], title: 'Gandhi statue', discipline: 'sculpture', group: 'figures', views: ['Gandhi statue', 'Gandhi statue, front view', 'Gandhi statue, in the workshop'], images: ['gallery/sculptures/40', 'gallery/sculptures/41', 'gallery/sculptures/54'] },
   { slug: 'figure-in-a-wall-niche', code: 'IFA-SC-034', title: 'Figure in a wall niche', discipline: 'sculpture', group: 'figures', images: ['gallery/sculptures/43'] },
   { slug: 'figure-with-kites', code: 'IFA-SC-035', codes: ['IFA-SC-035', 'IFA-SC-036'], title: 'Figure with kites', discipline: 'sculpture', group: 'figures', views: ['Figure with kites', 'Figure with kites, side view'], images: ['gallery/sculptures/44', 'gallery/sculptures/45'] },
   { slug: 'figure-at-the-spinning-wheel', code: 'IFA-SC-037', codes: ['IFA-SC-037', 'IFA-SC-038', 'IFA-SC-039', 'IFA-SC-040'], title: 'Figure at the spinning wheel', discipline: 'sculpture', group: 'figures', views: ['Figure at the spinning wheel', 'Figure at the spinning wheel, side view', 'Figure at the spinning wheel, detail', 'Figure at the spinning wheel, rear view'], images: ['gallery/sculptures/46', 'gallery/sculptures/47', 'gallery/sculptures/48', 'gallery/sculptures/49'] },
-  { slug: 'sculpture-of-hawker', code: 'IFA-SC-041', title: 'Sculpture of Hawker', discipline: 'sculpture', group: 'figures', year: '2007–08', location: 'Samvidhan Square, Nagpur', featured: true,
+  { slug: 'sculpture-of-hawker', process: 'metal', code: 'IFA-SC-041', title: 'Sculpture of Hawker', discipline: 'sculpture', group: 'figures', year: '2007–08', location: 'Samvidhan Square, Nagpur', featured: true,
     views: ['Sculpture of Hawker', 'Sculpture of Hawker, detail', 'Sculpture of Hawker, side view', 'Sculpture of Hawker, from behind'],
     images: ['kiran/hawker-front', 'kiran/hawker-detail', 'kiran/hawker-side', 'kiran/hawker-back'],
     beforeAfter: { before: { id: 'kiran/hawker-frame', label: 'The frame, 2007' }, after: { id: 'kiran/hawker-front', label: 'Finished' } },
@@ -175,7 +179,7 @@ const RAW = [
   { slug: 'reclining-ganesha', code: 'IFA-SC-047', title: 'Reclining Ganesha', discipline: 'sculpture', group: 'devotional', images: ['gallery/sculptures/56'] },
   { slug: 'leaning-figure-with-a-silver-mane', code: 'IFA-SC-048', codes: ['IFA-SC-048', 'IFA-SC-049', 'IFA-SC-050'], title: 'Leaning figure with a silver mane', discipline: 'sculpture', group: 'abstract', views: ['Leaning figure with a silver mane', 'Leaning figure with a silver mane, side view', 'Leaning figure with a silver mane, front view'], images: ['gallery/sculptures/57', 'gallery/sculptures/58', 'gallery/sculptures/59'], featured: true },
   { slug: 'relief-figure-on-a-rock', code: 'IFA-SC-051', title: 'Relief figure on a rock', discipline: 'sculpture', group: 'figures', images: ['gallery/sculptures/60'] },
-  { slug: 'statue-of-freedom-of-press', code: 'IFA-SC-052', title: 'Statue of Freedom of Press', discipline: 'sculpture', group: 'figures', medium: 'Stone', year: 2007, location: 'Lokmat Media printing press, Butibori, Nagpur', featured: true,
+  { slug: 'statue-of-freedom-of-press', process: 'stone', code: 'IFA-SC-052', title: 'Statue of Freedom of Press', discipline: 'sculpture', group: 'figures', medium: 'Stone', year: 2007, location: 'Lokmat Media printing press, Butibori, Nagpur', featured: true,
     views: ['Statue of Freedom of Press, at night', 'Statue of Freedom of Press, detail', 'Statue of Freedom of Press, by day, with its plaque'],
     images: ['kiran/freedom-of-press-night', 'kiran/freedom-of-press-night-close', 'kiran/freedom-of-press-day'],
     beforeAfter: { before: { id: 'kiran/freedom-of-press-team', label: 'Roughing out, 2006' }, after: { id: 'kiran/freedom-of-press-in-the-yard', label: 'Finished, 2007' } },
@@ -193,11 +197,11 @@ const RAW = [
       'Carved from a block of stone between November 2006 and March 2007, and installed in April 2007.',
     ] },
   // Kiran Adate's own stone works, from the client's photographs (titles are working titles: see CONTENT-TO-CONFIRM.md)
-  { slug: 'expectant-couple', title: 'Expectant couple', discipline: 'sculpture', group: 'figures', medium: 'Stone', year: 2007, views: ['Expectant couple', 'Expectant couple, in the stone yard', 'Expectant couple, from the side'], images: ['kiran/expectant-couple', 'kiran/expectant-couple-front', 'kiran/expectant-couple-side'] },
-  { slug: 'standing-couple', title: 'Standing couple', discipline: 'sculpture', group: 'figures', medium: 'Stone', year: 2012, views: ['Standing couple', 'Standing couple, in the stone yard'], images: ['kiran/standing-couple', 'kiran/standing-couple-in-the-yard'] },
-  { slug: 'reclining-couple', title: 'Reclining couple', discipline: 'sculpture', group: 'figures', medium: 'Stone', year: 2012, views: ['Reclining couple', 'Reclining couple, from above'], images: ['kiran/reclining-couple', 'kiran/reclining-couple-above'] },
-  { slug: 'two-torsos', title: 'Two torsos', discipline: 'sculpture', group: 'figures', medium: 'Stone', year: 2012, images: ['kiran/two-torsos'] },
-  { slug: 'stone-column', title: 'Stone column', discipline: 'sculpture', group: 'abstract', medium: 'Stone', images: ['kiran/stone-column'] },
+  { slug: 'expectant-couple', process: 'stone', title: 'Expectant couple', discipline: 'sculpture', group: 'figures', medium: 'Stone', year: 2007, views: ['Expectant couple', 'Expectant couple, in the stone yard', 'Expectant couple, from the side'], images: ['kiran/expectant-couple', 'kiran/expectant-couple-front', 'kiran/expectant-couple-side'] },
+  { slug: 'standing-couple', process: 'stone', title: 'Standing couple', discipline: 'sculpture', group: 'figures', medium: 'Stone', year: 2012, views: ['Standing couple', 'Standing couple, in the stone yard'], images: ['kiran/standing-couple', 'kiran/standing-couple-in-the-yard'] },
+  { slug: 'reclining-couple', process: 'stone', title: 'Reclining couple', discipline: 'sculpture', group: 'figures', medium: 'Stone', year: 2012, views: ['Reclining couple', 'Reclining couple, from above'], images: ['kiran/reclining-couple', 'kiran/reclining-couple-above'] },
+  { slug: 'two-torsos', process: 'stone', title: 'Two torsos', discipline: 'sculpture', group: 'figures', medium: 'Stone', year: 2012, images: ['kiran/two-torsos'] },
+  { slug: 'stone-column', process: 'stone', title: 'Stone column', discipline: 'sculpture', group: 'abstract', medium: 'Stone', images: ['kiran/stone-column'] },
   { slug: 'standing-portrait-statue', code: 'IFA-SC-053', title: 'Standing portrait statue', discipline: 'sculpture', group: 'figures', images: ['gallery/sculptures/62'] },
   { slug: 'figure-at-the-spinning-wheel-large', code: 'IFA-SC-054', codes: ['IFA-SC-054', 'IFA-SC-055'], title: 'Figure at the spinning wheel, large', discipline: 'sculpture', group: 'figures', views: ['Figure at the spinning wheel, large', 'Figure at the spinning wheel, large, side view'], images: ['gallery/sculptures/63', 'gallery/sculptures/64'] },
   { slug: 'wall-of-climbing-figures', code: 'IFA-SC-056', title: 'Wall of climbing figures', discipline: 'sculpture', group: 'figures', images: ['gallery/sculptures/65'] },
@@ -208,7 +212,7 @@ const RAW = [
   { slug: 'buddha-head', code: 'IFA-SC-064', title: 'Buddha head', discipline: 'sculpture', group: 'devotional', images: ['gallery/sculptures/75'] },
   { slug: 'figure-holding-a-child', code: 'IFA-SC-065', title: 'Figure holding a child', discipline: 'sculpture', group: 'figures', images: ['gallery/sculptures/76'] },
   { slug: 'tall-standing-figure', code: 'IFA-SC-066', title: 'Tall standing figure', discipline: 'sculpture', group: 'figures', images: ['gallery/sculptures/77'] },
-  { slug: 'lion-of-machine-parts', code: 'IFA-SC-068', codes: ['IFA-SC-068', 'IFA-SC-067'], title: 'Lion of machine parts', discipline: 'sculpture', group: 'animals', views: ['Lion of machine parts', 'Lion of machine parts, in the workshop'], images: ['gallery/sculptures/80', 'gallery/sculptures/78'] },
+  { slug: 'lion-of-machine-parts', process: 'metal', code: 'IFA-SC-068', codes: ['IFA-SC-068', 'IFA-SC-067'], title: 'Lion of machine parts', discipline: 'sculpture', group: 'animals', views: ['Lion of machine parts', 'Lion of machine parts, in the workshop'], images: ['gallery/sculptures/80', 'gallery/sculptures/78'] },
   { slug: 'eagle-and-sword-landmark', code: 'IFA-SC-069', title: 'Eagle and sword landmark', discipline: 'sculpture', group: 'animals', images: ['gallery/sculptures/83'] },
   { slug: 'twisted-ribbon-form', code: 'IFA-SC-070', title: 'Twisted ribbon form', discipline: 'sculpture', group: 'abstract', images: ['gallery/sculptures/84'], featured: true },
   { slug: 'mesh-egg-and-stacked-books', code: 'IFA-SC-071', title: 'Mesh egg and stacked books', discipline: 'sculpture', group: 'abstract', images: ['gallery/sculptures/85'] },
@@ -220,19 +224,19 @@ const RAW = [
 
   // MURALS & WALL FEATURES
   // From the client's photographs (2026). Soaring Higher is named on its plaque; the others have working titles.
-  { slug: 'soaring-higher', title: 'Soaring Higher', discipline: 'murals', group: 'murals', year: 2023, medium: 'Stainless steel, 1,733 handmade pieces', dimensions: '74 ft wall',
+  { slug: 'soaring-higher', process: 'steel', title: 'Soaring Higher', discipline: 'murals', group: 'murals', year: 2023, medium: 'Stainless steel, 1,733 handmade pieces', dimensions: '74 ft wall',
     images: ['kiran/soaring-higher'],
     description: [
       'A kinetic wall installation for SBICAPS, made in 2023 by The Good Edge with Invent Fine Art. It is inspired by murmuration, when great flocks of birds make shifting, synchronised waves across the sky.',
       'Across a 74-foot wall, 1,733 handmade stainless steel pieces stir with the slightest air current, as the birds turn into the “seeds of progress” of the SBICAPS emblem and back again, in the brand’s own colours.',
     ] },
-  { slug: 'flowing-wall-installation', title: 'Flowing wall installation', discipline: 'murals', group: 'wall-features',
+  { slug: 'flowing-wall-installation', process: 'relief', title: 'Flowing wall installation', discipline: 'murals', group: 'wall-features',
     views: ['Flowing wall installation', 'Flowing wall installation, in a bedroom', 'Flowing wall installation, closer'],
     images: ['kiran/flowing-wall', 'kiran/flowing-wall-room', 'kiran/flowing-wall-detail'] },
-  { slug: 'lit-relief-in-a-lounge', title: 'Lit relief in a lounge', discipline: 'murals', group: 'murals', images: ['kiran/lit-relief'] },
-  { slug: 'gold-and-black-relief-wall', title: 'Gold and black relief wall', discipline: 'murals', group: 'murals', images: ['kiran/gold-relief-wall'] },
-  { slug: 'relief-frieze-wall', code: 'IFA-GRC-008', title: 'Relief frieze wall', discipline: 'murals', group: 'murals', medium: 'GRC', images: ['gallery/grc_products/12'] },
-  { slug: 'figurative-relief-panel', code: 'IFA-GRC-009', title: 'Figurative relief panel', discipline: 'murals', group: 'murals', medium: 'GRC', images: ['gallery/grc_products/13'] },
+  { slug: 'lit-relief-in-a-lounge', process: 'relief', title: 'Lit relief in a lounge', discipline: 'murals', group: 'murals', images: ['kiran/lit-relief'] },
+  { slug: 'gold-and-black-relief-wall', process: 'relief', title: 'Gold and black relief wall', discipline: 'murals', group: 'murals', images: ['kiran/gold-relief-wall'] },
+  { slug: 'relief-frieze-wall', process: 'relief', code: 'IFA-GRC-008', title: 'Relief frieze wall', discipline: 'murals', group: 'murals', medium: 'GRC', images: ['gallery/grc_products/12'] },
+  { slug: 'figurative-relief-panel', process: 'relief', code: 'IFA-GRC-009', title: 'Figurative relief panel', discipline: 'murals', group: 'murals', medium: 'GRC', images: ['gallery/grc_products/13'] },
   { slug: 'botanical-relief-panel', code: 'IFA-GRC-010', title: 'Botanical relief panel', discipline: 'murals', group: 'murals', medium: 'GRC', images: ['gallery/grc_products/14'] },
   { slug: 'lotus-relief-wall', code: 'IFA-GRC-011', title: 'Lotus relief wall', discipline: 'murals', group: 'murals', medium: 'GRC', images: ['gallery/grc_products/15'] },
   { slug: 'woven-leaf-installations', code: 'IFA-MU-001', title: 'Woven leaf installations', discipline: 'murals', images: ['gallery/wall_murals/2'] },
@@ -242,7 +246,7 @@ const RAW = [
   { slug: 'vase-form-relief-figures', code: 'IFA-MU-005', title: 'Vase-form relief figures', discipline: 'murals', group: 'murals', images: ['gallery/wall_murals/6'] },
   { slug: 'orchid-relief-reception-wall', code: 'IFA-MU-006', title: 'Orchid relief, reception wall', discipline: 'murals', group: 'murals', images: ['gallery/wall_murals/7'] },
   { slug: 'leaf-wall-lights', code: 'IFA-MU-007', title: 'Leaf wall lights', discipline: 'murals', group: 'wall-features', images: ['gallery/wall_murals/8'] },
-  { slug: 'metal-leaf-wall-installation', code: 'IFA-MU-008', title: 'Metal leaf wall installation', discipline: 'murals', group: 'murals', images: ['gallery/wall_murals/9'], featured: true },
+  { slug: 'metal-leaf-wall-installation', process: 'relief', code: 'IFA-MU-008', title: 'Metal leaf wall installation', discipline: 'murals', group: 'murals', images: ['gallery/wall_murals/9'], featured: true },
   { slug: 'metal-leaves-on-a-blue-wall', code: 'IFA-MU-009', title: 'Metal leaves on a blue wall', discipline: 'murals', group: 'wall-features', images: ['gallery/wall_murals/10'] },
   { slug: 'wheat-relief-kitchen-wall', code: 'IFA-MU-010', title: 'Wheat relief, kitchen wall', discipline: 'murals', group: 'murals', images: ['gallery/wall_murals/11'] },
   { slug: 'white-3d-block-panel', code: 'IFA-MU-011', title: 'White 3D block panel', discipline: 'murals', group: 'wall-features', images: ['gallery/wall_murals/14'] },
@@ -257,15 +261,15 @@ const RAW = [
   { slug: 'painted-masks-wall', code: 'IFA-MU-020', title: 'Painted masks wall', discipline: 'murals', group: 'wall-features', images: ['gallery/wall_murals/23'] },
   { slug: 'metal-tree-by-a-window', code: 'IFA-MU-021', title: 'Metal tree by a window', discipline: 'murals', images: ['gallery/wall_murals/24'] },
   { slug: 'painted-plates-on-a-stone-wall', code: 'IFA-MU-022', title: 'Painted plates on a stone wall', discipline: 'murals', group: 'wall-features', images: ['gallery/wall_murals/25'] },
-  { slug: 'floral-relief-panel', code: 'IFA-MU-023', title: 'Floral relief panel', discipline: 'murals', group: 'murals', images: ['gallery/wall_murals/26'] },
+  { slug: 'floral-relief-panel', process: 'relief', code: 'IFA-MU-023', title: 'Floral relief panel', discipline: 'murals', group: 'murals', images: ['gallery/wall_murals/26'] },
   { slug: 'teal-disc-wall-pieces', code: 'IFA-MU-024', title: 'Teal disc wall pieces', discipline: 'murals', group: 'wall-features', images: ['gallery/wall_murals/27'] },
-  { slug: 'metal-figures-wall-and-floor', code: 'IFA-MU-025', title: 'Metal figures, wall and floor', discipline: 'murals', group: 'murals', images: ['gallery/wall_murals/28'] },
+  { slug: 'metal-figures-wall-and-floor', process: 'steel', code: 'IFA-MU-025', title: 'Metal figures, wall and floor', discipline: 'murals', group: 'murals', images: ['gallery/wall_murals/28'] },
   { slug: 'lit-stone-panels-with-water', code: 'IFA-MU-026', title: 'Lit stone panels with water', discipline: 'murals', group: 'wall-features', images: ['gallery/wall_murals/29'] },
   { slug: 'lit-leaf-wall-light', code: 'IFA-MU-027', title: 'Lit leaf wall light', discipline: 'murals', group: 'wall-features', images: ['gallery/wall_murals/30'] },
   { slug: 'tiled-art-panel-lobby', code: 'IFA-MU-028', title: 'Tiled art panel, lobby', discipline: 'murals', group: 'wall-features', images: ['gallery/wall_murals/31'] },
   { slug: 'carved-relief-wall', code: 'IFA-MU-029', title: 'Carved relief wall', discipline: 'murals', group: 'murals', images: ['gallery/wall_murals/32'], featured: true },
-  { slug: 'dancers-relief-lobby-wall', code: 'IFA-MU-030', title: 'Dancers relief, lobby wall', discipline: 'murals', group: 'murals', images: ['gallery/wall_murals/33'], featured: true },
-  { slug: 'carved-relief-wall-full-length', code: 'IFA-MU-031', title: 'Carved relief wall, full length', discipline: 'murals', group: 'murals', images: ['gallery/wall_murals/34'] },
+  { slug: 'dancers-relief-lobby-wall', process: 'relief', code: 'IFA-MU-030', title: 'Dancers relief, lobby wall', discipline: 'murals', group: 'murals', images: ['gallery/wall_murals/33'], featured: true },
+  { slug: 'carved-relief-wall-full-length', process: 'relief', code: 'IFA-MU-031', title: 'Carved relief wall, full length', discipline: 'murals', group: 'murals', images: ['gallery/wall_murals/34'] },
   { slug: 'illuminated-leaf-wall-lights', code: 'IFA-MU-032', title: 'Illuminated leaf wall lights', discipline: 'murals', group: 'wall-features', images: ['gallery/wall_murals/35'] },
 
   // PLANTERS & POTS
@@ -386,6 +390,61 @@ const EXTRA = [
   { slug: 'kiran-adate', title: 'Kiran Adate', discipline: 'sculpture', listed: false, views: ['Portrait of Kiran Adate'], images: ['portrait/kiran-adate'] },
 ]
 
+/*
+  Descriptions written from the photographs, for works the studio has not described yet: what can
+  be seen, nothing more. To confirm with Kiran Adate (CONTENT-TO-CONFIRM.md); a work's own
+  `description` in RAW always wins.
+*/
+const DESCRIBED = {
+  'figure-in-flight': 'A figure in dark metal leaps from the tips of tall, curving rods above a planted bed, caught in mid-flight against the sky.',
+  'polished-oval-with-an-opening': 'A tall oval of mirror-polished stainless steel stands at the entrance of an office building. An opening through its centre and small cut-outs in its side frame the surroundings, which slide across its curved surface as one walks around it.',
+  'ribbon-in-a-reception-lobby': 'A single ribbon of brushed steel loops and folds over itself above a round black base, in the reception lobby of an office building.',
+  'column-of-mirrored-cubes': 'A tall column of mirror-finished cubes, set at shifting angles so that they seem to tumble upwards, rises in front of a glass office building.',
+  'twisted-form-on-a-terrace': 'Folded, pointed planes of polished steel twist upwards from a dark stone plinth on an open terrace.',
+  'interlocking-rings': 'Two large rings of polished steel tube lean into one another. The photographs show the work in the workshop, before it left for its site.',
+  'folded-steel-form': 'Sharp, folded planes of steel rise from a white plinth, like leaves or blades caught in the wind.',
+  'tall-twisting-form': 'A tall, slender form in stainless steel that turns on itself as it rises from its plinth.',
+  'steel-arch': 'Two broad bands of steel lean against each other to form an arch, on a planted bed beside the road.',
+  'rings-of-steel-rod-in-a-garden': 'Thin steel rods sweep up into large open rings across a garden lawn, drawing lines in the air.',
+  'pierced-steel-lanterns': 'Faceted lanterns of pierced steel on a bed of dark pebbles. Lit from within, they throw patterns of light across the stones around them.',
+  'expectant-couple': 'Two figures carved in stone: a woman expecting a child, held close by the man behind her. Ribbed and smooth surfaces set the two apart.',
+  'standing-couple': 'A man and a woman stand side by side in stone, one surface ribbed, the other smooth, the two joined at the shoulder.',
+  'reclining-couple': 'Two figures lie together in stone, their bodies folded into one compact block. The photographs show the work in the stone yard.',
+  'two-torsos': 'Two torsos carved in stone stand side by side: one smooth, one ribbed with fine lines.',
+  'stone-column': 'A tall column of pale stone, cut into stepped planes that read as an abstract standing figure.',
+  'twisted-ribbon-form': 'Ribbons of dark and copper-coloured metal spiral around one another above a wooden base.',
+  'lion-of-machine-parts': 'A lion in full stride, built from gears, chains and machine parts welded together.',
+  'leaning-figure-with-a-silver-mane': 'A lean, four-legged figure bows its head over a black base; a mane of polished silver pours down its green, patinated back.',
+  'seated-buddha': 'The Buddha seated in meditation, his robe falling in folds, in a gold finish.',
+  'rhinoceros-in-metal-mesh': 'A rhinoceros made of a dark metal mesh of rings and openings, so that light passes through its body.',
+  'stylised-ganesha': 'Ganesha reduced to a few soft, flowing forms in pale stone, on a marble plinth.',
+  'runner-around-a-column': 'A faceted red figure runs around a white column in a glazed atrium, half hidden behind it, half emerging.',
+  'embracing-couple': 'Two figures in a close embrace, their surfaces cut in fine ribs, in a warm terracotta colour.',
+  'figure-at-the-spinning-wheel': 'A seated figure spins thread at a wheel. The body is built of bands with open gaps between them, in a dark metallic finish.',
+  'reclining-ganesha': 'Ganesha reclines at ease, one knee raised, in a polished reddish-brown finish.',
+  'cellist': 'A figure in dark metal plays the cello, on a wooden base.',
+  'figure-with-kites': 'A slender figure in dark metal flies kites on long wires, from a free-form base.',
+  'buddha-head': 'A large head of the Buddha, with curled hair and lowered eyes, in a bronze finish.',
+  'leaping-figure': 'A slender metal figure leaps across a garden, arms and legs flung wide, held up on a single support.',
+  'gandhi-statue': 'Mahatma Gandhi walking with his staff, a shawl over his shoulders, in a bronze finish. The last photograph shows the statue in the workshop.',
+  'saraswati-with-veena': 'Saraswati seated with her veena, in white, her crown and jewellery picked out in fine detail.',
+  'sliced-figures-on-a-rock': 'Two figures built of parallel slices of steel, one seated on a yellow rock and one standing with a foot raised on it, on a bed of pebbles in a lawn.',
+  'columns-of-climbing-figures': 'Three slender columns, each climbed by small dark figures, at the foot of a staircase.',
+  'wall-of-climbing-figures': 'Small metal figures climb a wall on ropes, as if scaling a cliff.',
+  'abstract-ring-form': 'An open ring of dark metal, ending in a curl, rises above a pool in a garden.',
+  'tall-standing-figure': 'A tall standing figure in a mottled green and bronze finish, shown in a gallery.',
+  'flowing-wall-installation': 'Clusters of polished metal discs flow across a panelled bedroom wall, as if carried by water.',
+  'lit-relief-in-a-lounge': 'A metal relief of sweeping curves and circles above a band of glowing glass, along the wall of a lounge.',
+  'gold-and-black-relief-wall': 'A relief wall of gold and black panels with patterned, geometric detail, behind a long sofa.',
+  'dancers-relief-lobby-wall': 'Two dancing figures in white relief against a dark, textured wall, in a lobby.',
+  'carved-relief-wall-full-length': 'A long wall carved in low relief with figures, plants and birds, in a warm sand colour.',
+  'metal-leaf-wall-installation': 'Large metal leaves in silver and gold spread across a living-room wall.',
+  'figurative-relief-panel': 'Relief panels in GRC with figures among trees and flowers, around the walls of a rooftop room.',
+  'relief-frieze-wall': 'A long frieze of figures in GRC relief runs along a parapet wall.',
+  'floral-relief-panel': 'A tall panel of large leaves in deep relief, lit from above.',
+  'metal-figures-wall-and-floor': 'Ribbons of brushed steel form dancing figures, one standing on the floor and one leaping on the wall.',
+}
+
 const captionFor = (w, i) => (w.views ? w.views[i] : i === 0 ? w.title : `${w.title}, view ${i + 1}`)
 
 const build = (w) => {
@@ -395,11 +454,21 @@ const build = (w) => {
     alt: w.listed === false ? captionFor(w, i) : `${captionFor(w, i)}, by Kiran Adate`,
     caption: captionFor(w, i),
   }] : []))
-  // The making: dated steps, each with an optional photograph.
-  const making = w.making?.map((s) => ({
-    ...s,
-    image: s.id ? { id: s.id, alt: `${w.title}: ${s.note}`, caption: `${s.label}, ${s.date}. ${s.note}` } : null,
-  }))
+  // The making: the work's own dated steps, or else the steps of the process it was made by,
+  // whose photographs show other works (named in each step) and end with this work in place.
+  const proc = PROCESSES[w.process]
+  const making = w.making
+    ? w.making.map((s) => ({
+      ...s,
+      image: s.id ? { id: s.id, alt: `${w.title}: ${s.note}`, caption: `${s.label}, ${s.date}. ${s.note}` } : null,
+    }))
+    : proc?.steps.map((s) => {
+      const id = s.id === 'self' ? pics[0]?.id : s.id
+      return { date: '', label: s.label, note: s.note, image: id ? { id, alt: `${w.title}: ${s.label}`, caption: `${s.label}. ${w.title}` } : null }
+    })
+  // A work's page shows only photographs of that work: a technique's steps may show none but its own.
+  const borrowed = !w.making && making?.filter((s) => s.image && !w.images.includes(s.image.id))
+  if (borrowed?.length) throw new Error(`${w.slug}: making shows photographs of other works (${borrowed.map((s) => s.image.id).join(', ')})`)
   // Walk around: views (from `images`) in the order of a walk around the work.
   const turnaround = w.turnaround?.map((t) => ({ label: t.label, image: pics.find((p) => p.id === t.id) }))
   // Before and after: { before, after } each { id, label }, compared with a slider.
@@ -407,7 +476,19 @@ const build = (w) => {
   const beforeAfter = w.beforeAfter && { before: side(w.beforeAfter.before), after: side(w.beforeAfter.after) }
   // Film: the still shown before it plays is a photo of the work (the cover unless named).
   const film = w.film && { ...w.film, poster: w.film.poster ? { id: w.film.poster, alt: '' } : { ...pics[0], alt: '' } }
-  return { ...w, cover: pics[0], gallery: pics.slice(1), making, turnaround, beforeAfter, film }
+  return {
+    ...w,
+    description: w.description || (DESCRIBED[w.slug] && [DESCRIBED[w.slug]]),
+    technique: proc?.name,
+    makingTitle: w.making ? 'The making' : 'How it is made',
+    makingIntro: w.making ? w.makingIntro : proc?.intro,
+    cover: pics[0],
+    gallery: pics.slice(1),
+    making,
+    turnaround,
+    beforeAfter,
+    film,
+  }
 }
 
 const bySlug = Object.fromEntries(RAW.map((w) => [w.slug, w]))
