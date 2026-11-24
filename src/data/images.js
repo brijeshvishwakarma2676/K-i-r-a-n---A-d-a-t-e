@@ -4,6 +4,11 @@
 // The client's own photographs (ids kiran/…) come from clientImages.js, made by scripts/import-client-images.py.
 import { clientImages } from './clientImages.js'
 const studioImages = {"portrait/kiran-adate":{"w":1074,"h":1465,"color":"#ECE9E3","files":{"480":"/img/portrait/kiran-adate-480.webp","800":"/img/portrait/kiran-adate-800.webp","1074":"/img/portrait/kiran-adate-1074.webp"}},
+  "gallery/sculptures/67":{"w":966,"h":1288,"color":"#586868","files":{"480":"/img/gallery/sculptures/67-480.14264204.webp","960":"/img/gallery/sculptures/67-960.14264204.webp"}},
+  "gallery/sculptures/68":{"w":966,"h":1288,"color":"#a8a8a8","files":{"480":"/img/gallery/sculptures/68-480.ca6dc708.webp","960":"/img/gallery/sculptures/68-960.ca6dc708.webp"}},
+  "gallery/sculptures/69":{"w":966,"h":1288,"color":"#586878","files":{"480":"/img/gallery/sculptures/69-480.7bc4df2d.webp","960":"/img/gallery/sculptures/69-960.7bc4df2d.webp"}},
+  "gallery/sculptures/70":{"w":966,"h":1288,"color":"#a8a8a8","files":{"480":"/img/gallery/sculptures/70-480.c07cf030.webp","960":"/img/gallery/sculptures/70-960.c07cf030.webp"}},
+  "gallery/sculptures/71":{"w":966,"h":1288,"color":"#a8a8a8","files":{"480":"/img/gallery/sculptures/71-480.1d8b8784.webp","960":"/img/gallery/sculptures/71-960.1d8b8784.webp"}},
   "gallery/grc_products/1":{"w":4160,"h":3120,"color":"#f8f8f8","files":{"480":"/img/gallery/grc_products/1-480.3b05b3d5.webp","960":"/img/gallery/grc_products/1-960.3b05b3d5.webp","1600":"/img/gallery/grc_products/1-1600.3b05b3d5.webp"}},
   "gallery/grc_products/12":{"w":1280,"h":687,"color":"#686848","files":{"480":"/img/gallery/grc_products/12-480.49d9b427.webp","960":"/img/gallery/grc_products/12-960.49d9b427.webp","1200":"/img/gallery/grc_products/12-1200.49d9b427.webp"}},
   "gallery/grc_products/13":{"w":1600,"h":1200,"color":"#888878","files":{"480":"/img/gallery/grc_products/13-480.b2612c87.webp","960":"/img/gallery/grc_products/13-960.b2612c87.webp","1600":"/img/gallery/grc_products/13-1600.b2612c87.webp"}},

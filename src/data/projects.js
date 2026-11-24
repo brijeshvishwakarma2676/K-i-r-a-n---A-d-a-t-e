@@ -103,6 +103,30 @@ const RAW = [
     ] },
   // Installations from the client's photographs (2026). Titles describe what the photos show:
   // working titles until the studio names them (see CONTENT-TO-CONFIRM.md).
+  // Full journeys from the "Kiran Adate" folder (2026-11-24): each work's own photographs, from the
+  // workshop to its site. Working titles until the studio names them.
+  { slug: 'rising-ribbon-with-a-drop', process: 'steel', title: 'Rising ribbon with a drop', discipline: 'sculpture', group: 'abstract',
+    views: ['Rising ribbon with a drop, finished in the workshop', 'Rising ribbon with a drop, in a glass lobby', 'Rising ribbon with a drop, in the lobby, from the side', 'Rising ribbon with a drop, in the lobby, from the entrance'],
+    images: ['kiran/drop-ribbon-plinth', 'kiran/drop-ribbon', 'kiran/drop-ribbon-side', 'kiran/drop-ribbon-lobby'],
+    beforeAfter: { before: { id: 'kiran/drop-ribbon-forming', label: 'Forming' }, after: { id: 'kiran/drop-ribbon-plinth', label: 'Finished' } },
+    makingIntro: 'From stainless steel sheet in the workshop to the finished work in its lobby, in the studio’s own photographs.',
+    making: [
+      { date: 'In the workshop', label: 'Forming', note: 'The ribbon is cut from stainless steel sheet, formed into its S-curve and loop, and welded.', id: 'kiran/drop-ribbon-forming' },
+      { date: 'In the workshop', label: 'Polishing', note: 'The welds are ground away and the ribbon is polished to a mirror.', id: 'kiran/drop-ribbon-polishing' },
+      { date: 'In the workshop', label: 'The drop', note: 'The polished drop is fitted at the top of the ribbon.', id: 'kiran/drop-ribbon-finial' },
+      { date: 'In the workshop', label: 'On its plinth', note: 'The finished work on its steel plinth, ready to leave the workshop.', id: 'kiran/drop-ribbon-plinth' },
+      { date: 'On site', label: 'Installed', note: 'Installed in a glass-fronted lobby.', id: 'kiran/drop-ribbon' },
+    ] },
+  { slug: 'twisted-helix-at-a-building-entrance', process: 'steel', title: 'Twisted helix at a building entrance', discipline: 'sculpture', group: 'abstract',
+    views: ['Twisted helix at a building entrance, in the workshop', 'Twisted helix at a building entrance, installed', 'Twisted helix at a building entrance, from the front'],
+    images: ['kiran/helix-polished', 'kiran/helix', 'kiran/helix-front'],
+    beforeAfter: { before: { id: 'kiran/helix-polished', label: 'In the workshop' }, after: { id: 'kiran/helix-front', label: 'Installed' } },
+    makingIntro: 'From the workshop to the entrance of an office building, in the studio’s own photographs.',
+    making: [
+      { date: 'In the workshop', label: 'Building the helix', note: 'Twisting bands of stainless steel are formed and welded around one another.', id: 'kiran/helix-workshop' },
+      { date: 'In the workshop', label: 'Polished', note: 'The finished helix, polished, before it leaves the workshop.', id: 'kiran/helix-polished' },
+      { date: 'On site', label: 'Installed', note: 'Installed at the entrance of an office building.', id: 'kiran/helix' },
+    ] },
   { slug: 'figure-in-flight', title: 'Figure in flight', discipline: 'sculpture', group: 'figures', images: ['kiran/figure-in-flight'] },
   { slug: 'polished-oval-with-an-opening', process: 'steel', title: 'Polished oval with an opening', discipline: 'sculpture', group: 'abstract',
     views: ['Polished oval with an opening', 'Polished oval with an opening, at the entrance', 'Polished oval with an opening, from the side'],
@@ -144,7 +168,7 @@ const RAW = [
   { slug: 'leaping-figure', code: 'IFA-SC-019', title: 'Leaping figure', discipline: 'sculpture', group: 'figures', images: ['gallery/sculptures/23'] },
   { slug: 'birds-on-a-ledge', code: 'IFA-SC-020', title: 'Birds on a ledge', discipline: 'sculpture', group: 'animals', images: ['gallery/sculptures/24'] },
   { slug: 'birds-by-a-pool', code: 'IFA-SC-021', title: 'Birds by a pool', discipline: 'sculpture', group: 'animals', images: ['gallery/sculptures/25'] },
-  { slug: 'embracing-couple', code: 'IFA-SC-022', title: 'Embracing couple', discipline: 'sculpture', group: 'figures', images: ['gallery/sculptures/28'] },
+  { slug: 'embracing-couple', code: 'IFA-SC-022', title: 'Embracing couple', discipline: 'sculpture', group: 'figures', views: ['Embracing couple', 'Embracing couple, from the other side'], images: ['gallery/sculptures/28', 'kiran/embracing-couple-other-side'] },
   { slug: 'dancer-with-a-flowing-robe', code: 'IFA-SC-023', title: 'Dancer with a flowing robe', discipline: 'sculpture', group: 'figures', images: ['gallery/sculptures/30'] },
   { slug: 'dancer-with-a-bird', code: 'IFA-SC-024', title: 'Dancer with a bird', discipline: 'sculpture', group: 'figures', images: ['gallery/sculptures/31'] },
   { slug: 'couple-on-a-boulder', code: 'IFA-SC-025', codes: ['IFA-SC-025', 'IFA-SC-026'], title: 'Couple on a boulder', discipline: 'sculpture', group: 'figures', views: ['Couple on a boulder', 'Couple on a boulder, garden view'], images: ['gallery/sculptures/32', 'gallery/sculptures/33'] },
@@ -207,7 +231,15 @@ const RAW = [
   { slug: 'wall-of-climbing-figures', code: 'IFA-SC-056', title: 'Wall of climbing figures', discipline: 'sculpture', group: 'figures', images: ['gallery/sculptures/65'] },
   { slug: 'running-figures', code: 'IFA-SC-057', title: 'Running figures', discipline: 'sculpture', group: 'figures', images: ['gallery/sculptures/66'] },
   { slug: 'portrait-statue-clay-model', code: 'IFA-SC-058', codes: ['IFA-SC-058', 'IFA-SC-059', 'IFA-SC-060'], title: 'Portrait statue, clay model', discipline: 'sculpture', group: 'figures', views: ['Portrait statue, clay model', 'Portrait statue, clay model, side view', 'Portrait statue, clay model, three-quarter view'], images: ['gallery/sculptures/67', 'gallery/sculptures/68', 'gallery/sculptures/69'] },
-  { slug: 'portrait-statue', code: 'IFA-SC-061', codes: ['IFA-SC-061', 'IFA-SC-062'], title: 'Portrait statue', discipline: 'sculpture', group: 'figures', views: ['Portrait statue', 'Portrait statue, side view'], images: ['gallery/sculptures/70', 'gallery/sculptures/71'] },
+  { slug: 'portrait-statue', process: 'cast', code: 'IFA-SC-061', codes: ['IFA-SC-061', 'IFA-SC-062'], title: 'Portrait statue', discipline: 'sculpture', group: 'figures', views: ['Portrait statue', 'Portrait statue, side view'], images: ['gallery/sculptures/70', 'gallery/sculptures/71'],
+    beforeAfter: { before: { id: 'gallery/sculptures/67', label: 'The clay model' }, after: { id: 'gallery/sculptures/70', label: 'Cast and finished' } },
+    makingIntro: 'From the clay model to the finished cast, in the studio’s own photographs.',
+    making: [
+      { date: 'The model', label: 'Modelling in clay', note: 'The figure and the bundle of canes are modelled in clay at full size.', id: 'gallery/sculptures/69' },
+      { date: 'The model', label: 'The clay model, from the side', note: 'The folds of the shirt and the tied canes, in clay.', id: 'gallery/sculptures/68' },
+      { date: 'The model', label: 'Ready for the mould', note: 'The finished clay model, from which the mould is taken.', id: 'gallery/sculptures/67' },
+      { date: 'The cast', label: 'Cast and finished', note: 'The statue cast from the model, in a copper-brown finish.', id: 'gallery/sculptures/70' },
+    ] },
   { slug: 'seated-figure-in-meditation', code: 'IFA-SC-063', title: 'Seated figure in meditation', discipline: 'sculpture', group: 'figures', images: ['gallery/sculptures/74'] },
   { slug: 'buddha-head', code: 'IFA-SC-064', title: 'Buddha head', discipline: 'sculpture', group: 'devotional', images: ['gallery/sculptures/75'] },
   { slug: 'figure-holding-a-child', code: 'IFA-SC-065', title: 'Figure holding a child', discipline: 'sculpture', group: 'figures', images: ['gallery/sculptures/76'] },
@@ -336,6 +368,8 @@ const PORTFOLIO = [
   'figure-in-flight',
   'polished-oval-with-an-opening',
   'ribbon-in-a-reception-lobby',
+  'rising-ribbon-with-a-drop',
+  'twisted-helix-at-a-building-entrance',
   'column-of-mirrored-cubes',
   'twisted-form-on-a-terrace',
   'interlocking-rings',
@@ -364,6 +398,7 @@ const PORTFOLIO = [
   'buddha-head',
   'leaping-figure',
   'gandhi-statue',
+  'portrait-statue',
   'saraswati-with-veena',
   'sliced-figures-on-a-rock',
   'columns-of-climbing-figures',
@@ -396,6 +431,9 @@ const EXTRA = [
   `description` in RAW always wins.
 */
 const DESCRIBED = {
+  'rising-ribbon-with-a-drop': 'A ribbon of mirror-polished stainless steel rises in an S-curve, loops around itself and ends in a polished drop, on a square steel plinth in a glass-fronted lobby.',
+  'twisted-helix-at-a-building-entrance': 'Bands of polished stainless steel twist around one another into a tall helix, at the entrance of an office building.',
+  'portrait-statue': 'A portrait of a man in shirt and trousers, standing with one hand on a large tied bundle of canes, in a copper-brown finish.',
   'figure-in-flight': 'A figure in dark metal leaps from the tips of tall, curving rods above a planted bed, caught in mid-flight against the sky.',
   'polished-oval-with-an-opening': 'A tall oval of mirror-polished stainless steel stands at the entrance of an office building. An opening through its centre and small cut-outs in its side frame the surroundings, which slide across its curved surface as one walks around it.',
   'ribbon-in-a-reception-lobby': 'A single ribbon of brushed steel loops and folds over itself above a round black base, in the reception lobby of an office building.',
@@ -480,6 +518,7 @@ const build = (w) => {
     ...w,
     description: w.description || (DESCRIBED[w.slug] && [DESCRIBED[w.slug]]),
     technique: proc?.name,
+    ownMaking: !!w.making,
     makingTitle: w.making ? 'The making' : 'How it is made',
     makingIntro: w.making ? w.makingIntro : proc?.intro,
     cover: pics[0],
@@ -504,6 +543,20 @@ export const projects = PORTFOLIO.map((slug) => build(bySlug[slug]))
 export const projectBySlug = Object.fromEntries([...projects, ...EXTRA.map(build)].map((p) => [p.slug, p]))
 export const projectsFor = (slug) => projects.filter((p) => p.discipline === slug)
 export const featuredProjects = projects.filter((p) => p.featured)
+
+/*
+  The full journey: what a work's page needs to tell its whole story with its own photographs, as
+  the Statue of Freedom of Press does. A work with none missing carries a "Full journey" tag on
+  its card. `journeyGaps(p)` lists what is still missing, for the studio to supply.
+*/
+const JOURNEY = [
+  ['Description', (p) => p.description?.length],
+  ['Further views', (p) => p.gallery.length > 0],
+  ['Own making story', (p) => p.ownMaking && p.making.filter((s) => s.image).length >= 3],
+  ['Before and after', (p) => p.beforeAfter],
+]
+export const journeyGaps = (p) => JOURNEY.filter(([, has]) => !has(p)).map(([name]) => name)
+export const fullJourney = (p) => journeyGaps(p).length === 0
 
 // The URL of a single work: /works/<body of work>/<work>
 export const workPath = (p) => `/works/${p.discipline}/${p.slug}`

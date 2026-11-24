@@ -451,3 +451,9 @@ html:is(:lang(hi), :lang(mr)) body { line-height: 1.75; }
   0%, 100% { opacity: 0.55; transform: scale(1); }
   50% { opacity: 0.9; transform: scale(1.08); }
 }
+
+/* The "Full journey" tag on work cards: spaced capitals in English; Devanagari keeps its letters
+   joined, so Hindi and Marathi get no letter-spacing. */
+.journey-tag { font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; }
+:root:lang(hi) .journey-tag,
+:root:lang(mr) .journey-tag { font-size: 0.8rem; letter-spacing: 0; }

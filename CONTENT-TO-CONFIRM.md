@@ -47,6 +47,16 @@ items still need the owner's confirmation or input before launch.
     each work's own dated story with process photos, like the Statue of Freedom of Press: ask for
     process photos and dates of the main works.
 
+- **Full journeys found in the "Kiran Adate" folder** (2026-11-24), each in its own photographs
+  from the workshop to its site, now tagged "Full journey": **Rising ribbon with a drop** (in a
+  glass lobby), **Twisted helix at a building entrance**, and the **Portrait statue** (clay model
+  to cast; who is it, and are those canes sugarcane?). Working titles: ask for names, places, years.
+- **Possibly the same work, not joined until confirmed:** the large ribbon loop welded in the
+  workshop (`0F572A9D`, `BC20531F`, `C1D185C3`) and the dark ribbon loop installed on a planted bed
+  (`7D3E4DB6`, `6D3B7D4D`); the 2012 stone-yard photos `DSC02051`–`DSC02059` (which finished work
+  is being carved?). Not on the site yet: the perforated crescent ring (3 views), the steel wings
+  on a roundabout (being assembled + finished), the ribbon sculpture at a gate (day and night).
+
 ## New on the site (added 2026-11-18)
 
 - **Hindi and Marathi.** The whole site can be read in Hindi and Marathi (`src/i18n/hi.js`,
