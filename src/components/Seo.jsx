@@ -34,7 +34,8 @@ export default function Seo({ title: titleEn, description: descriptionEn = site.
   const title = titleEn && t(titleEn)
   const description = t(descriptionEn)
   const head = useContext(HeadContext)
-  const full = title ? `${title} | ${t(site.name)}` : `${t(site.name)} | ${t(site.short)}`
+  const fullName = t('Sculptor {name}', { name: t(site.name) })
+  const full = title ? `${title} | ${fullName}` : `${fullName} | ${t(site.basedIn)}`
   if (head) Object.assign(head, { title: full, description, image, jsonLd, url: `${site.url}${pathname}` })
 
   useEffect(() => {
@@ -45,7 +46,7 @@ export default function Seo({ title: titleEn, description: descriptionEn = site.
     setMeta('property', 'og:description', description)
     setMeta('property', 'og:type', 'website')
     setMeta('property', 'og:url', url)
-    setMeta('property', 'og:site_name', site.name)
+    setMeta('property', 'og:site_name', site.fullName)
     setMeta('property', 'og:image', image)
     setMeta('name', 'twitter:card', 'summary_large_image')
     let link = document.head.querySelector('link[rel="canonical"]')

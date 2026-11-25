@@ -26,6 +26,7 @@ export default function About() {
 
       <header className="wrap grid grid-cols-12 gap-x-6 gap-y-12 pt-[calc(var(--header-h)+3rem)] md:pt-[calc(var(--header-h)+5rem)]">
         <div className="col-span-12 flex flex-col md:col-span-7">
+          <p className="caption mb-4">{t(site.role)}</p>
           <SplitText
             as="h1"
             className="display text-[clamp(3.6rem,1.8rem+7.4vw,9.5rem)] font-light leading-[0.84]"
@@ -35,7 +36,7 @@ export default function About() {
             step={0.12}
           />
           <p className="caption mt-4">
-            {t('Sculptor, Mumbai. Studio: {studio}, since {year}.', { studio: site.studio, year: site.since })}
+            {t('Mumbai. Studio: {studio}, since {year}.', { studio: site.studio, year: site.since })}
           </p>
           <Reveal as="p" delay={0.6} className="lede mt-auto max-w-[32ch] pt-12">{t(artist.shortBio)}</Reveal>
         </div>
@@ -54,15 +55,23 @@ export default function About() {
           <figcaption className="caption col-span-12 mt-8 md:col-span-10 md:col-start-2">{t(artist.statementSource)}</figcaption>
         </figure>
 
+        {/* Kiran Adate's own words, from his artist profile */}
         <div className="mt-24 grid grid-cols-12 gap-x-6 gap-y-10 md:mt-32">
           <div className="col-span-12 md:col-span-4">
-            <SplitText as="h2" className="display text-[clamp(2.2rem,1.4rem+2.8vw,3.8rem)]" text="The practice" />
-            <p className="mt-6 max-w-[30ch] text-[1.15rem] italic text-ink-soft display">{t('From a sketch to the finished piece.')}</p>
+            <SplitText as="h2" className="display text-[clamp(2.2rem,1.4rem+2.8vw,3.8rem)]" text="Artist statement" />
           </div>
           <Reveal className="prose-body col-span-12 text-[1.06rem] md:col-span-6 md:col-start-6">
-            {artist.practice.map((p) => (
+            {artist.statementFull.map((p) => (
               <p key={p}>{t(p)}</p>
             ))}
+          </Reveal>
+        </div>
+        <div className="mt-20 grid grid-cols-12 gap-x-6 gap-y-10 md:mt-28">
+          <div className="col-span-12 md:col-span-4">
+            <SplitText as="h2" className="display text-[clamp(2.2rem,1.4rem+2.8vw,3.8rem)]" text="Contemporary artistic vision" />
+          </div>
+          <Reveal className="prose-body col-span-12 text-[1.06rem] md:col-span-6 md:col-start-6">
+            <p>{t(artist.vision)}</p>
           </Reveal>
         </div>
       </div></section>
@@ -87,7 +96,7 @@ export default function About() {
       <section aria-labelledby="materials-title" className="cv-auto wrap py-28 md:py-40">
         <div className="grid grid-cols-12 gap-x-6 gap-y-10">
           <div className="col-span-12 md:col-span-5">
-            <SplitText as="h2" id="materials-title" className="display text-[clamp(2.2rem,1.4rem+2.8vw,3.8rem)]" text="Materials" />
+            <SplitText as="h2" id="materials-title" className="display text-[clamp(2.2rem,1.4rem+2.8vw,3.8rem)]" text="Mediums & material exploration" />
             <p className="mt-6 max-w-[46ch] text-[1.04rem]">{t(artist.materialsNote)}</p>
           </div>
           <ul className="col-span-12 md:col-span-6 md:col-start-7">

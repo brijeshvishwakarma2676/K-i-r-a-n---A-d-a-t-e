@@ -37,9 +37,10 @@ export default function Header() {
         transition={{ duration: 0.45, ease }}
       >
         <div className="wrap flex h-[var(--header-h)] items-center justify-between gap-6">
-          <Link to="/" className="group flex items-baseline gap-3">
-            <span className="display latin text-[1.7rem] leading-none">{site.name}</span>
-            <span className="caption hidden xl:inline">{t(site.short)}</span>
+          <Link to="/" className="group flex items-baseline gap-2.5" aria-label={t('Sculptor {name}', { name: t(site.name) })}>
+            <span className="caption" aria-hidden="true">{t(site.role)}</span>
+            <span className="display latin text-[1.7rem] leading-none" aria-hidden="true">{site.name}</span>
+            <span className="caption hidden xl:inline" aria-hidden="true">· {t(site.basedIn)}</span>
           </Link>
 
           <nav aria-label={t('Main')} className="hidden items-center gap-9 md:flex">
@@ -134,8 +135,9 @@ function MobileMenu({ onClose }) {
       transition={{ duration: 0.6, ease }}
     >
       <div className="wrap flex h-[var(--header-h)] items-center justify-between">
-        <Link to="/" onClick={onClose} className="display latin text-[1.85rem] leading-none">
-          {site.name}
+        <Link to="/" onClick={onClose} className="flex items-baseline gap-2.5" aria-label={t('Sculptor {name}', { name: t(site.name) })}>
+          <span className="caption" aria-hidden="true">{t(site.role)}</span>
+          <span className="display latin text-[1.85rem] leading-none" aria-hidden="true">{site.name}</span>
         </Link>
         <button type="button" onClick={onClose} className="-mr-2 flex items-center gap-2 p-2 text-[0.85rem]" aria-label={t('Close menu')}>
           {t('Close')} <X size={18} strokeWidth={1.25} aria-hidden="true" />
@@ -167,7 +169,7 @@ function MobileMenu({ onClose }) {
         <a href={`mailto:${site.email}`} className="text-link text-[0.95rem]">
           {site.email}
         </a>
-        <p className="caption mt-2">{t(site.short)}</p>
+        <p className="caption mt-2">{t(site.basedIn)}</p>
         <LangSwitch className="mt-4 -ml-1" />
       </div>
     </motion.div>

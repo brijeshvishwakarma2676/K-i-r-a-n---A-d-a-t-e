@@ -26,7 +26,7 @@ export default function MakingTimeline({ steps, onOpen, className = '' }) {
       {steps.map((s, i) => {
         const size = s.image && photo(s.image)
         return (
-          <Reveal as="li" key={`${s.label}-${i}`} className="relative grid grid-cols-12 gap-x-6 pb-16 pl-9 last:pb-0 md:pb-24 md:pl-0">
+          <Reveal as="li" key={`${s.label}-${i}`} className="relative grid grid-cols-12 gap-x-0 pb-16 pl-9 md:gap-x-6 last:pb-0 md:pb-24 md:pl-0">
             <span aria-hidden="true" className="absolute left-0 top-[0.35rem] h-[0.8rem] w-[0.8rem] rounded-full border border-geru bg-limestone md:left-[calc(100%*7/24-0.3125rem-0.4rem)]" />
             <div className="col-span-12 md:col-span-3 md:pr-10 md:text-right">
               {s.date && <p className="caption tabular-nums">{t(s.date)}</p>}

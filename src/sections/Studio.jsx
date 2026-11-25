@@ -25,13 +25,13 @@ export default function Studio() {
           <SplitText as="h2" id="studio-title" className="display col-span-12 text-[clamp(2.4rem,1.4rem+3.6vw,4.6rem)] md:col-span-6" text="From block to statue" />
           <Reveal className="col-span-12 max-w-[52ch] self-end md:col-span-5 md:col-start-8">
             <p className="text-[1.02rem]">
-              {t('A work begins with a sketch, a reference or an idea, and a small model that fixes the form. Then it is carved, cast or welded in the workshop and finished by hand. Here, the')}{' '}
+              {t('Every work begins small: a sketch, then a model that settles the proportions before any stone is cut or steel is bent. Only then is it carved, cast or welded at full size, and the last of it is always done by hand. Here, the')}{' '}
               <Link to={workPath(work)} className="text-link">{t(work.title)}</Link>{t(', from block to statue.')}
             </p>
           </Reveal>
         </div>
 
-        <ol data-lenis-prevent-horizontal className="no-scrollbar -mx-[var(--gutter)] mt-16 flex snap-x snap-mandatory gap-5 overflow-x-auto px-[var(--gutter)] md:mx-0 md:mt-24 md:grid md:grid-cols-5 md:overflow-visible md:px-0">
+        <ol data-lenis-prevent-horizontal className="no-scrollbar -mx-[var(--gutter)] mt-16 flex snap-x snap-mandatory gap-5 overflow-x-auto scroll-px-[var(--gutter)] px-[var(--gutter)] md:mx-0 md:mt-24 md:grid md:grid-cols-5 md:overflow-visible md:px-0">
           {steps.map((s, i) => (
             <Reveal as="li" key={s.id} delay={i * 0.08} className="group w-[68vw] shrink-0 snap-start sm:w-[40vw] md:w-auto">
               <div className="sheen overflow-hidden">

@@ -37,7 +37,7 @@ export default function InPlace() {
         <div>
           <SplitText as="h2" id="inplace-title" className="display text-[clamp(2.4rem,1.4rem+3.6vw,4.6rem)]" text="In place" />
           <p className="mt-4 max-w-[50ch] text-[1rem]">
-            {t('Works in the places they were made for: a lobby, a stairwell, a garden, a park.')}
+            {t('A sculpture is finished only when it stands in its place: a lobby, a stairwell, a garden, a park.')}
           </p>
         </div>
         <div className="hidden gap-2 md:flex">

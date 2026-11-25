@@ -1,17 +1,30 @@
-# Content to confirm with Kiran Adate (Invent Fine Art)
+  # Content to confirm with Kiran Adate (Invent Fine Art)
 
 All content on this site comes from the studio's old website (inventfineart.com, archived in
 `../Mine-site/VernoraTech Projects/inventfineart/old data`) and the catalogue prepared for
 site-v4 (`site-v4/app/data`, `site-v4/CONTENT-GAPS.md`). Nothing has been invented. These
 items still need the owner's confirmation or input before launch.
 
+## The profile's wording, used word for word (added 2026-11-24)
+
+Kiran Adate asked for the text of his profile (`Kiran Adate_ Profile.pdf`), his official
+resume, to be used as written. The site and the portfolio PDF now use it word for word: the
+title-page line (contemporary sculptor; stone, bronze, stainless steel), the artist statement, the
+contemporary artistic vision, the mediums and material exploration, and the eight works' concept
+texts, sizes and materials. Only these slips were corrected; please confirm:
+
+- Eternal Orbit: "connected within an ever-changes." now reads "connected within an
+  ever-changing cycle."
+- Hugging: "the essence of human nature the desire to give love" now reads "the essence of human
+  nature—the desire to give love".
+- Sizes: "W-8'" (Couple) and "W-78'" (Freedom) are read as inches, like the rest of each size.
+
 ## From Kiran Adate's profile and photo folder (added 2026-11-23)
 
 - **Eight works from the profile** are now first among the works, with Kiran Adate's own titles,
   sizes, materials and texts: Freedom, Beyond Boundaries, Extraction of Negative Energy, Eternal
-  Orbit, Kinetic Equilibrium, Hugging, Spectator, Couple. The texts were lightly copy-edited (e.g.
-  "within an ever-changes" became "within an ever-changing whole"; "W-8'" and "W-78'" read as
-  inches). Please confirm, and give a year and a place for each if they can be shown.
+  Orbit, Kinetic Equilibrium, Hugging, Spectator, Couple. Since 2026-11-24 the texts are his,
+  word for word (see above). Please give a year and a place for each if they can be shown.
 - **Soaring Higher** (murals): facts from its plaque: SBICAPS, 2023, The Good Edge with Invent Fine
   Art, 74-foot wall, 1,733 stainless steel pieces. Confirm the credit wording and that SBICAPS may
   be named.

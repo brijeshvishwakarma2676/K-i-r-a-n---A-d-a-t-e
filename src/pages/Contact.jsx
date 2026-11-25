@@ -71,7 +71,7 @@ export default function Contact() {
 
   return (
     <>
-      <Seo title="Contact" description="Write to Kiran Adate, sculptor, Mumbai: about a work, a commission, an exhibition or press." />
+      <Seo title="Contact" description="Write to Sculptor Kiran Adate, Mumbai: about a work, a commission, an exhibition or press." />
       <header className="wrap pt-[calc(var(--header-h)+3rem)] md:pt-[calc(var(--header-h)+5rem)]">
         <div className="grid grid-cols-12 gap-x-6 gap-y-8">
           <SplitText as="h1" className="display col-span-12 text-[clamp(3.4rem,1.8rem+7vw,9rem)] font-light leading-[0.86] md:col-span-8" text="Contact" immediate delay={0.3} />

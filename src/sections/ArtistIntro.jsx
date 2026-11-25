@@ -17,11 +17,12 @@ export default function ArtistIntro() {
           <figcaption className="caption mt-3">{t(artist.portrait.alt)}</figcaption>
         </figure>
         <div className="col-span-12 self-end md:col-span-5 md:col-start-7 lg:col-span-4 lg:col-start-8">
+          <p className="caption mb-3">{t(site.role)}</p>
           <SplitText as="h2" id="artist-title" className="display text-[clamp(2.6rem,1.6rem+3vw,4.4rem)] leading-none" text={site.name} />
-          <p className="caption mt-3">{t(site.short)}</p>
+          <p className="caption mt-3">{t(site.basedIn)}</p>
           <Reveal>
             <p className="mt-8 text-[1.02rem]">{t(artist.shortBio)}</p>
-            <p className="mt-4 text-[1.02rem] text-ink-soft">{t(artist.practice[0])}</p>
+            <p className="mt-4 text-[1.02rem] text-ink-soft">{t(artist.statementFull[0])}</p>
           </Reveal>
           <Link to="/about" className="text-link mt-8 inline-block text-[0.95rem]">{t('About {name}', { name: site.name })}</Link>
         </div>

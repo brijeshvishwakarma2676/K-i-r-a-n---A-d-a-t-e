@@ -9,16 +9,20 @@
 
 export const site = {
   name: 'Kiran Adate',
+  // The title written before the name, as is usual for artists in India: "Sculptor Kiran Adate".
+  // Wherever the name stands as the artist's name (header, hero, headings, page titles) it carries
+  // the title; in running text ("by Kiran Adate", "Kiran Adate is a sculptor…") it does not.
   role: 'Sculptor',
+  fullName: 'Sculptor Kiran Adate',
   short: 'Sculptor, Mumbai',
   studio: 'Invent Fine Art',
   studioRole: 'Studio of sculptors, painters and designers',
-  tagline: 'Sculpture in steel, stone and bronze.',
+  tagline: 'Contemporary sculptor. Stone, bronze, stainless steel.', // from the profile's title page
   basedIn: 'Mumbai',
   since: 2008, // the studio's founding year. CONFIRM: the old home page says 2008, the old about page 2009
   url: 'https://www.inventfineart.com',
   description:
-    'Kiran Adate is a sculptor in Mumbai, making figures, devotional forms, animals and abstract work in steel, stone, bronze and fibre, and relief murals.',
+    'Kiran Adate is a contemporary sculptor in Mumbai, trained at the Sir J.J. School of Art: figures, devotional forms, animals and abstract work in stone, bronze and stainless steel, and relief murals.',
 
   email: 'inventfineart.mum@gmail.com',
   emailAlt: 'inventfineart@gmail.com', // CONFIRM: still in use?
@@ -72,17 +76,27 @@ export const nav = [
   { to: '/contact', label: 'Contact' },
 ]
 
-// The artist. Kiran Adate's own statement, biography, training and awards are not on hand yet
-// (see CONTENT-TO-CONFIRM.md); until they are, `statement` describes the work shown on the site and
-// `practice` restates how the old studio site described the making, without the sales language.
+// The artist. The statement, vision and mediums are Kiran Adate's own words, as written in his
+// artist profile (Kiran Adate_ Profile.pdf, 2026), which he gave as the official text: keep them
+// word for word. Only spelling slips are corrected (see CONTENT-TO-CONFIRM.md).
 export const artist = {
-  // Kiran Adate's own words, from his artist profile (2026).
+  // The profile's closing line of the artist statement.
   statement:
-    'For me, sculpture is an ongoing dialogue between material, imagination and space: a process of transforming matter into a meaningful visual experience.',
+    'For me, sculpture is an ongoing dialogue between material, imagination, and space—a process of transforming matter into a meaningful visual experience.',
   statementSource: 'Kiran Adate, artist profile',
 
+  // The profile's artist statement, in full.
+  statementFull: [
+    'My artistic journey has evolved through a continuous exploration of form, material, texture, and space. Having created numerous sculptures in stone and bronze, I have developed a deep appreciation for their timeless qualities, expressive strength, and permanence.',
+    'In my contemporary practice, I am increasingly drawn towards stainless steel as a medium that reflects the spirit of modern life. Its strength, durability, and reflective surfaces allow me to explore abstract forms, geometric compositions, and organic expressions while creating a dynamic interaction with light and the surrounding environment. My transition from stone and bronze to stainless steel represents an evolution in my artistic language, while my core interests remain rooted in form, balance, proportion, and spatial harmony. Through my sculptures, I seek to establish a meaningful dialogue between material, imagination, and space, transforming solid matter into an engaging visual experience.',
+  ],
+
+  // The profile's "Contemporary artistic vision".
+  vision:
+    'My current artistic vision centres on stainless steel as a medium of contemporary expression. Inspired by the evolving character of urban spaces and modern material culture, I explore reflective surfaces, fluid geometries, and figurative sculptural forms that interact with their surroundings. I aspire to create artworks that engage viewers through light, reflection, proportion, and spatial experience, bringing together material innovation, artistic sensitivity, and the enduring spirit of sculpture.',
+
   shortBio:
-    'Kiran Adate is a sculptor in Mumbai, from Parali Vaijnath in Beed district, Maharashtra, who trained in sculpture and modelling at the Sir J.J. School of Art in Mumbai. The work, in stone, bronze and more and more in stainless steel, ranges from public sculpture, such as the Statue of Freedom of Press and the Sculpture of Hawker in Nagpur, to figures and abstract forms for galleries and buildings. It is made in the workshop of Invent Fine Art, the studio Kiran Adate leads.',
+    'Kiran Adate is a contemporary sculptor in Mumbai, from Parali Vaijnath in Beed district, Maharashtra, trained in sculpture and modelling at the Sir J.J. School of Art. The work began in stone and bronze, with public statues such as the Statue of Freedom of Press and the Sculpture of Hawker in Nagpur, and has moved more and more into stainless steel, in abstract and figurative forms for galleries and buildings. Every piece is made in the workshop of Invent Fine Art, the studio Kiran Adate leads.',
 
   // Kiran Adate's own words, as printed in Lokmat Times, Nagpur, 7 January 2015 (client's clipping).
   quote: {
@@ -110,13 +124,7 @@ export const artist = {
   // The artist's work in progress: carving stone with a pointing machine (client photograph, 2012).
   portrait: { id: 'kiran/carving-with-a-pointing-machine', alt: 'Carving stone with a pointing machine, 2012' },
 
-  practice: [
-    'A work begins with a sketch, a reference photograph or an idea, and often with the place where it will stand. A small model fixes the form before the full piece is made.',
-    'The piece is then modelled, cast, welded or carved in the workshop at Nalasopara, near Mumbai, and finished by hand.',
-    'After many sculptures in stone and bronze, the work has turned more and more to stainless steel. Strong, lasting and reflective, it suits abstract forms, geometric compositions and organic shapes, and lets a sculpture answer the light and the space around it. The interests stay the same: form, balance, proportion and space.',
-  ],
-
-  materialsNote: 'Sculpture in stainless steel, stone, bronze and FRP; murals in steel, FRP, GRC and mixed media.',
+  materialsNote: 'Stone, bronze and stainless steel, and mixed media. For relief murals the studio also works in FRP and GRC.',
 
   // Clients named on the old site (our_client.html, 2017), shown only on the About page as a
   // record of commissions. CONFIRM: is the list current, and may it be published?

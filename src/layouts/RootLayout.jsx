@@ -118,7 +118,7 @@ function Curtain() {
         animate={{ opacity: 0, y: -30, transition: { duration: 0.5, ease, delay: 0.1 } }}
         exit={{ opacity: [0, 1], y: [40, 0], transition: { duration: 0.6, ease, delay: 0.1 } }}
       >
-        <p className="caption">{t(site.name)}</p>
+        <p className="caption">{t('Sculptor {name}', { name: t(site.name) })}</p>
         <p className="display mt-3 max-w-[14ch] text-[clamp(2.8rem,1.6rem+5vw,7rem)] font-light leading-[0.9]">
           {t(labelFor(pathname))}
         </p>

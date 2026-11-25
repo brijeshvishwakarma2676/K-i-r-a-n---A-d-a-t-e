@@ -172,7 +172,7 @@ export default function Project() {
               <Turnaround views={p.turnaround.map((v) => ({ ...v, label: t(v.label) }))} title={t(p.title)} className="col-span-12 md:col-span-6 lg:col-span-5 lg:col-start-2" />
               <div className="col-span-12 self-center md:col-span-5 md:col-start-8">
                 <SplitText as="h2" className="display text-[clamp(2.2rem,1.4rem+2.6vw,3.8rem)]" text="Walk around it" />
-                <p className="mt-6 max-w-[40ch] text-[1.02rem]">{t('A sculpture is made to be seen from every side. Drag across the photograph, or choose a view, to walk around the {title}.', { title: p.title })}</p>
+                <p className="mt-6 max-w-[40ch] text-[1.02rem]">{t('A sculpture has no front. Drag across the photograph, or choose a view, to walk around the {title}.', { title: p.title })}</p>
               </div>
             </div>
           )}

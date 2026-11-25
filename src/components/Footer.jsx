@@ -16,8 +16,9 @@ export default function Footer() {
       <div className="wrap pb-10 pt-20 md:pt-24">
         <div className="grid gap-14 md:grid-cols-12">
           <div className="md:col-span-5">
+            <p className="caption mb-2">{t(site.role)}</p>
             <p className="display text-[clamp(1.8rem,1.3rem+1.6vw,2.6rem)] leading-tight">{site.name}</p>
-            <p className="caption mt-2">{t(site.short)}</p>
+            <p className="caption mt-2">{t(site.basedIn)}</p>
             <a href={`mailto:${site.email}`} className="text-link mt-8 inline-block text-[1.05rem] text-bone/90 hover:text-bone">
               {site.email}
             </a>

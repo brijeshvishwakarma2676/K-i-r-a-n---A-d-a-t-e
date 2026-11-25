@@ -127,7 +127,7 @@ export default function Hero() {
         <div className="enter-fade col-span-12 sm:col-span-8 md:col-span-5 lg:col-span-4" style={{ '--enter-delay': '0.9s' }}>
           <p className="lede max-w-[18ch]">{t(site.tagline)}</p>
           <p className="caption mt-4 max-w-[34ch] md:mt-5 md:max-w-[30ch] [@media(max-height:700px)_and_(max-width:767px)]:hidden">
-            {t('Sculptor, Mumbai. Figures, devotional forms, animals and abstract work, and relief murals.')}
+            {t('Carved, cast and welded in the studio’s own workshop near Mumbai.')}
           </p>
           {show && showStatus !== 'past' && (
             <Link to="/exhibitions" className="group mt-7 block max-w-[30ch]">
@@ -256,7 +256,7 @@ export default function Hero() {
                   transition={{ duration: 0.9, ease, delay: enterDelay + 0.6 }}
                 >
                   <span className="label-title block text-[1.05rem] leading-tight group-hover:text-geru md:text-[1.2rem]">{work.title}</span>
-                  <span className="caption mt-1 block">{isWorkPage ? [work.medium, work.year].filter(Boolean).join(', ') || 'Sculpture' : site.short}</span>
+                  <span className="caption mt-1 block">{isWorkPage ? [work.medium, work.year].filter(Boolean).join(', ') || 'Sculpture' : t(site.short)}</span>
                 </motion.span>
               </Link>
             </motion.figure>
@@ -270,7 +270,10 @@ export default function Hero() {
         style={reduce ? undefined : { y: nameY, x: nameX, opacity: fade }}
         className="display latin relative z-0 mt-auto px-[var(--gutter)] pb-[3svh] font-light leading-[0.82] tracking-[-0.03em] md:z-20 md:pb-[2svh]"
       >
-        <span className="sr-only">{t('{name}, sculptor, {city}', { name: site.name, city: site.basedIn })}</span>
+        <span className="sr-only">{t('Sculptor {name}, {city}', { name: t(site.name), city: t(site.basedIn) })}</span>
+        <span aria-hidden="true" className={`caption enter-fade mb-[0.6em] block text-[0.85rem] tracking-[0.22em] md:text-[0.95rem] ${isWork ? 'md:text-center' : ''}`} style={{ '--enter-delay': '0.35s' }}>
+          {t(site.role)}
+        </span>
         <span
           aria-hidden="true"
           className={`flex flex-col items-start text-[25vw] ${isWork ? 'md:flex-row md:justify-center md:gap-[0.2em] md:text-[15vw]' : 'md:text-[min(17vw,24svh)]'}`}

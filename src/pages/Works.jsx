@@ -41,7 +41,7 @@ export default function Works() {
         <div className="grid grid-cols-12 gap-x-6 gap-y-8">
           <SplitText as="h1" className="display col-span-12 text-[clamp(4rem,2rem+9vw,11rem)] font-light leading-[0.82] md:col-span-7" text="Works" immediate delay={0.3} />
           <p className="col-span-12 max-w-[46ch] self-end text-[1.02rem] md:col-span-4 md:col-start-9">
-            {t('A selection of sculpture and relief murals, in steel, stone, bronze and fibre.')}
+            {t('Sculpture and relief murals in stone, bronze, stainless steel and fibre: works for a room, a building and the open air.')}
           </p>
         </div>
 

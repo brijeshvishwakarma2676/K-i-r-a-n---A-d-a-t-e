@@ -2,7 +2,7 @@ import { Link } from 'react-router'
 import Seo from '../components/Seo'
 import ArtImage from '../components/ArtImage'
 import { projects, projectBySlug } from '../data/projects'
-import { disciplineBySlug } from '../data/disciplines'
+import { disciplineBySlug, materials } from '../data/disciplines'
 import { exhibitions, yearOf } from '../data/exhibitions'
 import { artist, site } from '../data/site'
 import { useToday } from '../lib/useToday'
@@ -30,6 +30,8 @@ const PAIRS = [
   ['expectant-couple', 'standing-couple'],
   ['reclining-couple', 'two-torsos'],
 ]
+// His works from the profile carry his concept text on their sheet, word for word.
+const PROFILE = new Set(['freedom', 'beyond-boundaries', 'extraction-of-negative-energy', 'eternal-orbit', 'hugging', 'spectator', 'couple', 'kinetic-equilibrium'])
 const shown = new Set([...FEATURE, ...PAIRS.flat()])
 const rest = projects.filter((p) => !shown.has(p.slug))
 // At most 12 to a sheet, spread evenly so the last sheet is not left with one or two.
@@ -43,9 +45,9 @@ export default function Portfolio() {
   const year = useToday().slice(0, 4)
   return (
     <main className="portfolio bg-[#d5d0c6] py-10 print:bg-transparent print:py-0">
-      <Seo title="Portfolio" description={`Portfolio of ${site.name}, sculptor, ${site.basedIn}: selected works, public works and press.`} />
+      <Seo title="Portfolio" description={`Portfolio of ${site.fullName}, ${site.basedIn}: selected works, public works and press.`} />
       <nav aria-label="Portfolio" className="mx-auto mb-8 flex max-w-[297mm] flex-wrap items-center justify-between gap-4 px-4 print:hidden">
-        <Link to="/" className="text-link text-[0.95rem]">← {site.name}</Link>
+        <Link to="/" className="text-link text-[0.95rem]">← {site.fullName}</Link>
         <div className="flex flex-wrap gap-3">
           <a href={PDF} download className="btn btn-solid">Download PDF</a>
           <button type="button" onClick={() => window.print()} className="btn">Print</button>
@@ -57,10 +59,11 @@ export default function Portfolio() {
         <div className="flex flex-col justify-between p-[14mm]">
           <p className="caption">Portfolio, {year}</p>
           <div>
+            <p className="caption mb-3">{site.role}</p>
             <h1 className="display text-[64pt] leading-[0.9]">{site.name}</h1>
             <p className="display mt-4 text-[20pt] italic">{site.tagline}</p>
           </div>
-          <p className="caption">{site.role}, {site.basedIn} · {site.url.replace('https://', '')}</p>
+          <p className="caption">{site.basedIn} · {site.url.replace('https://', '')}</p>
         </div>
         <div className="relative pt-[10mm]">
           <ArtImage image={{ id: 'portrait/kiran-adate', alt: `Portrait of ${site.name}`, fit: 'contain', position: '50% 100%' }} fill priority sizes="150mm" />
@@ -84,6 +87,28 @@ export default function Portfolio() {
           <Record title="Exhibitions" rows={exhibitions.map((x) => [yearOf(x), `${x.title}, ${x.kind.toLowerCase()}, ${x.venue}, ${x.city}`])} />
           <Record title="Press" rows={artist.press.map((x) => [x.year, `${x.title}. ${x.outlet}`])} />
           <Record title="Studio" rows={[[site.since, `${site.studio}, ${site.basedIn}; workshop at Nalasopara`]]} />
+        </div>
+      </Sheet>
+
+      {/* Artist statement: Kiran Adate's own words, from his artist profile */}
+      <Sheet className="grid grid-cols-[1fr_1.25fr] gap-[12mm] p-[14mm]">
+        <div className="flex flex-col">
+          <h2 className="display text-[30pt]">Artist statement</h2>
+          <blockquote className="display mt-auto border-l-2 border-geru pl-5 text-[17pt] italic leading-snug">
+            “{artist.statement}”
+            <footer className="caption mt-3 not-italic">{site.name}</footer>
+          </blockquote>
+        </div>
+        <div className="space-y-3 text-[9.5pt] leading-relaxed">
+          {artist.statementFull.map((t) => <p key={t}>{t}</p>)}
+          <h3 className="caption pt-3">Contemporary artistic vision</h3>
+          <p>{artist.vision}</p>
+          <h3 className="caption pt-3">Mediums &amp; material exploration</h3>
+          <dl className="space-y-1.5">
+            {materials.slice(0, 4).map((m) => (
+              <div key={m.name}><dt className="inline font-medium">{m.name}</dt> <dd className="inline">— {m.note}</dd></div>
+            ))}
+          </dl>
         </div>
       </Sheet>
 
@@ -131,6 +156,8 @@ export default function Portfolio() {
                 <figcaption className="mt-3">
                   <span className="label-title text-[15pt]">{p.title}</span>
                   <span className="caption ml-2">{label(p)}</span>
+                  {/* The artist's own concept text, for his works from the profile */}
+                  {PROFILE.has(slug) && p.description.map((t) => <span key={t} className="mt-2 block text-[8.5pt] leading-relaxed">{t}</span>)}
                 </figcaption>
               </figure>
             )

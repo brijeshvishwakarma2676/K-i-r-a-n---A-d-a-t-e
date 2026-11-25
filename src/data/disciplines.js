@@ -22,14 +22,14 @@ export const allDisciplines = [
     shortName: 'Sculpture',
     variant: 'monument',
     accent: '#7A5537',
-    headline: 'Figures, devotional forms, animals and abstract work.',
+    headline: 'Made to be walked around.',
     intro:
-      'Sculpture in steel, stone, bronze and fibre: figures and portraits, devotional forms, animals and birds, and abstract work, from pieces for a room to works for gardens and public places.',
+      'Figures and portraits, devotional forms, animals and birds, and abstract work, in stone, bronze, stainless steel and fibre. The scale follows the place: a table, a lobby, a garden or a city square.',
     body: [
-      'From a portrait statue to a lion assembled from machine parts, each piece begins as a sketch, a reference or an idea.',
-      'It is then modelled, cast, welded or carved in the workshop and finished by hand.',
+      'From a portrait statue to a lion welded from machine parts, every piece starts the same way: a drawing, a model, and the question of where it will stand.',
+      'Then it is modelled, carved, cast or welded in the workshop, and the last of the work, the surface, is always done by hand.',
     ],
-    note: 'Steel, stone, bronze and FRP: each chosen for the place a sculpture will stand, indoors or out.',
+    note: 'The material is chosen for the place: stone and bronze for permanence in the open, stainless steel where light and reflection matter, FRP where weight must be kept down.',
     materials: ['Steel', 'Stone', 'Bronze', 'FRP (GRP)'],
     groups: [
       { slug: 'figures', name: 'Figures & portraits' },
@@ -49,16 +49,16 @@ export const allDisciplines = [
     accent: '#7F5F22',
     headline: 'A composition carried across a wall.',
     intro:
-      'Relief murals in steel, FRP, GRC and mixed media, each drawn to the wall it is made for.',
+      'Relief murals in steel, FRP, GRC and mixed media, each drawn for one wall and no other.',
     body: [
-      'A mural carries one composition across a wall: a carved scene, a pair of dancers, a field of metal leaves.',
-      'Each is drawn to the wall’s exact size, then carved or cast in panels and assembled on the wall.',
+      'A relief is sculpture that keeps to the wall. Its depth is a matter of centimetres, and the light does the rest: a carved scene, a pair of dancers, a field of metal leaves.',
+      'Each is drawn full size against the wall it will cover, made in panels in the workshop, and joined and finished on site.',
     ],
     definitions: [
       { term: 'Mural', text: 'Artwork raised in relief on a wall: a figure, a scene or a pattern.' },
       { term: 'Wall feature', text: 'A set of decorative panels that covers a wall and gives it character.' },
     ],
-    note: 'Light changes a relief through the day. Many of these walls are lit from within or from one side, so their carving reads as shadow.',
+    note: 'A relief lives on raking light. Lit from one side or from within, a few centimetres of carving throw shadows that read from across the room.',
     materials: ['Steel', 'FRP', 'GRC', 'Mixed media'],
     groups: [
       { slug: 'murals', name: 'Murals' },
@@ -158,9 +158,11 @@ export const disciplineBySlug = Object.fromEntries(disciplines.map((d) => [d.slu
   The swatches are drawn textures (Plate), not photographs.
 */
 export const materials = [
-  { name: 'Bronze', note: 'The classic material of statues. Holds the finest detail and darkens naturally with age.', plate: { kind: 'texture', variant: 'bronze', material: 'bronze', seed: 61 } },
-  { name: 'Stone', note: 'Natural stone, carved by hand. No two pieces are alike, and it lasts for generations outdoors.', plate: { kind: 'texture', variant: 'stone', material: 'stone', seed: 63 } },
-  { name: 'Steel', note: 'Strong in thin sections, for slim, open and bold forms: polished, brushed or painted.', plate: { kind: 'texture', variant: 'steel', material: 'steel', seed: 62 } },
+  // The first four, and their notes, are from Kiran Adate's profile ("Mediums & material exploration").
+  { name: 'Stainless Steel', note: 'Contemporary abstract forms exploring reflection, light, movement, and urban aesthetics.', plate: { kind: 'texture', variant: 'steel', material: 'steel', seed: 62 } },
+  { name: 'Stone', note: 'Sculptures exploring mass, texture, permanence, and the intrinsic character of natural material.', plate: { kind: 'texture', variant: 'stone', material: 'stone', seed: 63 } },
+  { name: 'Bronze', note: 'Sculptural expressions exploring form, detail, surface, and timeless presence.', plate: { kind: 'texture', variant: 'bronze', material: 'bronze', seed: 61 } },
+  { name: 'Mixed Media', note: 'Experimentation with materials, textures, and contrasting visual qualities.', plate: { kind: 'texture', variant: 'corten', material: 'corten', seed: 66 } },
   { name: 'FRP', note: 'Fibre-reinforced plastic. Light and strong, for large forms and pieces that stand outdoors.', plate: { kind: 'texture', variant: 'frp', material: 'frp', seed: 64 } },
   { name: 'GRC', note: 'Glassfibre reinforced concrete. Takes fine detail from the mould; used for relief murals.', plate: { kind: 'texture', variant: 'grc', material: 'grc', seed: 65 } },
 ]

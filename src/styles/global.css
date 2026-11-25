@@ -428,6 +428,16 @@ html:is(:lang(hi), :lang(mr)) :is(.italic, .label-title, blockquote, em):not(.la
 html:is(:lang(hi), :lang(mr)) .caption { letter-spacing: 0; line-height: 1.6; }
 html:is(:lang(hi), :lang(mr)) body { line-height: 1.75; }
 
+/*
+  Very narrow phones (under about 420px): a 12-column grid with 1.5rem gaps needs 16.5rem for the
+  gaps alone, more than the page has at 300px, so content ran into the margin or off the screen.
+  Tighter gaps there; every grid on the site spans its items across all 12 columns at this size
+  or nearly, so nothing else changes.
+*/
+@media (max-width: 26rem) {
+  .grid-cols-12 { column-gap: 0.75rem; }
+}
+
 /* The portfolio document (/portfolio): one A4 landscape page per sheet when printed or saved as PDF. */
 @page { size: A4 landscape; margin: 0; }
 @media print {
