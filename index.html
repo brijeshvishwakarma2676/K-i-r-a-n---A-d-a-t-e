@@ -8,10 +8,125 @@
     <title>Sculptor Kiran Adate | Mumbai</title>
     <meta name="description" content="Kiran Adate is a contemporary sculptor in Mumbai, trained at the Sir J.J. School of Art: figures, devotional forms, animals and abstract work in stone, bronze and stainless steel, and relief murals." />
     <!-- The pre-rendered page is complete without scripts; these rules only settle the few script-driven parts (parallax, map lines, page curtain). -->
-    <noscript><style>#root [style*="opacity"],#root img{opacity:1!important}#root [style*="translate"]{transform:none!important}.reveal-cover,.curtain,.scroll-progress{display:none!important}</style></noscript>
+    <noscript><style>#root [style*="opacity"],#root img{opacity:1!important}#root [style*="translate"]{transform:none!important}.reveal-cover,.curtain,.scroll-progress,#opening{display:none!important}</style></noscript>
+    <!--
+      The opening curtain: on a fresh load the basalt curtain, with the artist's name, covers the
+      page until the images on the first screen (and video stills, and the fonts) have arrived,
+      then lifts like the curtain between pages. It is capped at 3 seconds, lifts on its own after
+      4 seconds even if the script below never runs, and is not shown without scripts.
+      While it is up the page's own entrance animations wait (html.opening), so they play as it lifts.
+    -->
+    <style>
+      #opening { position: fixed; inset: 0; z-index: 90; display: flex; align-items: flex-end; color: #ECE7DD; animation: opening-safety 0s 4s forwards; }
+      #opening .op-panel { position: absolute; inset: 0; background: var(--color-basalt, #262522); transform-origin: 50% 0; transition: transform 0.8s cubic-bezier(0.65, 0, 0.35, 1) 0.1s; }
+      #opening .op-name { position: relative; width: 100%; padding-bottom: 8svh; opacity: 0; transition: opacity 0.5s, transform 0.5s cubic-bezier(0.22, 1, 0.36, 1); }
+      #opening.op-ready .op-name { opacity: 1; }
+      #opening .op-title { margin-top: 0.75rem; max-width: 14ch; font-size: clamp(2.8rem, 1.6rem + 5vw, 7rem); font-weight: 300; line-height: 0.9; }
+      #opening .op-line { display: block; margin-top: 2rem; height: 1px; width: min(16rem, 50vw); background: rgb(236 231 221 / 0.18); overflow: hidden; }
+      #opening .op-line::after { content: ''; display: block; height: 100%; background: #D9957A; /* geru as it reads on basalt */ transform-origin: 0 50%; animation: opening-load 2.8s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+      html.opened #opening { pointer-events: none; }
+      html.opened #opening .op-panel { transform: scaleY(0); }
+      html.opened #opening .op-name { opacity: 0; transform: translateY(-30px); }
+      html.opening .enter-words .rv-word, html.opening .enter-fade, html.opening .enter-rise, html.opening .enter-up { animation-play-state: paused; }
+      @keyframes opening-load { from { transform: scaleX(0); } to { transform: scaleX(0.92); } }
+      @keyframes opening-safety { to { visibility: hidden; pointer-events: none; } }
+    </style>
   </head>
   <body>
+    <!-- Inline, so the site's reduced-motion rule (which zeroes animation delays) cannot cut the safety delay. -->
+    <div id="opening" class="on-dark" aria-hidden="true" style="animation-delay: 4s !important">
+      <div class="op-panel"></div>
+      <div class="op-name wrap">
+        <p class="caption" data-hi="मूर्तिकार" data-mr="शिल्पकार">Sculptor</p>
+        <p class="op-title display" data-hi="किरण अदाते" data-mr="किरण अदाते">Kiran Adate</p>
+        <span class="op-line"></span>
+      </div>
+    </div>
     <div id="root"></div>
+    <script>
+      ;(function () {
+        var html = document.documentElement
+        var curtain = document.getElementById('opening')
+        if (!curtain) return
+        var MAX = 3000 // never hold the site longer than this
+        var seen = false
+        try { seen = sessionStorage.getItem('opened') === '1' } catch (e) {}
+        var MIN = seen ? 250 : 900 // long enough to read the name on a first visit
+        var start = Date.now()
+        var lifted = false
+
+        try {
+          var lang = localStorage.getItem('lang')
+          if (lang === 'hi' || lang === 'mr') {
+            curtain.querySelectorAll('[data-' + lang + ']').forEach(function (el) { el.textContent = el.getAttribute('data-' + lang) })
+          }
+        } catch (e) {}
+
+        // Show the name once its typeface has arrived, so it never appears in a stand-in font first.
+        var named = false
+        function showName() { if (!named) { named = true; curtain.classList.add('op-ready') } }
+        setTimeout(showName, 700)
+        if (document.fonts && document.fonts.load) document.fonts.load('300 1em "Cormorant Garamond Variable"').then(showName, showName)
+        else showName()
+
+        html.classList.add('opening')
+        // No scrolling or keyboard use of the page behind the curtain.
+        var keys = /^(Tab| |Spacebar|PageUp|PageDown|Home|End|ArrowUp|ArrowDown|ArrowLeft|ArrowRight)$/
+        function hold(e) {
+          if (e.type === 'keydown' && (!keys.test(e.key) || e.ctrlKey || e.metaKey || e.altKey)) return
+          e.preventDefault()
+          e.stopImmediatePropagation()
+        }
+        var opts = { capture: true, passive: false }
+        var events = ['wheel', 'touchmove', 'keydown']
+        events.forEach(function (t) { window.addEventListener(t, hold, opts) })
+
+        function lift() {
+          if (lifted) return
+          lifted = true
+          setTimeout(function () {
+            events.forEach(function (t) { window.removeEventListener(t, hold, opts) })
+            html.classList.remove('opening')
+            html.classList.add('opened')
+            try { sessionStorage.setItem('opened', '1') } catch (e) {}
+            setTimeout(function () { curtain.remove(); html.classList.remove('opened') }, 1200)
+          }, Math.max(0, MIN - (Date.now() - start)))
+        }
+        setTimeout(lift, MAX)
+
+        // An image waiting to rise into its frame (paused entrance) sits outside it; its frame counts.
+        function inView(el) {
+          var r = el.getBoundingClientRect()
+          return r.width > 0 && r.bottom > 0 && r.top < innerHeight && r.right > 0 && r.left < innerWidth
+        }
+        function onScreen(el) {
+          return inView(el) || (el.parentElement && inView(el.parentElement.tagName === 'PICTURE' ? el.parentElement.parentElement : el.parentElement))
+        }
+        function loaded(img) {
+          return new Promise(function (done) {
+            if (img.complete) return done()
+            img.addEventListener('load', done, { once: true })
+            img.addEventListener('error', done, { once: true })
+          })
+        }
+        // Wait for the page itself (pre-rendered pages have it already; others once React draws it).
+        function ready() {
+          var main = document.getElementById('main')
+          if (!main || !main.firstElementChild) return setTimeout(ready, 60)
+          var waits = []
+          main.querySelectorAll('img').forEach(function (img) { if (onScreen(img)) waits.push(loaded(img)) })
+          main.querySelectorAll('video[poster]').forEach(function (v) {
+            if (!onScreen(v)) return
+            var still = new Image()
+            still.src = v.getAttribute('poster')
+            waits.push(loaded(still))
+          })
+          if (document.fonts && document.fonts.ready) waits.push(document.fonts.ready)
+          Promise.all(waits).then(lift, lift)
+        }
+        ready()
+      })()
+    </script>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

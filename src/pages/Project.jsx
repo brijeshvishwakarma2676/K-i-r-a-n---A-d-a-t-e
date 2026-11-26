@@ -253,7 +253,7 @@ export default function Project() {
         </section>
       )}
 
-      <Invitation title="For this work, or a commission of your own." linkLabel="Ask about this work" to={`/contact?work=${p.slug}`} />
+      <Invitation title="For this work, or a commission of your own." linkLabel="Ask about this work" to={`/contact?work=${p.slug}`} film={false} />
 
       <Lightbox images={viewer} index={open} onIndex={setOpen} onClose={() => setOpen(null)} title={t(p.title)} />
     </article>

@@ -17,6 +17,7 @@ export const routes = [
       { path: 'exhibitions', lazy: page(() => import('./pages/Exhibitions')) },
       { path: 'about', lazy: page(() => import('./pages/About')) },
       { path: 'contact', lazy: page(() => import('./pages/Contact')) },
+      { path: 'video-test', lazy: page(() => import('./pages/VideoTest')) },
       { path: '*', lazy: page(() => import('./pages/NotFound')) },
     ],
   },

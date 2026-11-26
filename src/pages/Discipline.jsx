@@ -5,9 +5,10 @@ import ArtImage from '../components/ArtImage'
 import Masonry from '../components/Masonry'
 import { ClipReveal, Parallax, SplitText } from '../components/Motion'
 import Invitation from '../sections/Invitation'
+import AmbientVideo from '../components/AmbientVideo'
 import NotFound from './NotFound'
 import { useT } from '../i18n'
-import { disciplineBySlug, disciplines } from '../data/disciplines'
+import { disciplineBySlug, disciplines, materials } from '../data/disciplines'
 import { projectsFor } from '../data/projects'
 
 /*
@@ -32,6 +33,7 @@ export default function Discipline() {
       <Seo title={d.name} description={d.intro} />
       <Opening d={d} />
       <Body d={d} />
+      {d.slug === 'sculpture' && <SteelBand />}
       <Feature d={d} />
 
       <WorksGrid d={d} list={list} />
@@ -63,6 +65,25 @@ function Crumb({ d, dark }) {
       <span aria-hidden="true" className="mx-2">/</span>
       <span aria-current="page">{t(d.shortName)}</span>
     </nav>
+  )
+}
+
+/*
+  Sculpture only: light sliding along polished steel, a generated mood clip of the material
+  (VIDEO-GENERATION.md, V2), not a work, with the material and the artist's note on it.
+*/
+function SteelBand() {
+  const t = useT()
+  const steel = materials[0]
+  return (
+    <section aria-label={t(steel.name)} className="on-dark relative isolate overflow-hidden bg-basalt text-bone">
+      <AmbientVideo src="/ambient/steel-light.mp4" poster="/ambient/steel-light.jpg" className="absolute inset-0 -z-20 h-full w-full brightness-[0.8]" />
+      <span aria-hidden="true" className="absolute inset-0 -z-10 bg-[linear-gradient(to_top,rgb(20_19_18/0.85),rgb(20_19_18/0.25)_60%,rgb(20_19_18/0.1))]" />
+      <div className="wrap flex min-h-[62svh] flex-col justify-end pb-12 pt-32 md:min-h-[70svh] md:pb-16">
+        <p className="caption">{t(steel.name)}</p>
+        <p className="display mt-3 max-w-[22ch] text-[clamp(1.8rem,1.2rem+2.4vw,3.4rem)] leading-[1.04]">{t(steel.note)}</p>
+      </div>
+    </section>
   )
 }
 

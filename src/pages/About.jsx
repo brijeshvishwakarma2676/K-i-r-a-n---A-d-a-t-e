@@ -2,6 +2,7 @@ import { Link } from 'react-router'
 import Seo, { personLd } from '../components/Seo'
 import PublicWorksMap from '../components/PublicWorksMap'
 import ArtImage from '../components/ArtImage'
+import AmbientVideo from '../components/AmbientVideo'
 import { ClipReveal, Parallax, Reveal, ScrollWords, SplitText } from '../components/Motion'
 import Invitation from '../sections/Invitation'
 import PressClippings from '../components/PressClippings'
@@ -111,6 +112,13 @@ export default function About() {
             ))}
           </ul>
         </div>
+        {/* Light sliding along polished steel: a generated mood clip of the material (VIDEO-GENERATION.md, V2), not a work. */}
+        <figure className="mt-16 md:mt-24">
+          <div className="relative aspect-[4/3] overflow-hidden bg-basalt sm:aspect-[16/9] lg:aspect-[21/9]">
+            <AmbientVideo src="/ambient/steel-light.mp4" poster="/ambient/steel-light.jpg" className="absolute inset-0 h-full w-full" />
+          </div>
+          <figcaption className="caption mt-3">{t(materials[0].name)}</figcaption>
+        </figure>
       </section>
 
       <section aria-labelledby="workshop-title" className="cv-auto bg-paper py-28 md:py-40">
