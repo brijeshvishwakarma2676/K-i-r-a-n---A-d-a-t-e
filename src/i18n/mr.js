@@ -706,4 +706,12 @@ export const mr = {
   "Marble, uncarved, at dawn": "पहाटे, न कोरलेला संगमरवर",
   "Wet stone": "ओला दगड",
   "Water brings out the veins": "पाण्याने शिरा उठून दिसतात",
+  "Search the works": "कलाकृती शोधा",
+  "A name, material, place or year": "नाव, माध्यम, ठिकाण किंवा वर्ष",
+  "Close search": "शोध बंद करा",
+  "{n} found": "{n} सापडले",
+  "Nothing matches “{q}”.": "“{q}” शी जुळणारे काही नाही.",
+  "Pages": "पृष्ठे",
+  "Page": "पृष्ठ",
+  "Results": "निकाल",
 }

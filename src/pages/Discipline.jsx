@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Link, useParams } from 'react-router'
-import Seo from '../components/Seo'
+import Seo, { breadcrumbLd, collectionLd } from '../components/Seo'
 import ArtImage from '../components/ArtImage'
 import Masonry from '../components/Masonry'
 import { ClipReveal, Parallax, SplitText } from '../components/Motion'
@@ -9,7 +9,7 @@ import AmbientVideo from '../components/AmbientVideo'
 import NotFound from './NotFound'
 import { useT } from '../i18n'
 import { disciplineBySlug, disciplines, materials } from '../data/disciplines'
-import { projectsFor } from '../data/projects'
+import { projectsFor, workPath } from '../data/projects'
 
 /*
   One template, four art directions, one per body of work. `discipline.variant` chooses the
@@ -30,7 +30,14 @@ export default function Discipline() {
 
   return (
     <div style={{ '--accent': d.accent }}>
-      <Seo title={d.name} description={d.intro} />
+      <Seo
+        title={d.name}
+        description={d.intro}
+        jsonLd={[
+          collectionLd({ name: d.name, description: d.intro, path: `/works/${d.slug}`, works: list.map((p) => ({ name: p.title, path: workPath(p) })) }),
+          breadcrumbLd([{ name: 'Works', path: '/works' }, { name: d.name, path: `/works/${d.slug}` }]),
+        ]}
+      />
       <Opening d={d} />
       <Body d={d} />
       {d.slug === 'sculpture' && <SteelBand />}

@@ -1,7 +1,8 @@
-import Seo, { personLd } from '../components/Seo'
+import Seo, { personLd, studioLd, websiteLd } from '../components/Seo'
 import { artist } from '../data/site'
 
-const jsonLd = personLd(artist)
+// The site, the artist and his studio, described for search engines.
+const jsonLd = [websiteLd(), personLd(artist), studioLd()]
 import Hero from '../sections/Hero'
 import Statement from '../sections/Statement'
 import Monument from '../sections/Monument'

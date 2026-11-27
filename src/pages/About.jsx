@@ -1,5 +1,5 @@
 import { Link } from 'react-router'
-import Seo, { personLd } from '../components/Seo'
+import Seo, { breadcrumbLd, personLd } from '../components/Seo'
 import PublicWorksMap from '../components/PublicWorksMap'
 import ArtImage from '../components/ArtImage'
 import AmbientVideo from '../components/AmbientVideo'
@@ -23,7 +23,11 @@ export default function About() {
   const { lang } = useLang()
   return (
     <>
-      <Seo title="About" description={artist.shortBio} jsonLd={personLd(artist)} />
+      <Seo
+        title="About"
+        description="About sculptor Kiran Adate: from Parali Vaijnath to the Sir J.J. School of Art, public statues in Nagpur, and stainless steel forms made at Invent Fine Art."
+        jsonLd={[{ '@context': 'https://schema.org', '@type': 'ProfilePage', url: `${site.url}/about`, mainEntity: personLd(artist) }, breadcrumbLd([{ name: 'About', path: '/about' }])]}
+      />
 
       <header className="wrap grid grid-cols-12 gap-x-6 gap-y-12 pt-[calc(var(--header-h)+3rem)] md:pt-[calc(var(--header-h)+5rem)]">
         <div className="col-span-12 flex flex-col md:col-span-7">

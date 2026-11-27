@@ -706,4 +706,12 @@ export const hi = {
   "Marble, uncarved, at dawn": "भोर में, बिना तराशा संगमरमर",
   "Wet stone": "भीगा पत्थर",
   "Water brings out the veins": "पानी से नसें उभर आती हैं",
+  "Search the works": "कृतियाँ खोजें",
+  "A name, material, place or year": "नाम, सामग्री, स्थान या वर्ष",
+  "Close search": "खोज बंद करें",
+  "{n} found": "{n} मिले",
+  "Nothing matches “{q}”.": "“{q}” से कुछ नहीं मिला।",
+  "Pages": "पृष्ठ",
+  "Page": "पृष्ठ",
+  "Results": "परिणाम",
 }

@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router'
 import { Pause, Play } from 'lucide-react'
-import Seo from '../components/Seo'
+import Seo, { breadcrumbLd } from '../components/Seo'
 import AmbientVideo, { AmbientPause } from '../components/AmbientVideo'
 import { Basin, Frieze, Mounted, Niche, Panorama, StudyLabel, Window, clip } from '../components/StudyFrames'
 import { Reveal, SplitText } from '../components/Motion'
@@ -46,6 +46,7 @@ export default function Material() {
       <Seo
         title="Material and light"
         description="Moving studies of stone, bronze, steel, light and the hand: silent loops, shown the way a material is seen in a sculptor's workshop."
+        jsonLd={breadcrumbLd([{ name: 'Material and light', path: '/material' }])}
       />
 
       {/* 01 Touch: the whole first wall */}

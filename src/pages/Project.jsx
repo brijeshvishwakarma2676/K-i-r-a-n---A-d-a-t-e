@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Link, useParams } from 'react-router'
 import { Expand } from 'lucide-react'
-import Seo, { shareImageFor } from '../components/Seo'
+import Seo, { breadcrumbLd, fitDescription, ids, shareImageFor } from '../components/Seo'
 import ArtImage, { photo, srcFor } from '../components/ArtImage'
 import ProjectCard from '../components/ProjectCard'
 import Lightbox from '../components/Lightbox'
@@ -20,6 +20,22 @@ import { artist, site, whatsappLink } from '../data/site'
 import { useT } from '../i18n'
 
 // '2:40' → 'PT2M40S', the length format search engines read.
+/*
+  The work's search snippet: what it is, in what, by whom, and where; then the start of its own
+  description, so each work's snippet is its own (Google shows about 155 characters).
+    Freedom: stainless steel 316 sculpture by Kiran Adate, Mumbai. Freedom is the expression of
+    liberation, hope, and the courage to rise beyond limitations…
+*/
+function workSnippet(p, d) {
+  const material = p.medium && p.medium.split(/,| \+ /)[0].trim().toLowerCase()
+  const kind = d.slug === 'murals' ? 'relief mural' : 'sculpture'
+  const year = p.year ? ` (${p.year})` : ''
+  const where = p.location || site.basedIn
+  const head = `${p.title}${year}: ${material ? `${material} ${kind}` : kind} by ${site.name}, ${where}.`
+  const more = p.description?.join(' ') || `Photographs and details of the work, from the studio of ${site.studio}.`
+  return fitDescription(`${head} ${more}`)
+}
+
 const isoLength = (l) => {
   const [m, sec] = String(l).split(':').map(Number)
   return `PT${m}M${sec || 0}S`
@@ -79,14 +95,14 @@ export default function Project() {
     <article style={{ '--accent': d.accent }}>
       <Seo
         title={p.title}
-        description={`${p.title}${p.medium ? `, ${p.medium}` : ''}: ${d.name.toLowerCase()} by ${site.name}, ${site.basedIn}.`}
+        description={workSnippet(p, d)}
         image={shareImageFor(p)}
-        jsonLd={{
+        jsonLd={[{
           '@context': 'https://schema.org',
           '@type': 'VisualArtwork',
           name: p.title,
           artform: d.name,
-          creator: { '@type': 'Person', name: site.name },
+          creator: { '@type': 'Person', '@id': ids.person, name: site.name },
           ...(p.medium && { artMedium: p.medium }),
           ...(p.year && { dateCreated: String(p.year) }),
           ...(p.location && { locationCreated: { '@type': 'Place', name: p.location } }),
@@ -104,7 +120,7 @@ export default function Project() {
               ...(p.film.length && { duration: isoLength(p.film.length) }),
             },
           }),
-        }}
+        }, breadcrumbLd([{ name: 'Works', path: '/works' }, { name: d.name, path: `/works/${d.slug}` }, { name: p.title, path: workPath(p) }])]}
       />
 
       <div className="wrap grid grid-cols-12 gap-x-6 gap-y-10 pt-[calc(var(--header-h)+2.5rem)] md:pt-[calc(var(--header-h)+4rem)]">

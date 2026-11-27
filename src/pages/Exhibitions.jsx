@@ -1,5 +1,6 @@
 import { Link } from 'react-router'
-import Seo from '../components/Seo'
+import Seo, { breadcrumbLd, ids } from '../components/Seo'
+import { site } from '../data/site'
 import ArtImage from '../components/ArtImage'
 import { ClipReveal, SplitText } from '../components/Motion'
 import Invitation from '../sections/Invitation'
@@ -9,6 +10,21 @@ import { useLang, useT } from '../i18n'
 import { useToday } from '../lib/useToday'
 
 const LABEL = { current: 'Now showing', upcoming: 'Upcoming' }
+
+// Each show as an event for search engines: what, when, where, and whose work.
+const exhibitionLd = (x) => ({
+  '@context': 'https://schema.org',
+  '@type': 'ExhibitionEvent',
+  name: x.title,
+  description: x.text || `${x.kind}, ${x.venue}, ${x.city}`,
+  startDate: x.start,
+  ...(x.end && { endDate: x.end }),
+  eventStatus: 'https://schema.org/EventScheduled',
+  eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+  location: { '@type': 'Place', name: x.venue, address: { '@type': 'PostalAddress', addressLocality: x.city, addressCountry: 'IN' } },
+  performer: { '@id': ids.person },
+  url: `${site.url}/exhibitions`,
+})
 
 export default function Exhibitions() {
   const t = useT()
@@ -21,7 +37,11 @@ export default function Exhibitions() {
 
   return (
     <>
-      <Seo title="Exhibitions" description="Solo and group exhibitions, sculpture camps and residencies." />
+      <Seo
+        title="Exhibitions"
+        description="Exhibitions of sculptor Kiran Adate: solo and group shows, sculpture camps and residencies, with their dates, venues and cities."
+        jsonLd={[...exhibitions.map(exhibitionLd), breadcrumbLd([{ name: 'Exhibitions', path: '/exhibitions' }])]}
+      />
 
       <header className="wrap pb-10 pt-[calc(var(--header-h)+4rem)] md:pt-[calc(var(--header-h)+6rem)]">
         <div className="grid grid-cols-12 gap-x-6 gap-y-8">

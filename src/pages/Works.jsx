@@ -1,13 +1,13 @@
 import { useState } from 'react'
 import { Link } from 'react-router'
 import { AnimatePresence, motion } from 'framer-motion'
-import Seo from '../components/Seo'
+import Seo, { breadcrumbLd, collectionLd } from '../components/Seo'
 import ProjectCard from '../components/ProjectCard'
 import Masonry from '../components/Masonry'
 import Invitation from '../sections/Invitation'
 import { ease, SplitText } from '../components/Motion'
 import { disciplines } from '../data/disciplines'
-import { projects, projectsFor } from '../data/projects'
+import { projects, projectsFor, workPath } from '../data/projects'
 import { site } from '../data/site'
 import { useT } from '../i18n'
 
@@ -29,6 +29,12 @@ const arrangements = [
   ],
 ]
 
+const WORKS_DESCRIPTION = 'Sculpture and relief murals by Kiran Adate, Mumbai: figures, devotional forms, animals and abstract works in stone, bronze, stainless steel and fibre.'
+const worksLd = [
+  collectionLd({ name: 'Works', description: WORKS_DESCRIPTION, path: '/works', works: projects.map((p) => ({ name: p.title, path: workPath(p) })) }),
+  breadcrumbLd([{ name: 'Works', path: '/works' }]),
+]
+
 export default function Works() {
   const t = useT()
   const [filter, setFilter] = useState('all')
@@ -36,7 +42,7 @@ export default function Works() {
 
   return (
     <>
-      <Seo title="Works" description="Selected sculpture and relief murals by Kiran Adate, Mumbai." />
+      <Seo title="Works" description={WORKS_DESCRIPTION} jsonLd={worksLd} />
       <header className="wrap pb-14 pt-[calc(var(--header-h)+4rem)] md:pt-[calc(var(--header-h)+6rem)]">
         <div className="grid grid-cols-12 gap-x-6 gap-y-8">
           <SplitText as="h1" className="display col-span-12 text-[clamp(4rem,2rem+9vw,11rem)] font-light leading-[0.82] md:col-span-7" text="Works" immediate delay={0.3} />

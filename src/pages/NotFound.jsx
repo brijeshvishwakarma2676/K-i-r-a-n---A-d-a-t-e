@@ -7,7 +7,7 @@ import { T } from '../i18n'
 export default function NotFound() {
   return (
     <>
-      <Seo title="Page not found" />
+      <Seo title="Page not found" description="This page is not on the site. The works of sculptor Kiran Adate, Mumbai, are in Works: sculpture and relief murals in stone, bronze and steel." noindex />
       <section className="wrap grid min-h-[90svh] grid-cols-12 items-end gap-x-6 gap-y-10 pb-24 pt-[calc(var(--header-h)+3rem)]">
         <div className="col-span-12 md:col-span-6">
           <SplitText as="h1" className="display text-[clamp(3rem,2rem+5vw,7rem)] font-light leading-[0.9]" text="This page is not in the collection." immediate delay={0.3} />

@@ -1,12 +1,16 @@
-import { useEffect, useRef, useState } from 'react'
+import { lazy, Suspense, useEffect, useRef, useState } from 'react'
 import { Link, NavLink, useLocation } from 'react-router'
 import { AnimatePresence, motion, useMotionValueEvent, useScroll } from 'framer-motion'
-import { X } from 'lucide-react'
+import { Search as SearchIcon, X } from 'lucide-react'
 import { nav, site } from '../data/site'
 import useLockBody from '../hooks/useLockBody'
 import useFocusTrap from '../hooks/useFocusTrap'
 import { ease } from './Motion'
 import { LANGS, useLang, useT } from '../i18n'
+
+// The search dialog downloads only when it is first wanted (or the button is pointed at).
+const loadSearch = () => import('./Search')
+const Search = lazy(loadSearch)
 
 export default function Header() {
   const { pathname } = useLocation()
@@ -14,6 +18,7 @@ export default function Header() {
   const [solid, setSolid] = useState(false)
   const [hidden, setHidden] = useState(false)
   const [open, setOpen] = useState(false)
+  const [searching, setSearching] = useState(false)
   const t = useT()
   // Pages whose opening section is dark get light lettering until the header turns solid.
   const darkTop = ['/works/murals', '/material'].includes(pathname.replace(/\/$/, '')) && !solid
@@ -25,7 +30,40 @@ export default function Header() {
     if (y < prev - 4) setHidden(false)
   })
 
-  useEffect(() => setOpen(false), [pathname])
+  useEffect(() => {
+    setOpen(false)
+    setSearching(false)
+  }, [pathname])
+
+  // "/" or Ctrl/⌘ K opens search from anywhere, except while typing in a field.
+  useEffect(() => {
+    function onKey(e) {
+      const typing = /^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName) || e.target.isContentEditable
+      const slash = e.key === '/' && !typing && !e.metaKey && !e.ctrlKey && !e.altKey
+      const k = (e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k'
+      if (slash || k) {
+        e.preventDefault()
+        setSearching(true)
+      }
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [])
+
+  const searchButton = (cls) => (
+    <button
+      type="button"
+      onClick={() => setSearching(true)}
+      onPointerEnter={loadSearch}
+      onFocus={loadSearch}
+      aria-label={t('Search the works')}
+      aria-keyshortcuts="/ Control+K Meta+K"
+      title={`${t('Search the works')} (/)`}
+      className={`p-1.5 transition-colors ${darkTop ? 'text-bone/70 hover:text-bone' : 'text-ink-soft hover:text-ink'} ${cls}`}
+    >
+      <SearchIcon size={18} strokeWidth={1.4} aria-hidden="true" />
+    </button>
+  )
 
   return (
     <>
@@ -71,22 +109,31 @@ export default function Header() {
                 </li>
               ))}
             </ul>
+            {searchButton('-mx-2')}
             <LangSwitch dark={darkTop} />
           </nav>
 
-          <button
-            type="button"
-            className="text-[0.85rem] [font-variation-settings:'wdth'_112] md:hidden"
-            aria-expanded={open}
-            aria-controls="mobile-menu"
-            onClick={() => setOpen(true)}
-          >
-            {t('Menu')}
-          </button>
+          <div className="flex items-center gap-4 md:hidden">
+            {searchButton('-my-1.5')}
+            <button
+              type="button"
+              className="text-[0.85rem] [font-variation-settings:'wdth'_112]"
+              aria-expanded={open}
+              aria-controls="mobile-menu"
+              onClick={() => setOpen(true)}
+            >
+              {t('Menu')}
+            </button>
+          </div>
         </div>
       </motion.header>
 
       <AnimatePresence>{open && <MobileMenu onClose={() => setOpen(false)} />}</AnimatePresence>
+      {searching && (
+        <Suspense fallback={null}>
+          <Search onClose={() => setSearching(false)} />
+        </Suspense>
+      )}
     </>
   )
 }

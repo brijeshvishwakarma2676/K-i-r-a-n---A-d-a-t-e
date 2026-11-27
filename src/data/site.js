@@ -24,6 +24,10 @@ export const site = {
   description:
     'Kiran Adate is a contemporary sculptor in Mumbai, trained at the Sir J.J. School of Art: figures, devotional forms, animals and abstract work in stone, bronze and stainless steel, and relief murals.',
 
+  // The home page's search snippet (about 150 characters; Google cuts longer ones).
+  metaDescription:
+    'Kiran Adate, contemporary sculptor in Mumbai trained at Sir J.J. School of Art: figures, devotional and abstract works in stone, bronze and stainless steel.',
+
   email: 'inventfineart.mum@gmail.com',
   emailAlt: 'inventfineart@gmail.com', // CONFIRM: still in use?
   phones: [

@@ -4,6 +4,7 @@ import { routes } from './routes'
 import { HeadContext } from './components/Seo'
 import { projects, workPath } from './data/projects'
 import { disciplines } from './data/disciplines'
+export { shortLinks } from './data/shortLinks'
 
 /*
   Server entry used only at build time by scripts/prerender.mjs: renders one page of the site to

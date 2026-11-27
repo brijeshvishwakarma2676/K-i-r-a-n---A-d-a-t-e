@@ -15,7 +15,7 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
 const dist = path.join(root, 'dist')
 const server = path.join(root, 'dist-ssr')
 const entry = fs.readdirSync(server).find((f) => /^entry-server\.m?js$/.test(f))
-const { render, paths } = await import(pathToFileURL(path.join(server, entry)).href)
+const { render, paths, shortLinks } = await import(pathToFileURL(path.join(server, entry)).href)
 
 // Every WebP photograph needs its AVIF copy, which browsers that read AVIF are given instead.
 const webps = fs.readdirSync(path.join(dist, 'img'), { recursive: true }).filter((f) => f.endsWith('.webp'))
@@ -38,7 +38,16 @@ function page(html, head) {
     `<meta property="og:type" content="website" />`,
     `<meta property="og:url" content="${esc(head.url)}" />`,
     `<meta property="og:image" content="${esc(head.image)}" />`,
+    `<meta property="og:image:width" content="1200" />`,
+    `<meta property="og:image:height" content="630" />`,
+    `<meta property="og:image:alt" content="${esc(head.imageAlt)}" />`,
+    `<meta property="og:locale" content="en_IN" />`,
+    `<meta property="og:site_name" content="Sculptor Kiran Adate" />`,
     `<meta name="twitter:card" content="summary_large_image" />`,
+    `<meta name="twitter:title" content="${esc(head.title)}" />`,
+    `<meta name="twitter:description" content="${esc(head.description)}" />`,
+    `<meta name="twitter:image" content="${esc(head.image)}" />`,
+    head.noindex && `<meta name="robots" content="noindex" />`,
     head.jsonLd && `<script type="application/ld+json" id="json-ld">${JSON.stringify(head.jsonLd).replace(/</g, '\\u003c')}</script>`,
   ].filter(Boolean).join('\n    ')
   return template
@@ -55,27 +64,38 @@ for (const p of paths) {
   const share = new URL(head.image).pathname
   if (share.startsWith('/share/') && !fs.existsSync(path.join(dist, share)))
     throw new Error(`${p}: no link-preview picture ${share}. Run: python3 -I scripts/make-share-images.py`)
-  const video = head.jsonLd?.video?.contentUrl && new URL(head.jsonLd.video.contentUrl).pathname
+  const ld = [].concat(head.jsonLd || [])
+  const filmLd = ld.find((x) => x.video)
+  const video = filmLd && new URL(filmLd.video.contentUrl).pathname
   if (video && !fs.existsSync(path.join(dist, video)))
     throw new Error(`${p}: the film ${video} is not in public/. Run: sh scripts/make-film.sh <footage> <name>`)
   const file = p === '/' ? path.join(dist, 'index.html') : path.join(dist, p, 'index.html')
   fs.mkdirSync(path.dirname(file), { recursive: true })
   fs.writeFileSync(file, page(html, head))
-  urls.push(head.url)
+  // A work's photographs go into the sitemap with its page, for image search.
+  const artwork = ld.find((x) => x['@type'] === 'VisualArtwork')
+  urls.push({ loc: head.url, images: artwork ? [].concat(artwork.image || []) : [] })
 }
 
 // The not-found page, for the host to serve on unknown addresses.
 const missing = await render('/this-page-does-not-exist')
 fs.writeFileSync(path.join(dist, '404.html'), page(missing.html, missing.head))
 
-const today = new Date().toISOString().slice(0, 10)
+// No <lastmod>: a build date on every page would tell search engines that everything changed on
+// every build, and they learn to ignore it. Work pages list their photographs (image sitemap).
 fs.writeFileSync(
   path.join(dist, 'sitemap.xml'),
-  `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls
-    .map((u) => `  <url><loc>${esc(u)}</loc><lastmod>${today}</lastmod></url>`)
+  `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">\n${urls
+    .map((u) => `  <url><loc>${esc(u.loc)}</loc>${u.images.map((i) => `<image:image><image:loc>${esc(i)}</image:loc></image:image>`).join('')}</url>`)
     .join('\n')}\n</urlset>\n`,
 )
-const origin = new URL(urls[0]).origin
+const origin = new URL(urls[0].loc).origin
+
+// Short links (src/data/shortLinks.js) as permanent redirects the host answers before any page
+// loads: /freedom → /works/sculpture/freedom. Both the lower- and upper-case spelling of each.
+const redirects = Object.entries(shortLinks).flatMap(([k, to]) => [...new Set([k, k.toUpperCase()])].map((key) => `/${key} ${to} 301`))
+const own = fs.existsSync(path.join(root, 'public', '_redirects')) ? fs.readFileSync(path.join(root, 'public', '_redirects'), 'utf8').trimEnd() : ''
+fs.writeFileSync(path.join(dist, '_redirects'), `${own}\n\n# Short links, written by scripts/prerender.mjs\n${redirects.join('\n')}\n`)
 fs.writeFileSync(path.join(dist, 'robots.txt'), `User-agent: *\nAllow: /\n\nSitemap: ${origin}/sitemap.xml\n`)
 fs.rmSync(server, { recursive: true, force: true })
-console.log(`Pre-rendered ${urls.length} pages, 404.html and sitemap.xml`)
+console.log(`Pre-rendered ${urls.length} pages, 404.html, sitemap.xml and ${Object.keys(shortLinks).length} short links`)
