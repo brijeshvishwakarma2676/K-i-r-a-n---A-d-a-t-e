@@ -115,7 +115,7 @@ export default function About() {
         {/* Light sliding along polished steel: a generated mood clip of the material (VIDEO-GENERATION.md, V2), not a work. */}
         <figure className="mt-16 md:mt-24">
           <div className="relative aspect-[4/3] overflow-hidden bg-basalt sm:aspect-[16/9] lg:aspect-[21/9]">
-            <AmbientVideo src="/ambient/steel-light.mp4" poster="/ambient/steel-light.jpg" className="absolute inset-0 h-full w-full" />
+            <AmbientVideo src="/ambient/steel-light.mp4" poster="/ambient/steel-light.webp" className="absolute inset-0 h-full w-full" />
           </div>
           <figcaption className="caption mt-3">{t(materials[0].name)}</figcaption>
         </figure>

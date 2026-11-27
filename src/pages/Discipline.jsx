@@ -77,7 +77,7 @@ function SteelBand() {
   const steel = materials[0]
   return (
     <section aria-label={t(steel.name)} className="on-dark relative isolate overflow-hidden bg-basalt text-bone">
-      <AmbientVideo src="/ambient/steel-light.mp4" poster="/ambient/steel-light.jpg" className="absolute inset-0 -z-20 h-full w-full brightness-[0.8]" />
+      <AmbientVideo src="/ambient/steel-light.mp4" poster="/ambient/steel-light.webp" className="absolute inset-0 -z-20 h-full w-full brightness-[0.8]" />
       <span aria-hidden="true" className="absolute inset-0 -z-10 bg-[linear-gradient(to_top,rgb(20_19_18/0.85),rgb(20_19_18/0.25)_60%,rgb(20_19_18/0.1))]" />
       <div className="wrap flex min-h-[62svh] flex-col justify-end pb-12 pt-32 md:min-h-[70svh] md:pb-16">
         <p className="caption">{t(steel.name)}</p>

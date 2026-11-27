@@ -16,7 +16,7 @@ export default function Header() {
   const [open, setOpen] = useState(false)
   const t = useT()
   // Pages whose opening section is dark get light lettering until the header turns solid.
-  const darkTop = pathname.replace(/\/$/, '') === '/works/murals' && !solid
+  const darkTop = ['/works/murals', '/material'].includes(pathname.replace(/\/$/, '')) && !solid
 
   useMotionValueEvent(scrollY, 'change', (y) => {
     const prev = scrollY.getPrevious() ?? 0

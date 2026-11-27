@@ -31,6 +31,7 @@ export const paths = [
   ...disciplines.map((d) => `/works/${d.slug}`),
   ...projects.map(workPath),
   '/exhibitions',
+  '/material',
   '/about',
   '/contact',
   '/portfolio',

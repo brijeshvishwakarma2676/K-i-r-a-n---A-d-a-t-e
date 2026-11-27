@@ -27,7 +27,7 @@ export default function Invitation({
         <>
           <AmbientVideo
             src="/ambient/hand-on-stone.mp4"
-            poster="/ambient/hand-on-stone.jpg"
+            poster="/ambient/hand-on-stone.webp"
             className="absolute inset-0 -z-20 h-full w-full scale-[1.06] blur-[4px] brightness-[0.72] saturate-[0.9]"
           />
           {/* Darker towards the text, so it reads on every frame */}

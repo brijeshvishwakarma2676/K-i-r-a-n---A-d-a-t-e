@@ -72,6 +72,7 @@ export const site = {
 export const nav = [
   { to: '/works', label: 'Works' },
   { to: '/exhibitions', label: 'Exhibitions' },
+  { to: '/material', label: 'Material' },
   { to: '/about', label: 'About' },
   { to: '/contact', label: 'Contact' },
 ]
