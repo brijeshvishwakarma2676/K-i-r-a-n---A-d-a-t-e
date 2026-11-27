@@ -2,6 +2,8 @@ import { useRef } from 'react'
 import { Link } from 'react-router'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import ArtImage from '../components/ArtImage'
+import AmbientVideo from '../components/AmbientVideo'
+import { clip } from '../components/StudyFrames'
 import { disciplineBySlug } from '../data/disciplines'
 import { projectBySlug, workPath } from '../data/projects'
 
@@ -21,7 +23,9 @@ const sited = [
   ['tall-standing-figure', 0],
 ]
 
-// Works in their places, scrolled sideways at the reader's pace (no scroll hijacking).
+// Works in their places, scrolled sideways at the reader's pace (no scroll hijacking). The heading
+// stands over an empty lobby with the morning sun moving across it: a generated mood clip
+// (VIDEO-GENERATION.md, H2), home page only, showing a place waiting for a work, never a work.
 export default function InPlace() {
   const t = useT()
   const track = useRef(null)
@@ -32,8 +36,11 @@ export default function InPlace() {
   }
 
   return (
-    <section aria-labelledby="inplace-title" className="py-28 md:py-40">
-      <div className="wrap flex flex-wrap items-end justify-between gap-6">
+    <section aria-labelledby="inplace-title" className="pb-28 md:pb-40">
+      <div className="relative isolate overflow-hidden">
+      <AmbientVideo {...clip('home-lobby')} className="absolute inset-0 -z-20 h-full w-full" style={{ objectPosition: '50% 60%' }} />
+      <span aria-hidden="true" className="absolute inset-0 -z-10 bg-[linear-gradient(to_top,var(--color-limestone)_0%,color-mix(in_srgb,var(--color-limestone)_70%,transparent)_40%,color-mix(in_srgb,var(--color-limestone)_5%,transparent)_100%)]" />
+      <div className="wrap flex min-h-[42svh] flex-wrap items-end justify-between gap-6 pt-36 md:min-h-[54svh] md:pt-44">
         <div>
           <SplitText as="h2" id="inplace-title" className="display text-[clamp(2.4rem,1.4rem+3.6vw,4.6rem)]" text="In place" />
           <p className="mt-4 max-w-[50ch] text-[1rem]">
@@ -48,6 +55,7 @@ export default function InPlace() {
             <ChevronRight size={18} strokeWidth={1.25} />
           </button>
         </div>
+      </div>
       </div>
 
       <ul

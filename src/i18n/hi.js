@@ -703,4 +703,7 @@ export const hi = {
   "The plinth": "चबूतरा",
   "An empty plinth in a white room": "सफ़ेद कमरे में एक खाली चबूतरा",
   "Every plinth is waiting for its work.": "हर चबूतरा अपनी कृति की प्रतीक्षा में है।",
+  "Marble, uncarved, at dawn": "भोर में, बिना तराशा संगमरमर",
+  "Wet stone": "भीगा पत्थर",
+  "Water brings out the veins": "पानी से नसें उभर आती हैं",
 }

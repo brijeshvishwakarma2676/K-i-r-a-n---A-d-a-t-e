@@ -703,4 +703,7 @@ export const mr = {
   "The plinth": "चौथरा",
   "An empty plinth in a white room": "पांढऱ्या खोलीतील रिकामा चौथरा",
   "Every plinth is waiting for its work.": "प्रत्येक चौथरा आपल्या कलाकृतीची वाट पाहत आहे.",
+  "Marble, uncarved, at dawn": "पहाटे, न कोरलेला संगमरवर",
+  "Wet stone": "ओला दगड",
+  "Water brings out the veins": "पाण्याने शिरा उठून दिसतात",
 }

@@ -4,9 +4,10 @@ import { Reveal, SplitText } from '../components/Motion'
 import { useT } from '../i18n'
 
 /*
-  Home: the way into the moving studies (/material). Two of them, shown as they are on that page:
-  steel in a niche and a frieze of carving. Generated studies of material, not his works, so they
-  sit apart from "From block to statue", which shows the real making of a real work.
+  Home: the way into the moving studies (/material), with two studies of its own, framed as they
+  are on that page: an uncarved block standing in a niche, and water bringing out the veins of
+  marble as a frieze (VIDEO-GENERATION.md, H3 and H4). Generated studies of material, not his works,
+  so they sit apart from "From block to statue", which shows the real making of a real work.
 */
 export default function MaterialStudies() {
   const t = useT()
@@ -24,15 +25,15 @@ export default function MaterialStudies() {
           </Reveal>
         </div>
         <Reveal className="col-span-8 col-start-3 sm:col-span-5 sm:col-start-5 md:col-span-3 md:col-start-9">
-          <Niche name="steel-light" />
-          <StudyLabel title={t('Light')} className="mt-8">{t('Polished stainless steel')}</StudyLabel>
+          <Niche name="home-block" />
+          <StudyLabel title={t('The block')} className="mt-8">{t('Marble, uncarved, at dawn')}</StudyLabel>
         </Reveal>
       </div>
       <Reveal className="mt-20 md:mt-28 md:px-[var(--gutter)]">
-        <Frieze name="stone-chips" />
+        <Frieze name="home-water" />
       </Reveal>
       <div className="wrap mt-5">
-        <StudyLabel title={t('Chip')}>{t('Chisel and marble')}</StudyLabel>
+        <StudyLabel title={t('Wet stone')}>{t('Water brings out the veins')}</StudyLabel>
       </div>
     </section>
   )

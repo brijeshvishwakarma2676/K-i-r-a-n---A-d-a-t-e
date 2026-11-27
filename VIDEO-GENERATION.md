@@ -204,3 +204,85 @@ Action:
 Calm, still, natural colour.
 Avoid: a sculpture, people, frames or art on the walls, text.
 ```
+
+## H1. Dust in light (home page: behind the artist's words)
+
+```
+A 15-second, single continuous locked shot inside a dark stone-carving workshop, early morning.
+
+Subject: one shaft of sunlight falls from a high, unseen window diagonally down through the dark room, from the upper right towards the lower centre. Very fine marble dust, like motes, hangs in the beam and drifts slowly down, glinting where the light is brightest. Outside the beam the room is near-black; only a rough stone wall behind is faintly visible.
+
+Composition: the beam crosses the right two-thirds of the frame; the left third stays dark and empty, because words will sit there. The middle of the frame must also work cropped to a tall portrait.
+
+Camera: locked, 50mm lens, f/4, focus on the dust in the middle of the beam.
+
+Light: one warm, soft-edged beam and nothing else.
+
+Action:
+[00:00-00:05] The beam is steady; specks of dust drift down through it and sparkle as they cross its brightest part.
+[00:05-00:12] A faint, slow draught moves the dust a little to one side, then it settles back to drifting straight down.
+[00:12-00:15] The scene looks exactly as it did at the start, so the clip loops.
+
+Avoid: people, tools, sculptures, smoke, steam, fog, dust that rises or swirls, a beam that pulses or flickers, lens flare, text.
+```
+
+## H2. The place, waiting (home page: "In place")
+
+```
+A 15-second, single continuous wide shot of an empty, modern building lobby in India, in the morning.
+
+Subject: a tall, quiet lobby with a polished pale stone floor, a plain back wall of beige sandstone, and a full-height glass wall on the left. In the centre of the floor is a clear, empty space where a large sculpture could stand. No furniture, people, plants, artwork or signs.
+
+Composition: wide and calm, with the empty space in the centre third and plenty of floor in front of it. The frame can be cropped to a wide, low strip, so keep everything important in the middle band.
+
+Camera: locked at eye height, 35mm lens, f/8, everything sharp, vertical lines straight.
+
+Light: low morning sun through the glass wall throws long shadows of the window frames across the floor.
+
+Action:
+[00:00-00:15] Over the whole clip, like a time-lapse of about one hour, the sunlit shapes slide slowly across the floor to the right and climb a little up the back wall. Nothing else in the room moves or changes.
+
+Avoid: a sculpture or any object in the empty space, people, reflections of people, furniture, flickering light, warping walls, lens flare, text.
+```
+
+## H3. Wetting the stone (home page: the "Material and light" band)
+
+```
+A 15-second, single continuous close-up of the top of a rough-finished block of white marble, in an open-air stone yard in the shade, midday.
+
+Subject: the flat top of the block, covered in pale grey dust and fine chisel texture, so the stone looks dull and chalky. One hand (right hand and forearm only, dark weathered skin) holds a small steel mug and pours clean water slowly across it.
+
+Composition: the action stays in a horizontal band across the middle of the frame, because the top and bottom fifths will be cropped away to make a long, low strip.
+
+Camera: locked, 85mm lens, f/5.6, looking slightly down across the stone.
+
+Light: soft, even daylight shade; no harsh sun.
+
+Action:
+[00:00-00:03] The dusty stone lies still.
+[00:03-00:10] Water pours from the mug in one slow line from left to right; wherever it spreads, the stone turns deeper and slightly translucent, and fine grey veins appear, glossy and sharp.
+[00:10-00:15] The hand lifts out of the frame; a thin sheet of water spreads to the far edge and runs over it.
+
+Avoid: a second hand, a face, soap, foam, steam, water jumping up or behaving like gel, carved shapes or letters in the stone, text.
+```
+
+## H4. The standing block (home page: the arched niche)
+
+```
+A 15-second, single continuous locked shot of one tall, rough block of white marble standing upright in a quiet stone yard, at dawn.
+
+Subject: a single quarried block about two metres tall and half a metre wide, standing on end on a low wooden pallet. Its faces are rough and split, with natural grey veins. It is uncarved: no figure, face or shape is cut into it. Behind it, a soft blur of other blocks and a pale sky.
+
+Composition: make it in 9:16 portrait if the option is there. Otherwise, centre the block exactly, inside the middle third of the frame with even space on both sides, so it can be cropped to a tall portrait.
+
+Camera: locked, 85mm lens, f/4, the block sharp from top to bottom.
+
+Light: cool, even light before sunrise, then the first warm sun.
+
+Action:
+[00:00-00:05] Cool, even pre-dawn light; the block stands still.
+[00:05-00:12] A line of warm sunlight appears at the top edge and slides slowly down the face to the base, bringing out the veins and the split texture.
+[00:12-00:15] The whole block glows warm and the light holds.
+
+Avoid: carved forms, faces or figures appearing in the stone, people, tools, birds, the block changing shape, lens flare, text.
+```
