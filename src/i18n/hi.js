@@ -714,4 +714,5 @@ export const hi = {
   "Pages": "पृष्ठ",
   "Page": "पृष्ठ",
   "Results": "परिणाम",
+  "Clear the form": "फ़ॉर्म साफ़ करें",
 }

@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { Link, useParams } from 'react-router'
 import { Expand } from 'lucide-react'
 import Seo, { breadcrumbLd, fitDescription, ids, shareImageFor } from '../components/Seo'
@@ -13,6 +12,7 @@ import Turnaround from '../components/Turnaround'
 import BeforeAfter from '../components/BeforeAfter'
 import Film from '../components/Film'
 import NotFound from './NotFound'
+import useOverlay from '../hooks/useOverlay'
 import { disciplineBySlug } from '../data/disciplines'
 import { projectBySlug, projectsFor, workPath } from '../data/projects'
 import { exhibitions, yearOf } from '../data/exhibitions'
@@ -51,7 +51,10 @@ const spread = [
 export default function Project() {
   const { slug, work } = useParams()
   const p = projectBySlug[work]
-  const [open, setOpen] = useState(null)
+  // The full-screen viewer is a history step: Back closes it instead of leaving the work.
+  const photos = useOverlay('photo')
+  const open = photos.open ? photos.state.view ?? 0 : null
+  const setOpen = (i) => photos.show({ view: i })
   const t = useT()
   if (!p || p.discipline !== slug || p.listed === false) return <NotFound />
 
@@ -271,7 +274,7 @@ export default function Project() {
 
       <Invitation title="For this work, or a commission of your own." linkLabel="Ask about this work" to={`/contact?work=${p.slug}`} film={false} />
 
-      <Lightbox images={viewer} index={open} onIndex={setOpen} onClose={() => setOpen(null)} title={t(p.title)} />
+      <Lightbox images={viewer} index={open} onIndex={(i) => photos.update({ view: i })} onClose={photos.hide} title={t(p.title)} />
     </article>
   )
 }

@@ -1,6 +1,6 @@
-import { useState } from 'react'
 import ArtImage from './ArtImage'
 import Lightbox from './Lightbox'
+import useOverlay from '../hooks/useOverlay'
 import { Stagger } from './Motion'
 import { useT } from '../i18n'
 
@@ -10,7 +10,10 @@ import { useT } from '../i18n'
   `items` are entries of artist.press in src/data/site.js.
 */
 export default function PressClippings({ items, className = '' }) {
-  const [open, setOpen] = useState(null)
+  // A history step, like every overlay: Back closes the clipping (src/hooks/useOverlay.js).
+  const clipping = useOverlay('press')
+  const open = clipping.open ? clipping.state.view ?? 0 : null
+  const setOpen = (i) => clipping.show({ view: i })
   const t = useT()
   const images = items.map((x) => ({ id: x.image, alt: `${x.title}: ${t(x.outlet)}`, caption: `${x.title}. ${t(x.outlet)}`, fit: 'contain' }))
   return (
@@ -26,7 +29,7 @@ export default function PressClippings({ items, className = '' }) {
           </button>
         ))}
       </Stagger>
-      <Lightbox images={images} index={open} onIndex={setOpen} onClose={() => setOpen(null)} title={t('Press')} />
+      <Lightbox images={images} index={open} onIndex={(i) => clipping.update({ view: i })} onClose={clipping.hide} title={t('Press')} />
     </>
   )
 }

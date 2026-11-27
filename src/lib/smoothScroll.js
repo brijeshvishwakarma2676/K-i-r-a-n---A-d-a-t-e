@@ -40,3 +40,9 @@ export function scrollToTop() {
   if (lenis) lenis.scrollTo(0, { immediate: true, force: true })
   else window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
 }
+
+// To a given height at once: used to return to where the visitor was when they press Back.
+export function scrollToY(y) {
+  if (lenis) lenis.scrollTo(y, { immediate: true, force: true })
+  else window.scrollTo({ top: y, left: 0, behavior: 'instant' })
+}

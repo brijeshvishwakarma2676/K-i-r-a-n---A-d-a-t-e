@@ -714,4 +714,5 @@ export const mr = {
   "Pages": "पृष्ठे",
   "Page": "पृष्ठ",
   "Results": "निकाल",
+  "Clear the form": "फॉर्म रिकामा करा",
 }

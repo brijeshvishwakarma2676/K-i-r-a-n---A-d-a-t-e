@@ -5,6 +5,7 @@ import { Search as SearchIcon, X } from 'lucide-react'
 import { nav, site } from '../data/site'
 import useLockBody from '../hooks/useLockBody'
 import useFocusTrap from '../hooks/useFocusTrap'
+import useOverlay from '../hooks/useOverlay'
 import { ease } from './Motion'
 import { LANGS, useLang, useT } from '../i18n'
 
@@ -17,8 +18,10 @@ export default function Header() {
   const { scrollY } = useScroll()
   const [solid, setSolid] = useState(false)
   const [hidden, setHidden] = useState(false)
-  const [open, setOpen] = useState(false)
-  const [searching, setSearching] = useState(false)
+  // The menu and search are history steps (src/hooks/useOverlay.js): Back closes them.
+  const menu = useOverlay('menu')
+  const search = useOverlay('search')
+  const open = menu.open
   const t = useT()
   // Pages whose opening section is dark get light lettering until the header turns solid.
   const darkTop = ['/works/murals', '/material'].includes(pathname.replace(/\/$/, '')) && !solid
@@ -30,20 +33,19 @@ export default function Header() {
     if (y < prev - 4) setHidden(false)
   })
 
-  useEffect(() => {
-    setOpen(false)
-    setSearching(false)
-  }, [pathname])
-
   // "/" or Ctrl/⌘ K opens search from anywhere, except while typing in a field.
+  const searchOpen = useRef(false)
+  searchOpen.current = search.open
+  const openSearch = useRef(null)
+  openSearch.current = () => search.show()
   useEffect(() => {
     function onKey(e) {
       const typing = /^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName) || e.target.isContentEditable
       const slash = e.key === '/' && !typing && !e.metaKey && !e.ctrlKey && !e.altKey
       const k = (e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k'
-      if (slash || k) {
+      if ((slash || k) && !searchOpen.current) {
         e.preventDefault()
-        setSearching(true)
+        openSearch.current()
       }
     }
     window.addEventListener('keydown', onKey)
@@ -53,7 +55,7 @@ export default function Header() {
   const searchButton = (cls) => (
     <button
       type="button"
-      onClick={() => setSearching(true)}
+      onClick={() => search.show()}
       onPointerEnter={loadSearch}
       onFocus={loadSearch}
       aria-label={t('Search the works')}
@@ -120,7 +122,7 @@ export default function Header() {
               className="text-[0.85rem] [font-variation-settings:'wdth'_112]"
               aria-expanded={open}
               aria-controls="mobile-menu"
-              onClick={() => setOpen(true)}
+              onClick={() => menu.show()}
             >
               {t('Menu')}
             </button>
@@ -128,10 +130,10 @@ export default function Header() {
         </div>
       </motion.header>
 
-      <AnimatePresence>{open && <MobileMenu onClose={() => setOpen(false)} />}</AnimatePresence>
-      {searching && (
+      <AnimatePresence>{open && <MobileMenu onClose={menu.hide} />}</AnimatePresence>
+      {search.open && (
         <Suspense fallback={null}>
-          <Search onClose={() => setSearching(false)} />
+          <Search onClose={search.hide} />
         </Suspense>
       )}
     </>
@@ -182,7 +184,7 @@ function MobileMenu({ onClose }) {
       transition={{ duration: 0.6, ease }}
     >
       <div className="wrap flex h-[var(--header-h)] items-center justify-between">
-        <Link to="/" onClick={onClose} className="flex items-baseline gap-2.5" aria-label={t('Sculptor {name}', { name: t(site.name) })}>
+        <Link to="/" replace className="flex items-baseline gap-2.5" aria-label={t('Sculptor {name}', { name: t(site.name) })}>
           <span className="caption" aria-hidden="true">{t(site.role)}</span>
           <span className="display latin text-[1.85rem] leading-none" aria-hidden="true">{site.name}</span>
         </Link>
@@ -203,7 +205,7 @@ function MobileMenu({ onClose }) {
               <NavLink
                 to={item.to}
                 end={item.to === '/'}
-                onClick={onClose}
+                replace
                 className={({ isActive }) => `display block py-3 text-[2.8rem] leading-none ${isActive ? 'italic text-geru' : ''}`}
               >
                 {t(item.label)}

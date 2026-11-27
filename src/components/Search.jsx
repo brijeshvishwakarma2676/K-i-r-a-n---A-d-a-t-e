@@ -67,10 +67,9 @@ export default function Search({ onClose }) {
       .map((r) => r.e)
   }, [q, entries])
 
-  const go = (to) => {
-    onClose()
-    navigate(to)
-  }
+  // Replaces search's own history step, so Back from the chosen page returns to the page search
+  // was opened on (src/hooks/useOverlay.js).
+  const go = (to) => navigate(to, { replace: true })
   const onKey = (e) => {
     if (e.key === 'ArrowDown') {
       e.preventDefault()

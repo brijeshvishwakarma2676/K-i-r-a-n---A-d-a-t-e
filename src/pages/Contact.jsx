@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useSearchParams } from 'react-router'
 import { AnimatePresence, motion } from 'framer-motion'
 import Seo, { breadcrumbLd, studioLd } from '../components/Seo'
@@ -10,6 +10,26 @@ import { T, useT } from '../i18n'
 
 const TYPES = ['A work on this site', 'A commission', 'An exhibition or collaboration', 'Press', 'Something else']
 const EMPTY = { name: '', email: '', phone: '', type: '', location: '', message: '' }
+
+/*
+  A message being written is kept for the visit (this tab only), so going to look at a work and
+  coming back, or pressing Back, does not lose it. It is dropped once sent, or with "Clear the form".
+*/
+const DRAFT = 'enquiry-draft'
+const readDraft = () => {
+  try {
+    return JSON.parse(sessionStorage.getItem(DRAFT) || 'null')
+  } catch {
+    return null
+  }
+}
+const writeDraft = (draft) => {
+  try {
+    if (draft) sessionStorage.setItem(DRAFT, JSON.stringify(draft))
+    else sessionStorage.removeItem(DRAFT)
+  } catch { /* private mode: the draft lasts while the page is open */ }
+}
+const isEmpty = (v) => Object.values(v).every((x) => !String(x).trim())
 
 function validate(v) {
   const e = {}
@@ -26,16 +46,36 @@ export default function Contact() {
   // /contact?work=<slug> arrives from a work's page and starts the message about that work.
   const [params] = useSearchParams()
   const t = useT()
-  const work = projectBySlug[params.get('work')]
-  const initial = work
-    ? { ...EMPTY, type: 'A work on this site', message: t('I would like to know more about {title}.', { title: work.title }) }
-    : EMPTY
-  const [values, setValues] = useState(initial)
+  const slug = params.get('work')
+  const work = projectBySlug[slug]
+  // Starts empty, as pre-rendered; once the page is taken over it picks up the draft, or starts the
+  // message about the work it was opened from (a different work than the draft's starts afresh).
+  const [values, setValues] = useState(EMPTY)
+  const [loaded, setLoaded] = useState(false)
+  useEffect(() => {
+    const draft = readDraft()
+    if (work && draft?.work !== slug) setValues({ ...EMPTY, type: 'A work on this site', message: t('I would like to know more about {title}.', { title: work.title }) })
+    else if (draft?.values) setValues({ ...EMPTY, ...draft.values })
+    setLoaded(true)
+  }, [slug]) // eslint-disable-line react-hooks/exhaustive-deps
   const [errors, setErrors] = useState({})
   const [touched, setTouched] = useState({})
   const [status, setStatus] = useState('idle') // idle | sending | done | failed
   const [result, setResult] = useState(null)
   const formRef = useRef(null)
+
+  useEffect(() => {
+    if (!loaded) return
+    writeDraft(status === 'done' || isEmpty(values) ? null : { values, work: slug })
+  }, [values, status, loaded, slug])
+
+  const clear = () => {
+    setValues(EMPTY)
+    setTouched({})
+    setErrors({})
+    writeDraft(null)
+    formRef.current?.querySelector('[name="type"]')?.focus()
+  }
 
   const set = (name) => (e) => {
     const next = { ...values, [name]: e.target.value }
@@ -168,6 +208,11 @@ export default function Contact() {
                     {t(status === 'sending' ? 'Sending' : 'Send message')}
                   </button>
                   <p className="caption">{t('Fields marked * are required.')}</p>
+                  {!isEmpty(values) && status !== 'sending' && (
+                    <button type="button" onClick={clear} className="text-link ml-auto text-[0.9rem]">
+                      {t('Clear the form')}
+                    </button>
+                  )}
                 </div>
               </motion.form>
             )}

@@ -1,5 +1,4 @@
-import { useState } from 'react'
-import { Link } from 'react-router'
+import { Link, useSearchParams } from 'react-router'
 import { AnimatePresence, motion } from 'framer-motion'
 import Seo, { breadcrumbLd, collectionLd } from '../components/Seo'
 import ProjectCard from '../components/ProjectCard'
@@ -9,6 +8,7 @@ import { ease, SplitText } from '../components/Motion'
 import { disciplines } from '../data/disciplines'
 import { projects, projectsFor, workPath } from '../data/projects'
 import { site } from '../data/site'
+import useHydrated from '../hooks/useHydrated'
 import { useT } from '../i18n'
 
 // Two hand-composed arrangements, alternated chapter by chapter so no two read the same.
@@ -37,7 +37,14 @@ const worksLd = [
 
 export default function Works() {
   const t = useT()
-  const [filter, setFilter] = useState('all')
+  // The chosen body of work is part of the address (/works?kind=murals): Back from a work returns
+  // to it, and the filtered list can be shared. Read once the page is taken over, so the first
+  // render matches the pre-rendered page (which shows all works).
+  const [params, setParams] = useSearchParams()
+  const ready = useHydrated()
+  const kind = params.get('kind')
+  const filter = ready && disciplines.some((d) => d.slug === kind) ? kind : 'all'
+  const setFilter = (slug) => setParams(slug === 'all' ? {} : { kind: slug }, { replace: true, preventScrollReset: true })
   const options = [{ slug: 'all', shortName: 'All', count: projects.length }, ...disciplines.map((d) => ({ ...d, count: projectsFor(d.slug).length }))]
 
   return (
