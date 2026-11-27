@@ -7,6 +7,7 @@ import {
   useAnimationFrame,
   useInView,
   useMotionValue,
+  useMotionValueEvent,
   useScroll,
   useSpring,
   useTransform,
@@ -33,9 +34,20 @@ import { useToday } from '../lib/useToday'
   in global.css), so on a first visit it plays as soon as the page arrives, before any script.
   `heroSlug` picks what scene 02 shows: any work's slug from projects.js, or 'kiran-adate' (the
   portrait, an unlisted entry there) - an unlisted entry links to About instead of a work page.
+
+  The life of the work: when the work has its own dated making photographs (`making` in
+  projects.js), scene 02 first walks through them, each for STAGE_MS, from the bare frame to the
+  unveiling, with the date and stage under the title, then settles on the finished work and holds
+  (frame 2.6 s, then 1.6 s a stage, finished from 9 s to 12 s).
+  Real photographs only, never generated footage: this is the work itself. With reduced motion
+  only the finished work is shown.
 */
-const SCENE_MS = 8000
+const SCENE_MS = [8000, 12000] // the artist; the work (its life, then the finished work)
+const STAGE_MS = 1600
+const FIRST_STAGE_MS = 2600 // the first stage also waits for the scene's reveal to lift
 const heroSlug = 'sculpture-of-hawker'
+// Where each making photograph is cropped to the hero's 3:4 frame, so the work stays in view.
+const STAGE_POSITION = { 'kiran/hawker-welding': '30% 50%', 'kiran/hawker-unveiling': '50% 45%' }
 
 // Scene 01's cut-out portrait, from images.js like every other photo.
 const portrait = { ...images['portrait/kiran-adate'], alt: `Portrait of ${site.name}` }
@@ -49,25 +61,45 @@ export default function Hero() {
   const work = projectBySlug[heroSlug]
   const isWorkPage = work.listed !== false
   const SCENES = [t('The artist'), t(isWorkPage ? 'The work' : 'The portrait')]
+  // The work's life: its dated making photographs, then the finished work.
+  const stages = [
+    ...((work.ownMaking && work.making) || []).filter((m) => m.image).map((m) => ({
+      image: { ...m.image, alt: `${t(work.title)}: ${t(m.label)}, ${t(m.date)}`, position: STAGE_POSITION[m.image.id] },
+      note: `${t(m.date)} · ${t(m.label)}`,
+    })),
+    { image: work.cover, note: null },
+  ]
+  const last = stages.length - 1
 
   // Scene and its timer. `progress` runs 0 to 1 across one scene and drives the indicator line.
   const [scene, setScene] = useState(0)
   const [paused, setPaused] = useState(false)
+  // Which stage of the work's life is showing; changes only when a stage begins.
+  const [stage, setStage] = useState(0)
   const firstScene = useRef(true)
   const progress = useMotionValue(0)
   const running = !paused && !reduce && inView
   useAnimationFrame((_, delta) => {
     if (!running) return
-    const next = progress.get() + delta / SCENE_MS
+    const next = progress.get() + delta / SCENE_MS[scene]
     if (next >= 1) {
       progress.set(0)
       firstScene.current = false
+      setStage(0)
       setScene((s) => (s + 1) % SCENES.length)
     } else progress.set(next)
   })
+  useMotionValueEvent(progress, 'change', (v) => {
+    if (scene !== 1) return
+    const ms = v * SCENE_MS[1]
+    const s = ms < FIRST_STAGE_MS ? 0 : Math.min(last, 1 + Math.floor((ms - FIRST_STAGE_MS) / STAGE_MS))
+    if (s !== stage) setStage(s)
+  })
+  const shown = reduce ? last : stage
   const go = (i) => {
     firstScene.current = false
     progress.set(0)
+    setStage(0)
     setScene(i)
   }
 
@@ -246,7 +278,22 @@ export default function Hero() {
                     animate={{ scale: 1 }}
                     transition={{ duration: 1.8, ease, delay: enterDelay }}
                   >
-                    <ArtImage image={work.cover} fill priority sizes="(min-width: 768px) 30vw, 70vw" />
+                    {/* Each stage lies over the ones before it and fades in on top, so the frame never dims */}
+                    {stages.map((st, i) => (
+                      <div
+                        key={st.image.id}
+                        aria-hidden={i !== shown}
+                        className="absolute inset-0"
+                        style={{
+                          zIndex: i,
+                          opacity: i <= shown ? 1 : 0,
+                          transform: i === shown ? 'scale(1)' : 'scale(1.06)',
+                          transition: 'opacity 0.9s ease, transform 2.6s cubic-bezier(0.22, 1, 0.36, 1)',
+                        }}
+                      >
+                        <ArtImage image={st.image} fill priority={i === 0 || i === last} sizes="(min-width: 768px) 30vw, 70vw" />
+                      </div>
+                    ))}
                   </motion.div>
                 </motion.div>
                 <motion.span
@@ -256,7 +303,18 @@ export default function Hero() {
                   transition={{ duration: 0.9, ease, delay: enterDelay + 0.6 }}
                 >
                   <span className="label-title block text-[1.05rem] leading-tight group-hover:text-geru md:text-[1.2rem]">{work.title}</span>
-                  <span className="caption mt-1 block">{isWorkPage ? [work.medium, work.year].filter(Boolean).join(', ') || 'Sculpture' : t(site.short)}</span>
+                  <AnimatePresence mode="wait" initial={false}>
+                    <motion.span
+                      key={stages[shown].note || 'finished'}
+                      className="caption mt-1 block"
+                      initial={{ opacity: 0, y: 4 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -4 }}
+                      transition={{ duration: 0.35 }}
+                    >
+                      {stages[shown].note || (isWorkPage ? [work.medium, work.year].filter(Boolean).join(', ') || 'Sculpture' : t(site.short))}
+                    </motion.span>
+                  </AnimatePresence>
                 </motion.span>
               </Link>
             </motion.figure>
