@@ -1,0 +1,14 @@
+# How long browsers may keep each kind of file (Netlify and Cloudflare Pages read this file).
+# Code, fonts and photographs carry a fingerprint in their names that changes with their content,
+# so they can be kept for a year without ever being out of date. Clips and share pictures keep their
+# names, so a week. Pages and the service worker are always checked, so a new version shows at once.
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+/img/*
+  Cache-Control: public, max-age=31536000, immutable
+/ambient/*
+  Cache-Control: public, max-age=604800, stale-while-revalidate=86400
+/share/*
+  Cache-Control: public, max-age=604800
+/sw.js
+  Cache-Control: no-cache

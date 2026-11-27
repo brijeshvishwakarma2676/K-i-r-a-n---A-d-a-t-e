@@ -22,8 +22,9 @@ const webps = fs.readdirSync(path.join(dist, 'img'), { recursive: true }).filter
 const noAvif = webps.filter((f) => !fs.existsSync(path.join(dist, 'img', f.replace(/\.webp$/, '.avif'))))
 if (noAvif.length) throw new Error(`${noAvif.length} images have no AVIF copy (e.g. ${noAvif[0]}). Run: sh scripts/make-avif.sh`)
 
-// Fetch the two fonts used on first paint (Latin, upright) with the page instead of after the CSS.
-const fonts = fs.readdirSync(path.join(dist, 'assets')).filter((f) => /^(cormorant-garamond-latin-wght-normal|archivo-latin-wdth-normal)-.*\.woff2$/.test(f))
+// Fetch the three fonts used on first paint (Latin: the display face upright and italic, and the
+// text face) with the page instead of after the CSS.
+const fonts = fs.readdirSync(path.join(dist, 'assets')).filter((f) => /^(cormorant-garamond-latin-wght-(normal|italic)|archivo-latin-wdth-normal)-.*\.woff2$/.test(f))
 const preload = fonts.map((f) => `<link rel="preload" href="/assets/${f}" as="font" type="font/woff2" crossorigin />`).join('\n    ')
 const template = fs.readFileSync(path.join(dist, 'index.html'), 'utf8').replace('<link rel="stylesheet"', `${preload}\n    <link rel="stylesheet"`)
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
@@ -97,5 +98,18 @@ const redirects = Object.entries(shortLinks).flatMap(([k, to]) => [...new Set([k
 const own = fs.existsSync(path.join(root, 'public', '_redirects')) ? fs.readFileSync(path.join(root, 'public', '_redirects'), 'utf8').trimEnd() : ''
 fs.writeFileSync(path.join(dist, '_redirects'), `${own}\n\n# Short links, written by scripts/prerender.mjs\n${redirects.join('\n')}\n`)
 fs.writeFileSync(path.join(dist, 'robots.txt'), `User-agent: *\nAllow: /\n\nSitemap: ${origin}/sitemap.xml\n`)
+// The service worker (scripts/sw.js): every script and style sheet of this build, and the fonts of
+// the first paint, are stored on the visitor's device when the site is first opened. The language
+// dictionaries (only for Hindi and Marathi readers) are stored when first used instead.
+const assets = fs.readdirSync(path.join(dist, 'assets'))
+const code = assets
+  .filter((f) => (/\.(js|css)$/.test(f) && !/^(hi|mr)-/.test(f)) || /^(cormorant-garamond-latin-wght-(normal|italic)|archivo-latin-wdth-normal)-.*\.woff2$/.test(f))
+  .map((f) => `/assets/${f}`)
+const version = (await import('node:crypto')).createHash('sha1').update(assets.sort().join()).digest('hex').slice(0, 10)
+fs.writeFileSync(
+  path.join(dist, 'sw.js'),
+  fs.readFileSync(path.join(root, 'scripts', 'sw.js'), 'utf8').replace("'__VERSION__'", JSON.stringify(version)).replace('__CODE__', JSON.stringify(code)),
+)
+
 fs.rmSync(server, { recursive: true, force: true })
-console.log(`Pre-rendered ${urls.length} pages, 404.html, sitemap.xml and ${Object.keys(shortLinks).length} short links`)
+console.log(`Pre-rendered ${urls.length} pages, 404.html, sitemap.xml, ${Object.keys(shortLinks).length} short links, and sw.js (${code.length} files)`)

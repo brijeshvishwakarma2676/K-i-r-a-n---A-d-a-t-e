@@ -5,7 +5,15 @@ import { shortLinkFor } from './data/shortLinks'
 
 // Pages other than Home load on demand. The router waits for the code before it navigates,
 // so page transitions are unaffected.
-const page = (load) => () => load().then((m) => ({ Component: m.default }))
+const page = (load) => {
+  loaders.push(load)
+  return () => load().then((m) => ({ Component: m.default }))
+}
+const loaders = []
+
+// Fetches every page's code once the first page is up (main.jsx), so moving to another page never
+// waits for it; each is small, and the browser keeps them.
+export const prefetchPages = () => Promise.allSettled(loaders.map((load) => load()))
 
 export const routes = [
   {

@@ -45,7 +45,7 @@ import { useToday } from '../lib/useToday'
 const SCENE_MS = [8000, 12000] // the artist; the work (its life, then the finished work)
 const STAGE_MS = 1600
 const FIRST_STAGE_MS = 2600 // the first stage also waits for the scene's reveal to lift
-const heroSlug = 'sculpture-of-hawker'
+export const heroSlug = 'sculpture-of-hawker'
 // Where each making photograph is cropped to the hero's 3:4 frame, so the work stays in view.
 const STAGE_POSITION = { 'kiran/hawker-welding': '30% 50%', 'kiran/hawker-unveiling': '50% 45%' }
 

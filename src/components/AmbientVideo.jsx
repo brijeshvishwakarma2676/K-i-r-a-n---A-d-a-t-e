@@ -14,7 +14,7 @@ import { useReducedMotion } from '../lib/media'
 */
 let av1
 const canAv1 = () => (av1 ??= document.createElement('video').canPlayType('video/mp4; codecs="av01.0.05M.10"') === 'probably')
-const pick = (src) => (src?.startsWith('/ambient/') && canAv1() ? src.replace(/\.mp4$/, '.av1.mp4') : src)
+export const pick = (src) => (src?.startsWith('/ambient/') && canAv1() ? src.replace(/\.mp4$/, '.av1.mp4') : src)
 
 // Set to true by a page's "pause motion" button: every clip inside holds its frame.
 export const AmbientPause = createContext(false)

@@ -22,8 +22,13 @@
       #opening .op-name { position: relative; width: 100%; padding-bottom: 8svh; opacity: 0; transition: opacity 0.5s, transform 0.5s cubic-bezier(0.22, 1, 0.36, 1); }
       #opening.op-ready .op-name { opacity: 1; }
       #opening .op-title { margin-top: 0.75rem; max-width: 14ch; font-size: clamp(2.8rem, 1.6rem + 5vw, 7rem); font-weight: 300; line-height: 0.9; }
-      #opening .op-line { display: block; margin-top: 2rem; height: 1px; width: min(16rem, 50vw); background: rgb(236 231 221 / 0.18); overflow: hidden; }
-      #opening .op-line::after { content: ''; display: block; height: 100%; background: #D9957A; /* geru as it reads on basalt */ transform-origin: 0 50%; animation: opening-load 2.8s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+      #opening .op-load { display: flex; align-items: center; gap: 1rem; margin-top: 2rem; }
+      #opening .op-line { display: block; height: 1px; width: min(16rem, 50vw); background: rgb(236 231 221 / 0.18); overflow: hidden; }
+      /* The line fills as the first screen's photographs, stills and fonts arrive (--p, 0 to 1, set by
+         the script below); without the script it eases most of the way by itself. */
+      #opening .op-line::after { content: ''; display: block; height: 100%; background: #D9957A; /* geru as it reads on basalt */ transform-origin: 0 50%; transform: scaleX(var(--p, 0.06)); transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1); }
+      #opening:not(.op-live) .op-line::after { animation: opening-load 2.8s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+      #opening .op-count { min-width: 3ch; font-size: 0.78rem; font-variant-numeric: tabular-nums; color: rgb(236 231 221 / 0.6); }
       html.opened #opening { pointer-events: none; }
       html.opened #opening .op-panel { transform: scaleY(0); }
       html.opened #opening .op-name { opacity: 0; transform: translateY(-30px); }
@@ -39,7 +44,7 @@
       <div class="op-name wrap">
         <p class="caption" data-hi="मूर्तिकार" data-mr="शिल्पकार">Sculptor</p>
         <p class="op-title display" data-hi="किरण अदाते" data-mr="किरण अदाते">Kiran Adate</p>
-        <span class="op-line"></span>
+        <span class="op-load"><span class="op-line"></span><span class="op-count" aria-hidden="true"></span></span>
       </div>
     </div>
     <div id="root"></div>
@@ -51,7 +56,7 @@
         var MAX = 3000 // never hold the site longer than this
         var seen = false
         try { seen = sessionStorage.getItem('opened') === '1' } catch (e) {}
-        var MIN = seen ? 250 : 900 // long enough to read the name on a first visit
+        var MIN = seen ? 0 : 350 // a first visit sees the name for a moment; after that, no wait at all
         var start = Date.now()
         var lifted = false
 
@@ -81,9 +86,20 @@
         var events = ['wheel', 'touchmove', 'keydown']
         events.forEach(function (t) { window.addEventListener(t, hold, opts) })
 
+        // Progress: the share of what the first screen needs that has arrived.
+        var line = curtain.querySelector('.op-line')
+        var count = curtain.querySelector('.op-count')
+        curtain.classList.add('op-live')
+        function progress(p) {
+          line.style.setProperty('--p', String(Math.max(0.06, p)))
+          if (count) count.textContent = Math.round(p * 100) + '%'
+        }
+        progress(0)
+
         function lift() {
           if (lifted) return
           lifted = true
+          progress(1)
           setTimeout(function () {
             events.forEach(function (t) { window.removeEventListener(t, hold, opts) })
             html.classList.remove('opening')
@@ -122,6 +138,14 @@
             waits.push(loaded(still))
           })
           if (document.fonts && document.fonts.ready) waits.push(document.fonts.ready)
+          var done = 0
+          waits.forEach(function (w) {
+            w.then(tick, tick)
+          })
+          function tick() {
+            done++
+            if (!lifted) progress(0.9 * done / waits.length)
+          }
           Promise.all(waits).then(lift, lift)
         }
         ready()

@@ -1,7 +1,8 @@
 import { StrictMode, startTransition } from 'react'
 import { createRoot, hydrateRoot } from 'react-dom/client'
 import { createBrowserRouter, createMemoryRouter, RouterProvider } from 'react-router'
-import { routes } from './routes'
+import { prefetchPages, routes } from './routes'
+import { importantMedia } from './lib/warm'
 import '@fontsource-variable/cormorant-garamond/wght.css'
 import '@fontsource-variable/cormorant-garamond/wght-italic.css'
 import '@fontsource-variable/archivo/wdth.css'
@@ -44,6 +45,27 @@ function start() {
   } else createRoot(root).render(app)
   const idle = window.requestIdleCallback || ((f) => setTimeout(f, 200))
   idle(startSmoothScroll, { timeout: 2000 })
+  // Then, while the visitor looks at the first page: the code of every other page, and (through the
+  // service worker) the photographs and clips that come next. Nothing here delays the first page.
+  idle(prefetchPages, { timeout: 4000 })
+  keepOnDevice()
+}
+
+/*
+  The service worker (scripts/sw.js, written to dist/sw.js at build) keeps the site's files on the
+  device. Only on the built site: the dev server serves files that change on every save.
+*/
+function keepOnDevice() {
+  if (!import.meta.env.PROD || import.meta.env.VITE_MEMORY_ROUTER === 'true' || !('serviceWorker' in navigator)) return
+  const go = () => {
+    navigator.serviceWorker.register('/sw.js').catch(() => {})
+    navigator.serviceWorker.ready.then((reg) => {
+      const idle = window.requestIdleCallback || ((f) => setTimeout(f, 1500))
+      idle(() => reg.active?.postMessage({ type: 'warm', urls: importantMedia() }), { timeout: 5000 })
+    })
+  }
+  if (document.readyState === 'complete') go()
+  else addEventListener('load', go, { once: true })
 }
 if (router.state.initialized) start()
 else {

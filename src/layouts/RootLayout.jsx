@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useRef } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { useLocation, useNavigate, useNavigationType, useOutlet } from 'react-router'
 import { AnimatePresence, MotionConfig, motion } from 'framer-motion'
 import { useReducedMotion } from '../lib/media'
@@ -159,8 +159,8 @@ function Page({ children }) {
   return (
     <motion.div
       initial={first ? false : { opacity: 0 }}
-      animate={{ opacity: 1, transition: { duration: 0.5, ease, delay: 0.25 } }}
-      exit={{ opacity: 0, transition: { duration: 0.45, ease } }}
+      animate={{ opacity: 1, transition: { duration: 0.45, ease, delay: 0.12 } }}
+      exit={{ opacity: 0, transition: { duration: 0.4, ease } }}
     >
       <main id="main" tabIndex={-1} className="outline-none">
         {children}
@@ -175,12 +175,47 @@ function Page({ children }) {
   opened, then lifts away. On the first visit it starts lifted; with reduced motion it is not drawn.
   The curtain is two panels scaled vertically (one rises on leaving, one lifts on arriving), which
   the GPU animates without repainting the screen.
+  It lifts only once the photographs on the new page's first screen have arrived (at most
+  HOLD_MS), so the page is never revealed with empty frames; stored ones are there at once.
 */
+const HOLD_MS = 1500
+
+function inView(el) {
+  const r = (el.closest('picture')?.parentElement || el.parentElement || el).getBoundingClientRect()
+  return r.width > 0 && r.bottom > 0 && r.top < innerHeight && r.right > 0 && r.left < innerWidth
+}
+const arrived = (img) =>
+  img.complete ? Promise.resolve() : new Promise((done) => {
+    img.addEventListener('load', done, { once: true })
+    img.addEventListener('error', done, { once: true })
+  })
+
+function usePageReady(first) {
+  const [ready, setReady] = useState(first)
+  useEffect(() => {
+    if (first) return
+    let live = true
+    const go = () => live && setReady(true)
+    const timer = setTimeout(go, HOLD_MS)
+    // After the new page has laid itself out (two frames), wait for its photos on screen.
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      const photos = [...document.querySelectorAll('#main img')].filter(inView)
+      Promise.all(photos.map(arrived)).then(go)
+    }))
+    return () => {
+      live = false
+      clearTimeout(timer)
+    }
+  }, [first])
+  return ready
+}
+
 function Curtain() {
   const { pathname } = useLocation()
   const reduce = useReducedMotion()
   const t = useT()
   const first = useFirstPaint()
+  const ready = usePageReady(first)
   if (reduce) return null
   return (
     <div aria-hidden="true" className="curtain on-dark pointer-events-none fixed inset-0 z-[80] flex items-end text-bone">
@@ -189,7 +224,7 @@ function Curtain() {
         className="absolute inset-0 bg-basalt"
         style={{ originY: 0 }}
         initial={first ? false : { scaleY: 1 }}
-        animate={{ scaleY: 0, transition: { duration: 0.8, ease: easeInOut, delay: 0.1 } }}
+        animate={{ scaleY: ready ? 0 : 1, transition: { duration: 0.6, ease: easeInOut, delay: 0.03 } }}
       />
       {/* Leaving: rises from the floor to cover the screen */}
       <motion.div
@@ -197,13 +232,13 @@ function Curtain() {
         style={{ originY: 1 }}
         initial={{ scaleY: 0 }}
         animate={{ scaleY: 0 }}
-        exit={{ scaleY: 1, transition: { duration: 0.6, ease: easeInOut } }}
+        exit={{ scaleY: 1, transition: { duration: 0.42, ease: easeInOut } }}
       />
       <motion.div
         className="wrap relative pb-[8svh]"
         initial={first ? false : { opacity: 1, y: 0 }}
-        animate={{ opacity: 0, y: -30, transition: { duration: 0.5, ease, delay: 0.1 } }}
-        exit={{ opacity: [0, 1], y: [40, 0], transition: { duration: 0.6, ease, delay: 0.1 } }}
+        animate={ready ? { opacity: 0, y: -30, transition: { duration: 0.4, ease, delay: 0.03 } } : { opacity: 1, y: 0 }}
+        exit={{ opacity: [0, 1], y: [40, 0], transition: { duration: 0.42, ease, delay: 0.03 } }}
       >
         <p className="caption">{t('Sculptor {name}', { name: t(site.name) })}</p>
         <p className="display mt-3 max-w-[14ch] text-[clamp(2.8rem,1.6rem+5vw,7rem)] font-light leading-[0.9]">
