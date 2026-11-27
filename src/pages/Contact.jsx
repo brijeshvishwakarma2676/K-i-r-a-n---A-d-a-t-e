@@ -223,9 +223,12 @@ export default function Contact() {
           <dl className="space-y-8">
             <div>
               <dt className="caption">{t('Portfolio')}</dt>
-              <dd className="mt-1.5">
-                <a href={site.portfolioPdf} download className="text-link block w-fit text-[1.1rem]">{t('Download as PDF')}</a>
-              </dd>
+              {[site.pdfs.profile, site.pdfs.portfolio].map((pdf) => (
+                <dd key={pdf.href} className="mt-1.5">
+                  <a href={pdf.href} download className="text-link block w-fit text-[1.1rem]">{t(pdf.label)} (PDF)</a>
+                  <span className="caption">{t('{n} pages', { n: pdf.pages })}, {pdf.size}</span>
+                </dd>
+              ))}
             </div>
             <div>
               <dt className="caption">{t('Email')}</dt>

@@ -145,7 +145,11 @@ export default function About() {
           <div className="col-span-12 md:col-span-4">
             <SplitText as="h2" id="record-title" className="display text-[clamp(2.2rem,1.4rem+2.8vw,3.8rem)]" text="Record" />
             <Link to="/exhibitions" className="text-link mt-8 inline-block text-[0.95rem]">{t('Exhibitions')}</Link>
-            <a href={site.portfolioPdf} download className="arrow-link mt-8 flex w-fit">{t('Download portfolio (PDF)')}</a>
+            {[site.pdfs.profile, site.pdfs.portfolio].map((pdf, i) => (
+              <a key={pdf.href} href={pdf.href} download className={`arrow-link flex w-fit ${i ? 'mt-4' : 'mt-8'}`}>
+                {t(pdf.label)} (PDF)
+              </a>
+            ))}
           </div>
           <div className="col-span-12 space-y-16 md:col-span-7 md:col-start-6">
             <CvList title={t('Education')} rows={[{ year: artist.education.year, text: `${t(artist.education.course)}, ${t(artist.education.school)}` }]} />

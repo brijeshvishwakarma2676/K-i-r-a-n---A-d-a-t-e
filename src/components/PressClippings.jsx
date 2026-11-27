@@ -15,7 +15,7 @@ export default function PressClippings({ items, className = '' }) {
   const open = clipping.open ? clipping.state.view ?? 0 : null
   const setOpen = (i) => clipping.show({ view: i })
   const t = useT()
-  const images = items.map((x) => ({ id: x.image, alt: `${x.title}: ${t(x.outlet)}`, caption: `${x.title}. ${t(x.outlet)}`, fit: 'contain' }))
+  const images = items.map((x) => ({ id: x.image, alt: `${x.title}: ${t(x.outlet)}`, caption: `${x.title}${/[.!?]$/.test(x.title) ? "" : "."} ${t(x.outlet)}`, fit: 'contain' }))
   return (
     <>
       <Stagger as="ul" className={`grid grid-cols-2 gap-x-5 gap-y-10 sm:grid-cols-3 ${className}`} itemAs="li">

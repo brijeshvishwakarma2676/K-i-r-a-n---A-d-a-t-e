@@ -56,7 +56,16 @@ export const site = {
   // site's domain as registered there. Only one is used; Cloudflare wins if both are set.
   analytics: { cloudflareToken: null, plausibleDomain: null },
 
-  // The portfolio as a PDF, made from /portfolio by scripts/make-portfolio-pdf.mjs.
+  // Two PDFs to download (About, Contact):
+  //   profile    Kiran Adate's own artist profile, as he made it: his statement and eight works with
+  //              sizes and concepts (a copy with its photographs stored more compactly, 18 MB to
+  //              3.4 MB, same size and look; the text is unchanged).
+  //   portfolio  the /portfolio page saved by scripts/make-portfolio-pdf.mjs: everything on the
+  //              site (public works, more works, press, contact). Remake it when works change.
+  pdfs: {
+    profile: { href: '/kiran-adate-profile.pdf', label: 'Artist profile', pages: 9, size: '3.4 MB' },
+    portfolio: { href: '/kiran-adate-portfolio.pdf', label: 'Full portfolio', pages: 17, size: '3.2 MB' },
+  },
   portfolioPdf: '/kiran-adate-portfolio.pdf',
 
   // The studio's product lines (planters, FRP and GRC architectural work, water and garden work)

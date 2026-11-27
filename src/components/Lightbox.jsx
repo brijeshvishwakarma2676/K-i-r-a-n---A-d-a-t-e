@@ -1,18 +1,28 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
+import { createPortal } from 'react-dom'
 import { AnimatePresence, motion } from 'framer-motion'
 import { ChevronLeft, ChevronRight, X } from 'lucide-react'
 import ArtImage, { photo, srcFor, srcSetOf } from './ArtImage'
 import useLockBody from '../hooks/useLockBody'
 import useFocusTrap from '../hooks/useFocusTrap'
+import useHydrated from '../hooks/useHydrated'
 import { ease } from './Motion'
 import { useT } from '../i18n'
 
 /*
   Full-screen viewer for a set of images. Arrow keys and swipe move between images,
   Escape closes. `index` null means closed.
+
+  Drawn into <body>, not where it is used: a section with content-visibility (cv-auto), a transform
+  or a filter would otherwise become the frame of its "fixed, full screen" layer, so the viewer
+  would be as tall as that section and scroll away with it (the press clippings on About).
+  It only ever opens in the browser, after the page has been taken over (useOverlay).
 */
 export default function Lightbox({ images, index, onClose, onIndex, title }) {
-  return <AnimatePresence>{index !== null && <Viewer {...{ images, index, onClose, onIndex, title }} />}</AnimatePresence>
+  // Nothing until the app has taken over the page, so the first render matches the pre-rendered HTML.
+  const ready = useHydrated()
+  if (!ready) return null
+  return createPortal(<AnimatePresence>{index !== null && <Viewer {...{ images, index, onClose, onIndex, title }} />}</AnimatePresence>, document.body)
 }
 
 function Viewer({ images, index, onClose, onIndex, title }) {
