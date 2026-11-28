@@ -238,7 +238,9 @@ cookie banner is needed.
 Every page is a file in `dist/`, so no rewrite to `index.html` is needed and unknown addresses get
 `404.html` with a real 404 status:
 - Netlify: `public/_redirects` is kept empty on purpose.
-- Vercel: `vercel.json` serves `/about` from `about/index.html`.
+- Vercel: `vercel.json` sets the full build (`npm run build`, output `dist`), so every page is a
+  file; a project left on plain `vite build` has only the home page and every refresh is a 404.
+  It also carries the cache rules and the short links (kept in step by scripts/prerender.mjs).
 - Other static hosts: serve `dist/` as files, with `404.html` for missing paths.
 
 Before launch:

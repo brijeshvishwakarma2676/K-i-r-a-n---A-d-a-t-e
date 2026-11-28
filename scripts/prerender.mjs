@@ -97,6 +97,19 @@ const origin = new URL(urls[0].loc).origin
 const redirects = Object.entries(shortLinks).flatMap(([k, to]) => [...new Set([k, k.toUpperCase()])].map((key) => `/${key} ${to} 301`))
 const own = fs.existsSync(path.join(root, 'public', '_redirects')) ? fs.readFileSync(path.join(root, 'public', '_redirects'), 'utf8').trimEnd() : ''
 fs.writeFileSync(path.join(dist, '_redirects'), `${own}\n\n# Short links, written by scripts/prerender.mjs\n${redirects.join('\n')}\n`)
+// Vercel reads neither _redirects nor _headers: its rules live in vercel.json (headers by hand,
+// short links kept in step here). Vercel reads that file before building, so when the short links
+// change it is rewritten and has to be committed.
+const vercelFile = path.join(root, 'vercel.json')
+if (fs.existsSync(vercelFile)) {
+  const vercel = JSON.parse(fs.readFileSync(vercelFile, 'utf8'))
+  const short = Object.entries(shortLinks).flatMap(([k, to]) => [...new Set([k, k.toUpperCase()])].map((key) => ({ source: `/${key}`, destination: to, permanent: true })))
+  if (JSON.stringify(vercel.redirects) !== JSON.stringify(short)) {
+    vercel.redirects = short
+    fs.writeFileSync(vercelFile, `${JSON.stringify(vercel, null, 2)}\n`)
+    console.log('vercel.json: short links updated (commit it, Vercel reads it before building)')
+  }
+}
 fs.writeFileSync(path.join(dist, 'robots.txt'), `User-agent: *\nAllow: /\n\nSitemap: ${origin}/sitemap.xml\n`)
 // The service worker (scripts/sw.js): every script and style sheet of this build, and the fonts of
 // the first paint, are stored on the visitor's device when the site is first opened. The language

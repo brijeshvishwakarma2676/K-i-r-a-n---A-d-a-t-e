@@ -1,1 +1,1146 @@
-{ "trailingSlash": false }
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": "vite",
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "trailingSlash": false,
+  "headers": [
+    {
+      "source": "/assets/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/img/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/ambient/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=604800, stale-while-revalidate=86400"
+        }
+      ]
+    },
+    {
+      "source": "/share/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=604800"
+        }
+      ]
+    },
+    {
+      "source": "/sw.js",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-cache"
+        }
+      ]
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/sculpture",
+      "destination": "/works/sculpture",
+      "permanent": true
+    },
+    {
+      "source": "/SCULPTURE",
+      "destination": "/works/sculpture",
+      "permanent": true
+    },
+    {
+      "source": "/murals",
+      "destination": "/works/murals",
+      "permanent": true
+    },
+    {
+      "source": "/MURALS",
+      "destination": "/works/murals",
+      "permanent": true
+    },
+    {
+      "source": "/freedom",
+      "destination": "/works/sculpture/freedom",
+      "permanent": true
+    },
+    {
+      "source": "/FREEDOM",
+      "destination": "/works/sculpture/freedom",
+      "permanent": true
+    },
+    {
+      "source": "/beyond-boundaries",
+      "destination": "/works/sculpture/beyond-boundaries",
+      "permanent": true
+    },
+    {
+      "source": "/BEYOND-BOUNDARIES",
+      "destination": "/works/sculpture/beyond-boundaries",
+      "permanent": true
+    },
+    {
+      "source": "/extraction-of-negative-energy",
+      "destination": "/works/sculpture/extraction-of-negative-energy",
+      "permanent": true
+    },
+    {
+      "source": "/EXTRACTION-OF-NEGATIVE-ENERGY",
+      "destination": "/works/sculpture/extraction-of-negative-energy",
+      "permanent": true
+    },
+    {
+      "source": "/eternal-orbit",
+      "destination": "/works/sculpture/eternal-orbit",
+      "permanent": true
+    },
+    {
+      "source": "/ETERNAL-ORBIT",
+      "destination": "/works/sculpture/eternal-orbit",
+      "permanent": true
+    },
+    {
+      "source": "/kinetic-equilibrium",
+      "destination": "/works/sculpture/kinetic-equilibrium",
+      "permanent": true
+    },
+    {
+      "source": "/KINETIC-EQUILIBRIUM",
+      "destination": "/works/sculpture/kinetic-equilibrium",
+      "permanent": true
+    },
+    {
+      "source": "/hugging",
+      "destination": "/works/sculpture/hugging",
+      "permanent": true
+    },
+    {
+      "source": "/HUGGING",
+      "destination": "/works/sculpture/hugging",
+      "permanent": true
+    },
+    {
+      "source": "/spectator",
+      "destination": "/works/sculpture/spectator",
+      "permanent": true
+    },
+    {
+      "source": "/SPECTATOR",
+      "destination": "/works/sculpture/spectator",
+      "permanent": true
+    },
+    {
+      "source": "/couple",
+      "destination": "/works/sculpture/couple",
+      "permanent": true
+    },
+    {
+      "source": "/COUPLE",
+      "destination": "/works/sculpture/couple",
+      "permanent": true
+    },
+    {
+      "source": "/statue-of-freedom-of-press",
+      "destination": "/works/sculpture/statue-of-freedom-of-press",
+      "permanent": true
+    },
+    {
+      "source": "/STATUE-OF-FREEDOM-OF-PRESS",
+      "destination": "/works/sculpture/statue-of-freedom-of-press",
+      "permanent": true
+    },
+    {
+      "source": "/ifa-sc-052",
+      "destination": "/works/sculpture/statue-of-freedom-of-press",
+      "permanent": true
+    },
+    {
+      "source": "/IFA-SC-052",
+      "destination": "/works/sculpture/statue-of-freedom-of-press",
+      "permanent": true
+    },
+    {
+      "source": "/sculpture-of-hawker",
+      "destination": "/works/sculpture/sculpture-of-hawker",
+      "permanent": true
+    },
+    {
+      "source": "/SCULPTURE-OF-HAWKER",
+      "destination": "/works/sculpture/sculpture-of-hawker",
+      "permanent": true
+    },
+    {
+      "source": "/ifa-sc-041",
+      "destination": "/works/sculpture/sculpture-of-hawker",
+      "permanent": true
+    },
+    {
+      "source": "/IFA-SC-041",
+      "destination": "/works/sculpture/sculpture-of-hawker",
+      "permanent": true
+    },
+    {
+      "source": "/figure-in-flight",
+      "destination": "/works/sculpture/figure-in-flight",
+      "permanent": true
+    },
+    {
+      "source": "/FIGURE-IN-FLIGHT",
+      "destination": "/works/sculpture/figure-in-flight",
+      "permanent": true
+    },
+    {
+      "source": "/polished-oval-with-an-opening",
+      "destination": "/works/sculpture/polished-oval-with-an-opening",
+      "permanent": true
+    },
+    {
+      "source": "/POLISHED-OVAL-WITH-AN-OPENING",
+      "destination": "/works/sculpture/polished-oval-with-an-opening",
+      "permanent": true
+    },
+    {
+      "source": "/ribbon-in-a-reception-lobby",
+      "destination": "/works/sculpture/ribbon-in-a-reception-lobby",
+      "permanent": true
+    },
+    {
+      "source": "/RIBBON-IN-A-RECEPTION-LOBBY",
+      "destination": "/works/sculpture/ribbon-in-a-reception-lobby",
+      "permanent": true
+    },
+    {
+      "source": "/rising-ribbon-with-a-drop",
+      "destination": "/works/sculpture/rising-ribbon-with-a-drop",
+      "permanent": true
+    },
+    {
+      "source": "/RISING-RIBBON-WITH-A-DROP",
+      "destination": "/works/sculpture/rising-ribbon-with-a-drop",
+      "permanent": true
+    },
+    {
+      "source": "/twisted-helix-at-a-building-entrance",
+      "destination": "/works/sculpture/twisted-helix-at-a-building-entrance",
+      "permanent": true
+    },
+    {
+      "source": "/TWISTED-HELIX-AT-A-BUILDING-ENTRANCE",
+      "destination": "/works/sculpture/twisted-helix-at-a-building-entrance",
+      "permanent": true
+    },
+    {
+      "source": "/column-of-mirrored-cubes",
+      "destination": "/works/sculpture/column-of-mirrored-cubes",
+      "permanent": true
+    },
+    {
+      "source": "/COLUMN-OF-MIRRORED-CUBES",
+      "destination": "/works/sculpture/column-of-mirrored-cubes",
+      "permanent": true
+    },
+    {
+      "source": "/twisted-form-on-a-terrace",
+      "destination": "/works/sculpture/twisted-form-on-a-terrace",
+      "permanent": true
+    },
+    {
+      "source": "/TWISTED-FORM-ON-A-TERRACE",
+      "destination": "/works/sculpture/twisted-form-on-a-terrace",
+      "permanent": true
+    },
+    {
+      "source": "/interlocking-rings",
+      "destination": "/works/sculpture/interlocking-rings",
+      "permanent": true
+    },
+    {
+      "source": "/INTERLOCKING-RINGS",
+      "destination": "/works/sculpture/interlocking-rings",
+      "permanent": true
+    },
+    {
+      "source": "/folded-steel-form",
+      "destination": "/works/sculpture/folded-steel-form",
+      "permanent": true
+    },
+    {
+      "source": "/FOLDED-STEEL-FORM",
+      "destination": "/works/sculpture/folded-steel-form",
+      "permanent": true
+    },
+    {
+      "source": "/tall-twisting-form",
+      "destination": "/works/sculpture/tall-twisting-form",
+      "permanent": true
+    },
+    {
+      "source": "/TALL-TWISTING-FORM",
+      "destination": "/works/sculpture/tall-twisting-form",
+      "permanent": true
+    },
+    {
+      "source": "/steel-arch",
+      "destination": "/works/sculpture/steel-arch",
+      "permanent": true
+    },
+    {
+      "source": "/STEEL-ARCH",
+      "destination": "/works/sculpture/steel-arch",
+      "permanent": true
+    },
+    {
+      "source": "/rings-of-steel-rod-in-a-garden",
+      "destination": "/works/sculpture/rings-of-steel-rod-in-a-garden",
+      "permanent": true
+    },
+    {
+      "source": "/RINGS-OF-STEEL-ROD-IN-A-GARDEN",
+      "destination": "/works/sculpture/rings-of-steel-rod-in-a-garden",
+      "permanent": true
+    },
+    {
+      "source": "/pierced-steel-lanterns",
+      "destination": "/works/sculpture/pierced-steel-lanterns",
+      "permanent": true
+    },
+    {
+      "source": "/PIERCED-STEEL-LANTERNS",
+      "destination": "/works/sculpture/pierced-steel-lanterns",
+      "permanent": true
+    },
+    {
+      "source": "/expectant-couple",
+      "destination": "/works/sculpture/expectant-couple",
+      "permanent": true
+    },
+    {
+      "source": "/EXPECTANT-COUPLE",
+      "destination": "/works/sculpture/expectant-couple",
+      "permanent": true
+    },
+    {
+      "source": "/standing-couple",
+      "destination": "/works/sculpture/standing-couple",
+      "permanent": true
+    },
+    {
+      "source": "/STANDING-COUPLE",
+      "destination": "/works/sculpture/standing-couple",
+      "permanent": true
+    },
+    {
+      "source": "/reclining-couple",
+      "destination": "/works/sculpture/reclining-couple",
+      "permanent": true
+    },
+    {
+      "source": "/RECLINING-COUPLE",
+      "destination": "/works/sculpture/reclining-couple",
+      "permanent": true
+    },
+    {
+      "source": "/two-torsos",
+      "destination": "/works/sculpture/two-torsos",
+      "permanent": true
+    },
+    {
+      "source": "/TWO-TORSOS",
+      "destination": "/works/sculpture/two-torsos",
+      "permanent": true
+    },
+    {
+      "source": "/stone-column",
+      "destination": "/works/sculpture/stone-column",
+      "permanent": true
+    },
+    {
+      "source": "/STONE-COLUMN",
+      "destination": "/works/sculpture/stone-column",
+      "permanent": true
+    },
+    {
+      "source": "/twisted-ribbon-form",
+      "destination": "/works/sculpture/twisted-ribbon-form",
+      "permanent": true
+    },
+    {
+      "source": "/TWISTED-RIBBON-FORM",
+      "destination": "/works/sculpture/twisted-ribbon-form",
+      "permanent": true
+    },
+    {
+      "source": "/ifa-sc-070",
+      "destination": "/works/sculpture/twisted-ribbon-form",
+      "permanent": true
+    },
+    {
+      "source": "/IFA-SC-070",
+      "destination": "/works/sculpture/twisted-ribbon-form",
+      "permanent": true
+    },
+    {
+      "source": "/lion-of-machine-parts",
+      "destination": "/works/sculpture/lion-of-machine-parts",
+      "permanent": true
+    },
+    {
+      "source": "/LION-OF-MACHINE-PARTS",
+      "destination": "/works/sculpture/lion-of-machine-parts",
+      "permanent": true
+    },
+    {
+      "source": "/ifa-sc-068",
+      "destination": "/works/sculpture/lion-of-machine-parts",
+      "permanent": true
+    },
+    {
+      "source": "/IFA-SC-068",
+      "destination": "/works/sculpture/lion-of-machine-parts",
+      "permanent": true
+    },
+    {
+      "source": "/ifa-sc-067",
+      "destination": "/works/sculpture/lion-of-machine-parts",
+      "permanent": true
+    },
+    {
+      "source": "/IFA-SC-067",
+      "destination": "/works/sculpture/lion-of-machine-parts",
+      "permanent": true
+    },
+    {
+      "source": "/leaning-figure-with-a-silver-mane",
+      "destination": "/works/sculpture/leaning-figure-with-a-silver-mane",
+      "permanent": true
+    },
+    {
+      "source": "/LEANING-FIGURE-WITH-A-SILVER-MANE",
+      "destination": "/works/sculpture/leaning-figure-with-a-silver-mane",
+      "permanent": true
+    },
+    {
+      "source": "/ifa-sc-048",
+      "destination": "/works/sculpture/leaning-figure-with-a-silver-mane",
+      "permanent": true
+    },
+    {
+      "source": "/IFA-SC-048",
+      "destination": "/works/sculpture/leaning-figure-with-a-silver-mane",
+      "permanent": true
+    },
+    {
+      "source": "/ifa-sc-049",
+      "destination": "/works/sculpture/leaning-figure-with-a-silver-mane",
+      "permanent": true
+    },
+    {
+      "source": "/IFA-SC-049",
+      "destination": "/works/sculpture/leaning-figure-with-a-silver-mane",
+      "permanent": true
+    },
+    {
+      "source": "/ifa-sc-050",
+      "destination": "/works/sculpture/leaning-figure-with-a-silver-mane",
+      "permanent": true
+    },
+    {
+      "source": "/IFA-SC-050",
+      "destination": "/works/sculpture/leaning-figure-with-a-silver-mane",
+      "permanent": true
+    },
+    {
+      "source": "/seated-buddha",
+      "destination": "/works/sculpture/seated-buddha",
+      "permanent": true
+    },
+    {
+      "source": "/SEATED-BUDDHA",
+      "destination": "/works/sculpture/seated-buddha",
+      "permanent": true
+    },
+    {
+      "source": "/ifa-sc-012",
+      "destination": "/works/sculpture/seated-buddha",
+      "permanent": true
+    },
+    {
+      "source": "/IFA-SC-012",
+      "destination": "/works/sculpture/seated-buddha",
+      "permanent": true
+    },
+    {
+      "source": "/rhinoceros-in-metal-mesh",
+      "destination": "/works/sculpture/rhinoceros-in-metal-mesh",
+      "permanent": true
+    },
+    {
+      "source": "/RHINOCEROS-IN-METAL-MESH",
+      "destination": "/works/sculpture/rhinoceros-in-metal-mesh",
+      "permanent": true
+    },
+    {
+      "source": "/ifa-sc-027",
+      "destination": "/works/sculpture/rhinoceros-in-metal-mesh",
+      "permanent": true
+    },
+    {
+      "source": "/IFA-SC-027",
+      "destination": "/works/sculpture/rhinoceros-in-metal-mesh",
+      "permanent": true
+    },
+    {
+      "source": "/ifa-sc-028",
+      "destination": "/works/sculpture/rhinoceros-in-metal-mesh",
+      "permanent": true
+    },
+    {
+      "source": "/IFA-SC-028",
+      "destination": "/works/sculpture/rhinoceros-in-metal-mesh",
+      "permanent": true
+    },
+    {
+      "source": "/stylised-ganesha",
+      "destination": "/works/sculpture/stylised-ganesha",
+      "permanent": true
+    },
+    {
+      "source": "/STYLISED-GANESHA",
+      "destination": "/works/sculpture/stylised-ganesha",
+      "permanent": true
+    },
+    {
+      "source": "/ifa-sc-015",
+      "destination": "/works/sculpture/stylised-ganesha",
+      "permanent": true
+    },
+    {
+      "source": "/IFA-SC-015",
+      "destination": "/works/sculpture/stylised-ganesha",
+      "permanent": true
+    },
+    {
+      "source": "/runner-around-a-column",
+      "destination": "/works/sculpture/runner-around-a-column",
+      "permanent": true
+    },
+    {
+      "source": "/RUNNER-AROUND-A-COLUMN",
+      "destination": "/works/sculpture/runner-around-a-column",
+      "permanent": true
+    },
+    {
+      "source": "/ifa-sc-007",
+      "destination": "/works/sculpture/runner-around-a-column",
+      "permanent": true
+    },
+    {
+      "source": "/IFA-SC-007",
+      "destination": "/works/sculpture/runner-around-a-column",
+      "permanent": true
+    },
+    {
+      "source": "/embracing-couple",
+      "destination": "/works/sculpture/embracing-couple",
+      "permanent": true
+    },
+    {
+      "source": "/EMBRACING-COUPLE",
+      "destination": "/works/sculpture/embracing-couple",
+      "permanent": true
+    },
+    {
+      "source": "/ifa-sc-022",
+      "destination": "/works/sculpture/embracing-couple",
+      "permanent": true
+    },
+    {
+      "source": "/IFA-SC-022",
+      "destination": "/works/sculpture/embracing-couple",
+      "permanent": true
+    },
+    {
+      "source": "/figure-at-the-spinning-wheel",
+      "destination": "/works/sculpture/figure-at-the-spinning-wheel",
+      "permanent": true
+    },
+    {
+      "source": "/FIGURE-AT-THE-SPINNING-WHEEL",
+      "destination": "/works/sculpture/figure-at-the-spinning-wheel",
+      "permanent": true
+    },
+    {
+      "source": "/ifa-sc-037",
+      "destination": "/works/sculpture/figure-at-the-spinning-wheel",
+      "permanent": true
+    },
+    {
+      "source": "/IFA-SC-037",
+      "destination": "/works/sculpture/figure-at-the-spinning-wheel",
+      "permanent": true
+    },
+    {
+      "source": "/ifa-sc-038",
+      "destination": "/works/sculpture/figure-at-the-spinning-wheel",
+      "permanent": true
+    },
+    {
+      "source": "/IFA-SC-038",
+      "destination": "/works/sculpture/figure-at-the-spinning-wheel",
+      "permanent": true
+    },
+    {
+      "source": "/ifa-sc-039",
+      "destination": "/works/sculpture/figure-at-the-spinning-wheel",
+      "permanent": true
+    },
+    {
+      "source": "/IFA-SC-039",
+      "destination": "/works/sculpture/figure-at-the-spinning-wheel",
+      "permanent": true
+    },
+    {
+      "source": "/ifa-sc-040",
+      "destination": "/works/sculpture/figure-at-the-spinning-wheel",
+      "permanent": true
+    },
+    {
+      "source": "/IFA-SC-040",
+      "destination": "/works/sculpture/figure-at-the-spinning-wheel",
+      "permanent": true
+    },
+    {
+      "source": "/reclining-ganesha",
+      "destination": "/works/sculpture/reclining-ganesha",
+      "permanent": true
+    },
+    {
+      "source": "/RECLINING-GANESHA",
+      "destination": "/works/sculpture/reclining-ganesha",
+      "permanent": true
+    },
+    {
+      "source": "/ifa-sc-047",
+      "destination": "/works/sculpture/reclining-ganesha",
+      "permanent": true
+    },
+    {
+      "source": "/IFA-SC-047",
+      "destination": "/works/sculpture/reclining-ganesha",
+      "permanent": true
+    },
+    {
+      "source": "/cellist",
+      "destination": "/works/sculpture/cellist",
+      "permanent": true
+    },
+    {
+      "source": "/CELLIST",
+      "destination": "/works/sculpture/cellist",
+      "permanent": true
+    },
+    {
+      "source": "/ifa-sc-030",
+      "destination": "/works/sculpture/cellist",
+      "permanent": true
+    },
+    {
+      "source": "/IFA-SC-030",
+      "destination": "/works/sculpture/cellist",
+      "permanent": true
+    },
+    {
+      "source": "/figure-with-kites",
+      "destination": "/works/sculpture/figure-with-kites",
+      "permanent": true
+    },
+    {
+      "source": "/FIGURE-WITH-KITES",
+      "destination": "/works/sculpture/figure-with-kites",
+      "permanent": true
+    },
+    {
+      "source": "/ifa-sc-035",
+      "destination": "/works/sculpture/figure-with-kites",
+      "permanent": true
+    },
+    {
+      "source": "/IFA-SC-035",
+      "destination": "/works/sculpture/figure-with-kites",
+      "permanent": true
+    },
+    {
+      "source": "/ifa-sc-036",
+      "destination": "/works/sculpture/figure-with-kites",
+      "permanent": true
+    },
+    {
+      "source": "/IFA-SC-036",
+      "destination": "/works/sculpture/figure-with-kites",
+      "permanent": true
+    },
+    {
+      "source": "/buddha-head",
+      "destination": "/works/sculpture/buddha-head",
+      "permanent": true
+    },
+    {
+      "source": "/BUDDHA-HEAD",
+      "destination": "/works/sculpture/buddha-head",
+      "permanent": true
+    },
+    {
+      "source": "/ifa-sc-064",
+      "destination": "/works/sculpture/buddha-head",
+      "permanent": true
+    },
+    {
+      "source": "/IFA-SC-064",
+      "destination": "/works/sculpture/buddha-head",
+      "permanent": true
+    },
+    {
+      "source": "/leaping-figure",
+      "destination": "/works/sculpture/leaping-figure",
+      "permanent": true
+    },
+    {
+      "source": "/LEAPING-FIGURE",
+      "destination": "/works/sculpture/leaping-figure",
+      "permanent": true
+    },
+    {
+      "source": "/ifa-sc-019",
+      "destination": "/works/sculpture/leaping-figure",
+      "permanent": true
+    },
+    {
+      "source": "/IFA-SC-019",
+      "destination": "/works/sculpture/leaping-figure",
+      "permanent": true
+    },
+    {
+      "source": "/gandhi-statue",
+      "destination": "/works/sculpture/gandhi-statue",
+      "permanent": true
+    },
+    {
+      "source": "/GANDHI-STATUE",
+      "destination": "/works/sculpture/gandhi-statue",
+      "permanent": true
+    },
+    {
+      "source": "/ifa-sc-032",
+      "destination": "/works/sculpture/gandhi-statue",
+      "permanent": true
+    },
+    {
+      "source": "/IFA-SC-032",
+      "destination": "/works/sculpture/gandhi-statue",
+      "permanent": true
+    },
+    {
+      "source": "/ifa-sc-033",
+      "destination": "/works/sculpture/gandhi-statue",
+      "permanent": true
+    },
+    {
+      "source": "/IFA-SC-033",
+      "destination": "/works/sculpture/gandhi-statue",
+      "permanent": true
+    },
+    {
+      "source": "/ifa-sc-045",
+      "destination": "/works/sculpture/gandhi-statue",
+      "permanent": true
+    },
+    {
+      "source": "/IFA-SC-045",
+      "destination": "/works/sculpture/gandhi-statue",
+      "permanent": true
+    },
+    {
+      "source": "/portrait-statue",
+      "destination": "/works/sculpture/portrait-statue",
+      "permanent": true
+    },
+    {
+      "source": "/PORTRAIT-STATUE",
+      "destination": "/works/sculpture/portrait-statue",
+      "permanent": true
+    },
+    {
+      "source": "/ifa-sc-061",
+      "destination": "/works/sculpture/portrait-statue",
+      "permanent": true
+    },
+    {
+      "source": "/IFA-SC-061",
+      "destination": "/works/sculpture/portrait-statue",
+      "permanent": true
+    },
+    {
+      "source": "/ifa-sc-062",
+      "destination": "/works/sculpture/portrait-statue",
+      "permanent": true
+    },
+    {
+      "source": "/IFA-SC-062",
+      "destination": "/works/sculpture/portrait-statue",
+      "permanent": true
+    },
+    {
+      "source": "/saraswati-with-veena",
+      "destination": "/works/sculpture/saraswati-with-veena",
+      "permanent": true
+    },
+    {
+      "source": "/SARASWATI-WITH-VEENA",
+      "destination": "/works/sculpture/saraswati-with-veena",
+      "permanent": true
+    },
+    {
+      "source": "/ifa-sc-002",
+      "destination": "/works/sculpture/saraswati-with-veena",
+      "permanent": true
+    },
+    {
+      "source": "/IFA-SC-002",
+      "destination": "/works/sculpture/saraswati-with-veena",
+      "permanent": true
+    },
+    {
+      "source": "/sliced-figures-on-a-rock",
+      "destination": "/works/sculpture/sliced-figures-on-a-rock",
+      "permanent": true
+    },
+    {
+      "source": "/SLICED-FIGURES-ON-A-ROCK",
+      "destination": "/works/sculpture/sliced-figures-on-a-rock",
+      "permanent": true
+    },
+    {
+      "source": "/ifa-sc-072",
+      "destination": "/works/sculpture/sliced-figures-on-a-rock",
+      "permanent": true
+    },
+    {
+      "source": "/IFA-SC-072",
+      "destination": "/works/sculpture/sliced-figures-on-a-rock",
+      "permanent": true
+    },
+    {
+      "source": "/columns-of-climbing-figures",
+      "destination": "/works/sculpture/columns-of-climbing-figures",
+      "permanent": true
+    },
+    {
+      "source": "/COLUMNS-OF-CLIMBING-FIGURES",
+      "destination": "/works/sculpture/columns-of-climbing-figures",
+      "permanent": true
+    },
+    {
+      "source": "/ifa-sc-006",
+      "destination": "/works/sculpture/columns-of-climbing-figures",
+      "permanent": true
+    },
+    {
+      "source": "/IFA-SC-006",
+      "destination": "/works/sculpture/columns-of-climbing-figures",
+      "permanent": true
+    },
+    {
+      "source": "/wall-of-climbing-figures",
+      "destination": "/works/sculpture/wall-of-climbing-figures",
+      "permanent": true
+    },
+    {
+      "source": "/WALL-OF-CLIMBING-FIGURES",
+      "destination": "/works/sculpture/wall-of-climbing-figures",
+      "permanent": true
+    },
+    {
+      "source": "/ifa-sc-056",
+      "destination": "/works/sculpture/wall-of-climbing-figures",
+      "permanent": true
+    },
+    {
+      "source": "/IFA-SC-056",
+      "destination": "/works/sculpture/wall-of-climbing-figures",
+      "permanent": true
+    },
+    {
+      "source": "/abstract-ring-form",
+      "destination": "/works/sculpture/abstract-ring-form",
+      "permanent": true
+    },
+    {
+      "source": "/ABSTRACT-RING-FORM",
+      "destination": "/works/sculpture/abstract-ring-form",
+      "permanent": true
+    },
+    {
+      "source": "/ifa-sc-013",
+      "destination": "/works/sculpture/abstract-ring-form",
+      "permanent": true
+    },
+    {
+      "source": "/IFA-SC-013",
+      "destination": "/works/sculpture/abstract-ring-form",
+      "permanent": true
+    },
+    {
+      "source": "/tall-standing-figure",
+      "destination": "/works/sculpture/tall-standing-figure",
+      "permanent": true
+    },
+    {
+      "source": "/TALL-STANDING-FIGURE",
+      "destination": "/works/sculpture/tall-standing-figure",
+      "permanent": true
+    },
+    {
+      "source": "/ifa-sc-066",
+      "destination": "/works/sculpture/tall-standing-figure",
+      "permanent": true
+    },
+    {
+      "source": "/IFA-SC-066",
+      "destination": "/works/sculpture/tall-standing-figure",
+      "permanent": true
+    },
+    {
+      "source": "/soaring-higher",
+      "destination": "/works/murals/soaring-higher",
+      "permanent": true
+    },
+    {
+      "source": "/SOARING-HIGHER",
+      "destination": "/works/murals/soaring-higher",
+      "permanent": true
+    },
+    {
+      "source": "/flowing-wall-installation",
+      "destination": "/works/murals/flowing-wall-installation",
+      "permanent": true
+    },
+    {
+      "source": "/FLOWING-WALL-INSTALLATION",
+      "destination": "/works/murals/flowing-wall-installation",
+      "permanent": true
+    },
+    {
+      "source": "/lit-relief-in-a-lounge",
+      "destination": "/works/murals/lit-relief-in-a-lounge",
+      "permanent": true
+    },
+    {
+      "source": "/LIT-RELIEF-IN-A-LOUNGE",
+      "destination": "/works/murals/lit-relief-in-a-lounge",
+      "permanent": true
+    },
+    {
+      "source": "/gold-and-black-relief-wall",
+      "destination": "/works/murals/gold-and-black-relief-wall",
+      "permanent": true
+    },
+    {
+      "source": "/GOLD-AND-BLACK-RELIEF-WALL",
+      "destination": "/works/murals/gold-and-black-relief-wall",
+      "permanent": true
+    },
+    {
+      "source": "/dancers-relief-lobby-wall",
+      "destination": "/works/murals/dancers-relief-lobby-wall",
+      "permanent": true
+    },
+    {
+      "source": "/DANCERS-RELIEF-LOBBY-WALL",
+      "destination": "/works/murals/dancers-relief-lobby-wall",
+      "permanent": true
+    },
+    {
+      "source": "/ifa-mu-030",
+      "destination": "/works/murals/dancers-relief-lobby-wall",
+      "permanent": true
+    },
+    {
+      "source": "/IFA-MU-030",
+      "destination": "/works/murals/dancers-relief-lobby-wall",
+      "permanent": true
+    },
+    {
+      "source": "/carved-relief-wall-full-length",
+      "destination": "/works/murals/carved-relief-wall-full-length",
+      "permanent": true
+    },
+    {
+      "source": "/CARVED-RELIEF-WALL-FULL-LENGTH",
+      "destination": "/works/murals/carved-relief-wall-full-length",
+      "permanent": true
+    },
+    {
+      "source": "/ifa-mu-031",
+      "destination": "/works/murals/carved-relief-wall-full-length",
+      "permanent": true
+    },
+    {
+      "source": "/IFA-MU-031",
+      "destination": "/works/murals/carved-relief-wall-full-length",
+      "permanent": true
+    },
+    {
+      "source": "/metal-leaf-wall-installation",
+      "destination": "/works/murals/metal-leaf-wall-installation",
+      "permanent": true
+    },
+    {
+      "source": "/METAL-LEAF-WALL-INSTALLATION",
+      "destination": "/works/murals/metal-leaf-wall-installation",
+      "permanent": true
+    },
+    {
+      "source": "/ifa-mu-008",
+      "destination": "/works/murals/metal-leaf-wall-installation",
+      "permanent": true
+    },
+    {
+      "source": "/IFA-MU-008",
+      "destination": "/works/murals/metal-leaf-wall-installation",
+      "permanent": true
+    },
+    {
+      "source": "/figurative-relief-panel",
+      "destination": "/works/murals/figurative-relief-panel",
+      "permanent": true
+    },
+    {
+      "source": "/FIGURATIVE-RELIEF-PANEL",
+      "destination": "/works/murals/figurative-relief-panel",
+      "permanent": true
+    },
+    {
+      "source": "/ifa-grc-009",
+      "destination": "/works/murals/figurative-relief-panel",
+      "permanent": true
+    },
+    {
+      "source": "/IFA-GRC-009",
+      "destination": "/works/murals/figurative-relief-panel",
+      "permanent": true
+    },
+    {
+      "source": "/relief-frieze-wall",
+      "destination": "/works/murals/relief-frieze-wall",
+      "permanent": true
+    },
+    {
+      "source": "/RELIEF-FRIEZE-WALL",
+      "destination": "/works/murals/relief-frieze-wall",
+      "permanent": true
+    },
+    {
+      "source": "/ifa-grc-008",
+      "destination": "/works/murals/relief-frieze-wall",
+      "permanent": true
+    },
+    {
+      "source": "/IFA-GRC-008",
+      "destination": "/works/murals/relief-frieze-wall",
+      "permanent": true
+    },
+    {
+      "source": "/floral-relief-panel",
+      "destination": "/works/murals/floral-relief-panel",
+      "permanent": true
+    },
+    {
+      "source": "/FLORAL-RELIEF-PANEL",
+      "destination": "/works/murals/floral-relief-panel",
+      "permanent": true
+    },
+    {
+      "source": "/ifa-mu-023",
+      "destination": "/works/murals/floral-relief-panel",
+      "permanent": true
+    },
+    {
+      "source": "/IFA-MU-023",
+      "destination": "/works/murals/floral-relief-panel",
+      "permanent": true
+    },
+    {
+      "source": "/metal-figures-wall-and-floor",
+      "destination": "/works/murals/metal-figures-wall-and-floor",
+      "permanent": true
+    },
+    {
+      "source": "/METAL-FIGURES-WALL-AND-FLOOR",
+      "destination": "/works/murals/metal-figures-wall-and-floor",
+      "permanent": true
+    },
+    {
+      "source": "/ifa-mu-025",
+      "destination": "/works/murals/metal-figures-wall-and-floor",
+      "permanent": true
+    },
+    {
+      "source": "/IFA-MU-025",
+      "destination": "/works/murals/metal-figures-wall-and-floor",
+      "permanent": true
+    },
+    {
+      "source": "/hawker",
+      "destination": "/works/sculpture/sculpture-of-hawker",
+      "permanent": true
+    },
+    {
+      "source": "/HAWKER",
+      "destination": "/works/sculpture/sculpture-of-hawker",
+      "permanent": true
+    },
+    {
+      "source": "/freedom-of-press",
+      "destination": "/works/sculpture/statue-of-freedom-of-press",
+      "permanent": true
+    },
+    {
+      "source": "/FREEDOM-OF-PRESS",
+      "destination": "/works/sculpture/statue-of-freedom-of-press",
+      "permanent": true
+    },
+    {
+      "source": "/gandhi",
+      "destination": "/works/sculpture/gandhi-statue",
+      "permanent": true
+    },
+    {
+      "source": "/GANDHI",
+      "destination": "/works/sculpture/gandhi-statue",
+      "permanent": true
+    },
+    {
+      "source": "/saraswati",
+      "destination": "/works/sculpture/saraswati-with-veena",
+      "permanent": true
+    },
+    {
+      "source": "/SARASWATI",
+      "destination": "/works/sculpture/saraswati-with-veena",
+      "permanent": true
+    }
+  ]
+}
