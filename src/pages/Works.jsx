@@ -6,7 +6,7 @@ import Masonry from '../components/Masonry'
 import Invitation from '../sections/Invitation'
 import { ease, SplitText } from '../components/Motion'
 import { disciplines } from '../data/disciplines'
-import { projects, projectsFor, workPath } from '../data/projects'
+import { projects, projectsFor, stoneWorks, workPath } from '../data/projects'
 import { site } from '../data/site'
 import useHydrated from '../hooks/useHydrated'
 import { useT } from '../i18n'
@@ -42,10 +42,15 @@ export default function Works() {
   // render matches the pre-rendered page (which shows all works).
   const [params, setParams] = useSearchParams()
   const ready = useHydrated()
+  // Works in stone are a material, not a body of work: /works?material=stone (linked from the home page).
   const kind = params.get('kind')
-  const filter = ready && disciplines.some((d) => d.slug === kind) ? kind : 'all'
-  const setFilter = (slug) => setParams(slug === 'all' ? {} : { kind: slug }, { replace: true, preventScrollReset: true })
-  const options = [{ slug: 'all', shortName: 'All', count: projects.length }, ...disciplines.map((d) => ({ ...d, count: projectsFor(d.slug).length }))]
+  const filter = !ready ? 'all' : params.get('material') === 'stone' ? 'stone' : disciplines.some((d) => d.slug === kind) ? kind : 'all'
+  const setFilter = (slug) => setParams(slug === 'all' ? {} : slug === 'stone' ? { material: 'stone' } : { kind: slug }, { replace: true, preventScrollReset: true })
+  const options = [
+    { slug: 'all', shortName: 'All', count: projects.length },
+    ...disciplines.map((d) => ({ ...d, count: projectsFor(d.slug).length })),
+    { slug: 'stone', shortName: 'In stone', count: stoneWorks.length },
+  ]
 
   return (
     <>
@@ -80,6 +85,10 @@ export default function Works() {
         <motion.div key={filter} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.45, ease }}>
           {filter === 'all' ? (
             disciplines.map((d, ci) => <Chapter key={d.slug} d={d} arrangement={arrangements[ci % 2]} />)
+          ) : filter === 'stone' ? (
+            <div className="wrap pb-20 pt-6">
+              <Masonry projects={stoneWorks} />
+            </div>
           ) : (
             <div className="wrap pb-20 pt-6">
               <Masonry projects={projectsFor(filter)} />

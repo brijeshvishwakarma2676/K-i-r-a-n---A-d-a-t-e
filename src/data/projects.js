@@ -49,7 +49,7 @@
 */
 
 import { images } from './images.js'
-import { PROCESSES } from './process.js'
+import { PROCESSES, STUDIO_WAY } from './process.js'
 
 const RAW = [
   // SCULPTURE
@@ -490,12 +490,14 @@ const build = (w) => {
   // The making: the work's own dated steps, or else the steps of the process it was made by,
   // whose photographs show other works (named in each step) and end with this work in place.
   const proc = PROCESSES[w.process]
+  // Technique not yet known: the studio's way of working, which names none (process.js).
+  const way = proc || STUDIO_WAY
   const making = w.making
     ? w.making.map((s) => ({
       ...s,
       image: s.id ? { id: s.id, alt: `${w.title}: ${s.note}`, caption: `${s.label}, ${s.date}. ${s.note}` } : null,
     }))
-    : proc?.steps.map((s) => {
+    : way.steps.map((s) => {
       const id = s.id === 'self' ? pics[0]?.id : s.id
       return { date: '', label: s.label, note: s.note, image: id ? { id, alt: `${w.title}: ${s.label}`, caption: `${s.label}. ${w.title}` } : null }
     })
@@ -514,8 +516,8 @@ const build = (w) => {
     description: w.description || (DESCRIBED[w.slug] && [DESCRIBED[w.slug]]),
     technique: proc?.name,
     ownMaking: !!w.making,
-    makingTitle: w.making ? 'The making' : 'How it is made',
-    makingIntro: w.making ? w.makingIntro : proc?.intro,
+    makingTitle: w.making ? 'The making' : proc ? 'How it is made' : STUDIO_WAY.title,
+    makingIntro: w.making ? w.makingIntro : way.intro,
     cover: pics[0],
     gallery: pics.slice(1),
     making,
@@ -538,6 +540,9 @@ export const projects = PORTFOLIO.map((slug) => build(bySlug[slug]))
 export const projectBySlug = Object.fromEntries([...projects, ...EXTRA.map(build)].map((p) => [p.slug, p]))
 export const projectsFor = (slug) => projects.filter((p) => p.discipline === slug)
 export const featuredProjects = projects.filter((p) => p.featured)
+// Works carved in stone (marble, granite, sandstone or stone): the home page's "In stone" room
+// and the Works page's stone filter (/works?material=stone).
+export const stoneWorks = projects.filter((p) => /\b(stone|marble|granite|sandstone)\b/i.test(p.medium || ''))
 
 /*
   The full journey: what a work's page needs to tell its whole story with its own photographs, as

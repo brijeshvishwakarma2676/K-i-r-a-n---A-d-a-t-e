@@ -68,3 +68,22 @@ export const PROCESSES = {
     ],
   },
 }
+
+/*
+  The studio's way of working, for a work whose technique is not yet confirmed: every work page
+  then still has its making section, without guessing at a material or a technique it may not
+  have been made by (no "Technique" line, no technique's name). It says only what holds for every
+  work: drawn, settled in a model, made at full size in the studio's workshop, finished by hand.
+  Once the studio says how such a work was made, give it a `process` and this is no longer used.
+*/
+export const STUDIO_WAY = {
+  title: 'From drawing to work',
+  intro: 'The path every work takes in the studio, from the first drawing to its place.',
+  steps: [
+    { label: 'The idea', note: 'A work starts on paper: drawings of the form, its size, and where it will stand.' },
+    { label: 'The model', note: 'A small model settles the form in the round before anything is made at full size.' },
+    { label: 'At full size', note: 'The work is made at full size in the studio’s workshop, by hand.' },
+    { label: 'Finishing', note: 'The surface, colour and base are finished by hand, and the work is looked at from every side.' },
+    { label: 'In place', note: 'The finished work.', id: 'self' },
+  ],
+}

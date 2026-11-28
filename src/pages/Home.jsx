@@ -7,6 +7,7 @@ import Hero from '../sections/Hero'
 import Statement from '../sections/Statement'
 import Monument from '../sections/Monument'
 import SelectedWorks from '../sections/SelectedWorks'
+import InStone from '../sections/InStone'
 import RecentExhibition from '../sections/RecentExhibition'
 import DisciplineIndex from '../sections/DisciplineIndex'
 import Studio from '../sections/Studio'
@@ -27,10 +28,9 @@ export default function Home() {
         <Statement />
         <Monument />
       </div>
-      <div className="cv-auto">
-        <SelectedWorks />
-        <RecentExhibition />
-      </div>
+      <div className="cv-auto"><InStone /></div>
+      <div className="cv-auto"><SelectedWorks /></div>
+      <div className="cv-auto"><RecentExhibition /></div>
       <div className="cv-auto"><DisciplineIndex /></div>
       <div className="cv-auto"><Studio /></div>
       <div className="cv-auto"><PressBand /></div>
